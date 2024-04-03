@@ -3,13 +3,13 @@ PWM_example.elf:     file format elf32-littlearm
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00001874  10001000  10001000  00001000  2**2
+  0 .text         00001864  10001000  10001000  00001000  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .VENEER_Code  00000138  2000000c  10002874  0000800c  2**2
+  1 .VENEER_Code  00000138  2000000c  10002864  0000800c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
   2 Stack         00000404  20000144  00000000  00000144  2**0
                   ALLOC
-  3 .data         00000044  20000548  100029ac  00008548  2**2
+  3 .data         00000044  20000548  1000299c  00008548  2**2
                   CONTENTS, ALLOC, LOAD, DATA
   4 .bss          0000000c  2000058c  00000448  0000858c  2**2
                   ALLOC
@@ -17,21 +17,21 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
   6 .debug_aranges 00000658  00000000  00000000  00008590  2**3
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   0000ac63  00000000  00000000  00008be8  2**0
+  7 .debug_info   0000ac31  00000000  00000000  00008be8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 000016c9  00000000  00000000  0001384b  2**0
+  8 .debug_abbrev 000016c9  00000000  00000000  00013819  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   000035b6  00000000  00000000  00014f14  2**0
+  9 .debug_line   00003556  00000000  00000000  00014ee2  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  0000147c  00000000  00000000  000184cc  2**2
+ 10 .debug_frame  00001478  00000000  00000000  00018438  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    00004ae3  00000000  00000000  00019948  2**0
+ 11 .debug_str    00004ae3  00000000  00000000  000198b0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    0000217c  00000000  00000000  0001e42b  2**0
+ 12 .debug_loc    0000217c  00000000  00000000  0001e393  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 00000560  00000000  00000000  000205a8  2**3
+ 13 .debug_ranges 00000560  00000000  00000000  00020510  2**3
                   CONTENTS, READONLY, DEBUGGING
- 14 .build_attributes 000002fb  00000000  00000000  00020b08  2**0
+ 14 .build_attributes 000002fb  00000000  00000000  00020a70  2**0
                   CONTENTS, READONLY
 
 Disassembly of section .text:
@@ -149,7 +149,7 @@ Reset_Handler:
 Reset_Handler: 
 /* Initialize interrupt veneer */
 	ldr	r1, =eROData
-10001060:	10002874 	.word	0x10002874
+10001060:	10002864 	.word	0x10002864
 	ldr	r2, =VeneerStart
 10001064:	2000000c 	.word	0x2000000c
 	ldr	r3, =VeneerEnd
@@ -162,7 +162,7 @@ Reset_Handler:
 	
 /* Initialize data */
 	ldr	r1, =DataLoadAddr
-10001070:	100029ac 	.word	0x100029ac
+10001070:	1000299c 	.word	0x1000299c
 	ldr	r2, =__data_start
 10001074:	20000548 	.word	0x20000548
 	ldr	r3, =__data_end
@@ -171,7 +171,7 @@ Reset_Handler:
 
 /* RAM code */
 	ldr	r1, =__ram_code_load
-1000107c:	100029f0 	.word	0x100029f0
+1000107c:	100029e0 	.word	0x100029e0
 	ldr	r2, =__ram_code_start
 10001080:	2000058c 	.word	0x2000058c
 	ldr	r3, =__ram_code_end
@@ -191,7 +191,7 @@ Reset_Handler:
 
 #ifndef __SKIP_LIBC_INIT_ARRAY
     ldr  r0, =__libc_init_array
-10001090:	10002725 	.word	0x10002725
+10001090:	10002715 	.word	0x10002715
     blx  r0
 #endif
 
@@ -2575,7 +2575,7 @@ void XMC_CCU8_SLICE_SetInterruptNode(XMC_CCU8_SLICE_t *const slice,
 10001c62:	46bd      	mov	sp, r7
 10001c64:	b006      	add	sp, #24
 10001c66:	bd80      	pop	{r7, pc}
-10001c68:	10002770 	.word	0x10002770
+10001c68:	10002760 	.word	0x10002760
 
 10001c6c <XMC_CCU8_SLICE_DeadTimeInit>:
 }
@@ -2792,1608 +2792,1624 @@ __STATIC_INLINE void XMC_CCU8_SLICE_StartTimer(XMC_CCU8_SLICE_t *const slice)
 10001d3c:	b002      	add	sp, #8
 10001d3e:	bd80      	pop	{r7, pc}
 
-10001d40 <XMC_CCU8_EnableShadowTransfer>:
+10001d40 <XMC_CCU8_SLICE_GetTimerPeriodMatch>:
+ *
+ * \par<b>Related APIs:</b><br>
+ *  XMC_CCU8_SLICE_SetTimerPeriodMatch().
+ */
+__STATIC_INLINE uint16_t XMC_CCU8_SLICE_GetTimerPeriodMatch(const XMC_CCU8_SLICE_t *const slice)
+{
+10001d40:	b580      	push	{r7, lr}
+10001d42:	b082      	sub	sp, #8
+10001d44:	af00      	add	r7, sp, #0
+10001d46:	6078      	str	r0, [r7, #4]
+  XMC_ASSERT("XMC_CCU8_SLICE_GetTimerPeriodMatch:Invalid Slice Pointer", XMC_CCU8_IsValidSlice(slice));
+  return ((uint16_t) slice->PR);
+10001d48:	687b      	ldr	r3, [r7, #4]
+10001d4a:	6b1b      	ldr	r3, [r3, #48]	; 0x30
+10001d4c:	b29b      	uxth	r3, r3
+}
+10001d4e:	1c18      	adds	r0, r3, #0
+10001d50:	46bd      	mov	sp, r7
+10001d52:	b002      	add	sp, #8
+10001d54:	bd80      	pop	{r7, pc}
+10001d56:	46c0      	nop			; (mov r8, r8)
+
+10001d58 <XMC_CCU8_EnableShadowTransfer>:
  *
  * \par<b>Related APIs:</b><br>
  *  None.
  */
 __STATIC_INLINE void XMC_CCU8_EnableShadowTransfer(XMC_CCU8_MODULE_t *const module, const uint32_t shadow_transfer_msk)
 {
-10001d40:	b580      	push	{r7, lr}
-10001d42:	b082      	sub	sp, #8
-10001d44:	af00      	add	r7, sp, #0
-10001d46:	6078      	str	r0, [r7, #4]
-10001d48:	6039      	str	r1, [r7, #0]
+10001d58:	b580      	push	{r7, lr}
+10001d5a:	b082      	sub	sp, #8
+10001d5c:	af00      	add	r7, sp, #0
+10001d5e:	6078      	str	r0, [r7, #4]
+10001d60:	6039      	str	r1, [r7, #0]
   XMC_ASSERT("XMC_CCU8_EnableShadowTransfer:Invalid module Pointer", XMC_CCU8_IsValidModule(module));
   module->GCSS = (uint32_t)shadow_transfer_msk;
-10001d4a:	687b      	ldr	r3, [r7, #4]
-10001d4c:	683a      	ldr	r2, [r7, #0]
-10001d4e:	611a      	str	r2, [r3, #16]
+10001d62:	687b      	ldr	r3, [r7, #4]
+10001d64:	683a      	ldr	r2, [r7, #0]
+10001d66:	611a      	str	r2, [r3, #16]
 }
-10001d50:	46bd      	mov	sp, r7
-10001d52:	b002      	add	sp, #8
-10001d54:	bd80      	pop	{r7, pc}
-10001d56:	46c0      	nop			; (mov r8, r8)
+10001d68:	46bd      	mov	sp, r7
+10001d6a:	b002      	add	sp, #8
+10001d6c:	bd80      	pop	{r7, pc}
+10001d6e:	46c0      	nop			; (mov r8, r8)
 
-10001d58 <XMC_CCU8_SLICE_EnableEvent>:
+10001d70 <XMC_CCU8_SLICE_EnableEvent>:
  * \par<b>Related APIs:</b><br>
  *  XMC_CCU8_SLICE_SetInterruptNode()<BR>  XMC_CCU8_SLICE_EnableMultipleEvents()<BR>  XMC_CCU8_SLICE_DisableEvent()<BR>
  *  XMC_CCU8_SLICE_DisableMultipleEvents().
  */
 __STATIC_INLINE void XMC_CCU8_SLICE_EnableEvent(XMC_CCU8_SLICE_t *const slice, const XMC_CCU8_SLICE_IRQ_ID_t event)
 {
-10001d58:	b580      	push	{r7, lr}
-10001d5a:	b082      	sub	sp, #8
-10001d5c:	af00      	add	r7, sp, #0
-10001d5e:	6078      	str	r0, [r7, #4]
-10001d60:	1c0a      	adds	r2, r1, #0
-10001d62:	1cfb      	adds	r3, r7, #3
-10001d64:	701a      	strb	r2, [r3, #0]
+10001d70:	b580      	push	{r7, lr}
+10001d72:	b082      	sub	sp, #8
+10001d74:	af00      	add	r7, sp, #0
+10001d76:	6078      	str	r0, [r7, #4]
+10001d78:	1c0a      	adds	r2, r1, #0
+10001d7a:	1cfb      	adds	r3, r7, #3
+10001d7c:	701a      	strb	r2, [r3, #0]
   XMC_ASSERT("XMC_CCU8_SLICE_EnableEvent:Invalid Slice Pointer", XMC_CCU8_IsValidSlice(slice));
   XMC_ASSERT("XMC_CCU8_SLICE_EnableEvent:Invalid SR event", XMC_CCU8_SLICE_CHECK_INTERRUPT(event));
 
   slice->INTE |= ((uint32_t) 1) << ((uint32_t) event);
-10001d66:	687b      	ldr	r3, [r7, #4]
-10001d68:	22a4      	movs	r2, #164	; 0xa4
-10001d6a:	589a      	ldr	r2, [r3, r2]
-10001d6c:	1cfb      	adds	r3, r7, #3
-10001d6e:	781b      	ldrb	r3, [r3, #0]
-10001d70:	2101      	movs	r1, #1
-10001d72:	4099      	lsls	r1, r3
-10001d74:	1c0b      	adds	r3, r1, #0
-10001d76:	431a      	orrs	r2, r3
-10001d78:	687b      	ldr	r3, [r7, #4]
-10001d7a:	21a4      	movs	r1, #164	; 0xa4
-10001d7c:	505a      	str	r2, [r3, r1]
+10001d7e:	687b      	ldr	r3, [r7, #4]
+10001d80:	22a4      	movs	r2, #164	; 0xa4
+10001d82:	589a      	ldr	r2, [r3, r2]
+10001d84:	1cfb      	adds	r3, r7, #3
+10001d86:	781b      	ldrb	r3, [r3, #0]
+10001d88:	2101      	movs	r1, #1
+10001d8a:	4099      	lsls	r1, r3
+10001d8c:	1c0b      	adds	r3, r1, #0
+10001d8e:	431a      	orrs	r2, r3
+10001d90:	687b      	ldr	r3, [r7, #4]
+10001d92:	21a4      	movs	r1, #164	; 0xa4
+10001d94:	505a      	str	r2, [r3, r1]
 }
-10001d7e:	46bd      	mov	sp, r7
-10001d80:	b002      	add	sp, #8
-10001d82:	bd80      	pop	{r7, pc}
+10001d96:	46bd      	mov	sp, r7
+10001d98:	b002      	add	sp, #8
+10001d9a:	bd80      	pop	{r7, pc}
 
-10001d84 <XMC_CCU8_SLICE_SetShadowTransferMode>:
+10001d9c <XMC_CCU8_SLICE_SetShadowTransferMode>:
  * XMC_CCU8_EnableShadowTransfer()<BR>
  * @note Not available for XMC4500 series
  */
 __STATIC_INLINE void XMC_CCU8_SLICE_SetShadowTransferMode(XMC_CCU8_SLICE_t *const slice,
     const XMC_CCU8_SLICE_SHADOW_TRANSFER_MODE_t shadow_transfer_mode)
 {
-10001d84:	b580      	push	{r7, lr}
-10001d86:	b082      	sub	sp, #8
-10001d88:	af00      	add	r7, sp, #0
-10001d8a:	6078      	str	r0, [r7, #4]
-10001d8c:	1c0a      	adds	r2, r1, #0
-10001d8e:	1cfb      	adds	r3, r7, #3
-10001d90:	701a      	strb	r2, [r3, #0]
+10001d9c:	b580      	push	{r7, lr}
+10001d9e:	b082      	sub	sp, #8
+10001da0:	af00      	add	r7, sp, #0
+10001da2:	6078      	str	r0, [r7, #4]
+10001da4:	1c0a      	adds	r2, r1, #0
+10001da6:	1cfb      	adds	r3, r7, #3
+10001da8:	701a      	strb	r2, [r3, #0]
   XMC_ASSERT("XMC_CCU8_SLICE_SetShadowTransferMode:Invalid Slice Pointer", XMC_CCU8_IsValidSlice(slice));
   slice->STC = ((slice->STC) & (uint32_t)~CCU8_CC8_STC_STM_Msk) |
-10001d92:	687b      	ldr	r3, [r7, #4]
-10001d94:	22b4      	movs	r2, #180	; 0xb4
-10001d96:	589b      	ldr	r3, [r3, r2]
-10001d98:	2206      	movs	r2, #6
-10001d9a:	4393      	bics	r3, r2
-10001d9c:	1c1a      	adds	r2, r3, #0
+10001daa:	687b      	ldr	r3, [r7, #4]
+10001dac:	22b4      	movs	r2, #180	; 0xb4
+10001dae:	589b      	ldr	r3, [r3, r2]
+10001db0:	2206      	movs	r2, #6
+10001db2:	4393      	bics	r3, r2
+10001db4:	1c1a      	adds	r2, r3, #0
                ((shadow_transfer_mode << CCU8_CC8_STC_STM_Pos) & (uint32_t)CCU8_CC8_STC_STM_Msk);
-10001d9e:	1cfb      	adds	r3, r7, #3
-10001da0:	781b      	ldrb	r3, [r3, #0]
-10001da2:	005b      	lsls	r3, r3, #1
-10001da4:	1c19      	adds	r1, r3, #0
-10001da6:	2306      	movs	r3, #6
-10001da8:	400b      	ands	r3, r1
+10001db6:	1cfb      	adds	r3, r7, #3
+10001db8:	781b      	ldrb	r3, [r3, #0]
+10001dba:	005b      	lsls	r3, r3, #1
+10001dbc:	1c19      	adds	r1, r3, #0
+10001dbe:	2306      	movs	r3, #6
+10001dc0:	400b      	ands	r3, r1
  */
 __STATIC_INLINE void XMC_CCU8_SLICE_SetShadowTransferMode(XMC_CCU8_SLICE_t *const slice,
     const XMC_CCU8_SLICE_SHADOW_TRANSFER_MODE_t shadow_transfer_mode)
 {
   XMC_ASSERT("XMC_CCU8_SLICE_SetShadowTransferMode:Invalid Slice Pointer", XMC_CCU8_IsValidSlice(slice));
   slice->STC = ((slice->STC) & (uint32_t)~CCU8_CC8_STC_STM_Msk) |
-10001daa:	431a      	orrs	r2, r3
-10001dac:	687b      	ldr	r3, [r7, #4]
-10001dae:	21b4      	movs	r1, #180	; 0xb4
-10001db0:	505a      	str	r2, [r3, r1]
+10001dc2:	431a      	orrs	r2, r3
+10001dc4:	687b      	ldr	r3, [r7, #4]
+10001dc6:	21b4      	movs	r1, #180	; 0xb4
+10001dc8:	505a      	str	r2, [r3, r1]
                ((shadow_transfer_mode << CCU8_CC8_STC_STM_Pos) & (uint32_t)CCU8_CC8_STC_STM_Msk);
 }
-10001db2:	46bd      	mov	sp, r7
-10001db4:	b002      	add	sp, #8
-10001db6:	bd80      	pop	{r7, pc}
+10001dca:	46bd      	mov	sp, r7
+10001dcc:	b002      	add	sp, #8
+10001dce:	bd80      	pop	{r7, pc}
 
-10001db8 <PWM_CCU8_Init>:
+10001dd0 <PWM_CCU8_Init>:
   return version;
 }
 
 /* This function initializes the app */
 PWM_CCU8_STATUS_t PWM_CCU8_Init(PWM_CCU8_t* handle_ptr)
 {
-10001db8:	b590      	push	{r4, r7, lr}
-10001dba:	b087      	sub	sp, #28
-10001dbc:	af00      	add	r7, sp, #0
-10001dbe:	6078      	str	r0, [r7, #4]
+10001dd0:	b590      	push	{r4, r7, lr}
+10001dd2:	b087      	sub	sp, #28
+10001dd4:	af00      	add	r7, sp, #0
+10001dd6:	6078      	str	r0, [r7, #4]
   PWM_CCU8_STATUS_t status;
   GLOBAL_CCU8_STATUS_t status_ccu8_global;
   uint32_t frequency_module;
   uint32_t prescalar;
 
   status = PWM_CCU8_STATUS_FAILURE;
-10001dc0:	2317      	movs	r3, #23
-10001dc2:	18fb      	adds	r3, r7, r3
-10001dc4:	2201      	movs	r2, #1
-10001dc6:	701a      	strb	r2, [r3, #0]
+10001dd8:	2317      	movs	r3, #23
+10001dda:	18fb      	adds	r3, r7, r3
+10001ddc:	2201      	movs	r2, #1
+10001dde:	701a      	strb	r2, [r3, #0]
   status_ccu8_global = GLOBAL_CCU8_STATUS_FAILURE;
-10001dc8:	2316      	movs	r3, #22
-10001dca:	18fb      	adds	r3, r7, r3
-10001dcc:	2201      	movs	r2, #1
-10001dce:	701a      	strb	r2, [r3, #0]
+10001de0:	2316      	movs	r3, #22
+10001de2:	18fb      	adds	r3, r7, r3
+10001de4:	2201      	movs	r2, #1
+10001de6:	701a      	strb	r2, [r3, #0]
   XMC_ASSERT("PWM_CCU8_Init:handle_ptr is NULL", (handle_ptr != NULL));
 
   if (PWM_CCU8_STATE_UNINITIALIZED == handle_ptr->state)
-10001dd0:	687b      	ldr	r3, [r7, #4]
-10001dd2:	7f1b      	ldrb	r3, [r3, #28]
-10001dd4:	2b00      	cmp	r3, #0
-10001dd6:	d000      	beq.n	10001dda <PWM_CCU8_Init+0x22>
-10001dd8:	e0af      	b.n	10001f3a <PWM_CCU8_Init+0x182>
+10001de8:	687b      	ldr	r3, [r7, #4]
+10001dea:	7f1b      	ldrb	r3, [r3, #28]
+10001dec:	2b00      	cmp	r3, #0
+10001dee:	d000      	beq.n	10001df2 <PWM_CCU8_Init+0x22>
+10001df0:	e0af      	b.n	10001f52 <PWM_CCU8_Init+0x182>
   {
     /* Initialize consumed Apps */
     status_ccu8_global = GLOBAL_CCU8_Init(handle_ptr->config_ptr->global_ccu8_handle);
-10001dda:	687b      	ldr	r3, [r7, #4]
-10001ddc:	681b      	ldr	r3, [r3, #0]
-10001dde:	228c      	movs	r2, #140	; 0x8c
-10001de0:	589b      	ldr	r3, [r3, r2]
-10001de2:	2216      	movs	r2, #22
-10001de4:	18bc      	adds	r4, r7, r2
-10001de6:	1c18      	adds	r0, r3, #0
-10001de8:	f000 fbc8 	bl	1000257c <GLOBAL_CCU8_Init>
-10001dec:	1c03      	adds	r3, r0, #0
-10001dee:	7023      	strb	r3, [r4, #0]
+10001df2:	687b      	ldr	r3, [r7, #4]
+10001df4:	681b      	ldr	r3, [r3, #0]
+10001df6:	228c      	movs	r2, #140	; 0x8c
+10001df8:	589b      	ldr	r3, [r3, r2]
+10001dfa:	2216      	movs	r2, #22
+10001dfc:	18bc      	adds	r4, r7, r2
+10001dfe:	1c18      	adds	r0, r3, #0
+10001e00:	f000 fbbc 	bl	1000257c <GLOBAL_CCU8_Init>
+10001e04:	1c03      	adds	r3, r0, #0
+10001e06:	7023      	strb	r3, [r4, #0]
 
     /* Initialize CCU8x_CC8y slice */
     if (GLOBAL_CCU8_STATUS_SUCCESS == status_ccu8_global)
-10001df0:	2316      	movs	r3, #22
-10001df2:	18fb      	adds	r3, r7, r3
-10001df4:	781b      	ldrb	r3, [r3, #0]
-10001df6:	2b00      	cmp	r3, #0
-10001df8:	d000      	beq.n	10001dfc <PWM_CCU8_Init+0x44>
-10001dfa:	e09a      	b.n	10001f32 <PWM_CCU8_Init+0x17a>
+10001e08:	2316      	movs	r3, #22
+10001e0a:	18fb      	adds	r3, r7, r3
+10001e0c:	781b      	ldrb	r3, [r3, #0]
+10001e0e:	2b00      	cmp	r3, #0
+10001e10:	d000      	beq.n	10001e14 <PWM_CCU8_Init+0x44>
+10001e12:	e09a      	b.n	10001f4a <PWM_CCU8_Init+0x17a>
     {
       XMC_DEBUG("PWM_CCU8_Init:Initilizing slice");
 
       /* Configure CCU8x_CC8y slice as timer */
       XMC_CCU8_SLICE_CompareInit(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ccu8_cc8_slice_timer_ptr);
-10001dfc:	687b      	ldr	r3, [r7, #4]
-10001dfe:	689a      	ldr	r2, [r3, #8]
-10001e00:	687b      	ldr	r3, [r7, #4]
-10001e02:	681b      	ldr	r3, [r3, #0]
-10001e04:	6c9b      	ldr	r3, [r3, #72]	; 0x48
-10001e06:	1c10      	adds	r0, r2, #0
-10001e08:	1c19      	adds	r1, r3, #0
-10001e0a:	f7ff fbb7 	bl	1000157c <XMC_CCU8_SLICE_CompareInit>
+10001e14:	687b      	ldr	r3, [r7, #4]
+10001e16:	689a      	ldr	r2, [r3, #8]
+10001e18:	687b      	ldr	r3, [r7, #4]
+10001e1a:	681b      	ldr	r3, [r3, #0]
+10001e1c:	6c9b      	ldr	r3, [r3, #72]	; 0x48
+10001e1e:	1c10      	adds	r0, r2, #0
+10001e20:	1c19      	adds	r1, r3, #0
+10001e22:	f7ff fbab 	bl	1000157c <XMC_CCU8_SLICE_CompareInit>
       /* Set period match value of the timer  */
       XMC_CCU8_SLICE_SetTimerPeriodMatch(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->period_value);
-10001e0e:	687b      	ldr	r3, [r7, #4]
-10001e10:	689a      	ldr	r2, [r3, #8]
-10001e12:	687b      	ldr	r3, [r7, #4]
-10001e14:	681b      	ldr	r3, [r3, #0]
-10001e16:	885b      	ldrh	r3, [r3, #2]
-10001e18:	1c10      	adds	r0, r2, #0
-10001e1a:	1c19      	adds	r1, r3, #0
-10001e1c:	f7ff fea4 	bl	10001b68 <XMC_CCU8_SLICE_SetTimerPeriodMatch>
+10001e26:	687b      	ldr	r3, [r7, #4]
+10001e28:	689a      	ldr	r2, [r3, #8]
+10001e2a:	687b      	ldr	r3, [r7, #4]
+10001e2c:	681b      	ldr	r3, [r3, #0]
+10001e2e:	885b      	ldrh	r3, [r3, #2]
+10001e30:	1c10      	adds	r0, r2, #0
+10001e32:	1c19      	adds	r1, r3, #0
+10001e34:	f7ff fe98 	bl	10001b68 <XMC_CCU8_SLICE_SetTimerPeriodMatch>
 
       /* Set timer compare match value for channel 1 */
       XMC_CCU8_SLICE_SetTimerCompareMatch(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_COMPARE_CHANNEL_1,
-10001e20:	687b      	ldr	r3, [r7, #4]
-10001e22:	689a      	ldr	r2, [r3, #8]
+10001e38:	687b      	ldr	r3, [r7, #4]
+10001e3a:	689a      	ldr	r2, [r3, #8]
                                           (uint16_t) handle_ptr->config_ptr->compare1_value);
-10001e24:	687b      	ldr	r3, [r7, #4]
-10001e26:	681b      	ldr	r3, [r3, #0]
+10001e3c:	687b      	ldr	r3, [r7, #4]
+10001e3e:	681b      	ldr	r3, [r3, #0]
       XMC_CCU8_SLICE_CompareInit(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ccu8_cc8_slice_timer_ptr);
       /* Set period match value of the timer  */
       XMC_CCU8_SLICE_SetTimerPeriodMatch(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->period_value);
 
       /* Set timer compare match value for channel 1 */
       XMC_CCU8_SLICE_SetTimerCompareMatch(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_COMPARE_CHANNEL_1,
-10001e28:	889b      	ldrh	r3, [r3, #4]
-10001e2a:	1c10      	adds	r0, r2, #0
-10001e2c:	2100      	movs	r1, #0
-10001e2e:	1c1a      	adds	r2, r3, #0
-10001e30:	f7ff fea8 	bl	10001b84 <XMC_CCU8_SLICE_SetTimerCompareMatch>
+10001e40:	889b      	ldrh	r3, [r3, #4]
+10001e42:	1c10      	adds	r0, r2, #0
+10001e44:	2100      	movs	r1, #0
+10001e46:	1c1a      	adds	r2, r3, #0
+10001e48:	f7ff fe9c 	bl	10001b84 <XMC_CCU8_SLICE_SetTimerCompareMatch>
                                           (uint16_t) handle_ptr->config_ptr->compare1_value);
       /* Set timer compare match value for channel 2 */
       XMC_CCU8_SLICE_SetTimerCompareMatch(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_COMPARE_CHANNEL_2,
-10001e34:	687b      	ldr	r3, [r7, #4]
-10001e36:	689a      	ldr	r2, [r3, #8]
+10001e4c:	687b      	ldr	r3, [r7, #4]
+10001e4e:	689a      	ldr	r2, [r3, #8]
                                           (uint16_t) handle_ptr->config_ptr->compare2_value);
-10001e38:	687b      	ldr	r3, [r7, #4]
-10001e3a:	681b      	ldr	r3, [r3, #0]
+10001e50:	687b      	ldr	r3, [r7, #4]
+10001e52:	681b      	ldr	r3, [r3, #0]
 
       /* Set timer compare match value for channel 1 */
       XMC_CCU8_SLICE_SetTimerCompareMatch(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_COMPARE_CHANNEL_1,
                                           (uint16_t) handle_ptr->config_ptr->compare1_value);
       /* Set timer compare match value for channel 2 */
       XMC_CCU8_SLICE_SetTimerCompareMatch(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_COMPARE_CHANNEL_2,
-10001e3c:	88db      	ldrh	r3, [r3, #6]
-10001e3e:	1c10      	adds	r0, r2, #0
-10001e40:	2101      	movs	r1, #1
-10001e42:	1c1a      	adds	r2, r3, #0
-10001e44:	f7ff fe9e 	bl	10001b84 <XMC_CCU8_SLICE_SetTimerCompareMatch>
+10001e54:	88db      	ldrh	r3, [r3, #6]
+10001e56:	1c10      	adds	r0, r2, #0
+10001e58:	2101      	movs	r1, #1
+10001e5a:	1c1a      	adds	r2, r3, #0
+10001e5c:	f7ff fe92 	bl	10001b84 <XMC_CCU8_SLICE_SetTimerCompareMatch>
                                           (uint16_t) handle_ptr->config_ptr->compare2_value);
 
       if ((1U == handle_ptr->config_ptr->ccu8_cc8_slice_timer_ptr->mcm_ch1_enable) || (1U
-10001e48:	687b      	ldr	r3, [r7, #4]
-10001e4a:	681b      	ldr	r3, [r3, #0]
-10001e4c:	6c9b      	ldr	r3, [r3, #72]	; 0x48
-10001e4e:	78db      	ldrb	r3, [r3, #3]
-10001e50:	2202      	movs	r2, #2
-10001e52:	4013      	ands	r3, r2
-10001e54:	b2db      	uxtb	r3, r3
-10001e56:	2b00      	cmp	r3, #0
-10001e58:	d108      	bne.n	10001e6c <PWM_CCU8_Init+0xb4>
+10001e60:	687b      	ldr	r3, [r7, #4]
+10001e62:	681b      	ldr	r3, [r3, #0]
+10001e64:	6c9b      	ldr	r3, [r3, #72]	; 0x48
+10001e66:	78db      	ldrb	r3, [r3, #3]
+10001e68:	2202      	movs	r2, #2
+10001e6a:	4013      	ands	r3, r2
+10001e6c:	b2db      	uxtb	r3, r3
+10001e6e:	2b00      	cmp	r3, #0
+10001e70:	d108      	bne.n	10001e84 <PWM_CCU8_Init+0xb4>
           == handle_ptr->config_ptr->ccu8_cc8_slice_timer_ptr->mcm_ch2_enable))
-10001e5a:	687b      	ldr	r3, [r7, #4]
-10001e5c:	681b      	ldr	r3, [r3, #0]
-10001e5e:	6c9b      	ldr	r3, [r3, #72]	; 0x48
-10001e60:	78db      	ldrb	r3, [r3, #3]
-10001e62:	2204      	movs	r2, #4
-10001e64:	4013      	ands	r3, r2
-10001e66:	b2db      	uxtb	r3, r3
+10001e72:	687b      	ldr	r3, [r7, #4]
+10001e74:	681b      	ldr	r3, [r3, #0]
+10001e76:	6c9b      	ldr	r3, [r3, #72]	; 0x48
+10001e78:	78db      	ldrb	r3, [r3, #3]
+10001e7a:	2204      	movs	r2, #4
+10001e7c:	4013      	ands	r3, r2
+10001e7e:	b2db      	uxtb	r3, r3
                                           (uint16_t) handle_ptr->config_ptr->compare1_value);
       /* Set timer compare match value for channel 2 */
       XMC_CCU8_SLICE_SetTimerCompareMatch(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_COMPARE_CHANNEL_2,
                                           (uint16_t) handle_ptr->config_ptr->compare2_value);
 
       if ((1U == handle_ptr->config_ptr->ccu8_cc8_slice_timer_ptr->mcm_ch1_enable) || (1U
-10001e68:	2b00      	cmp	r3, #0
-10001e6a:	d008      	beq.n	10001e7e <PWM_CCU8_Init+0xc6>
+10001e80:	2b00      	cmp	r3, #0
+10001e82:	d008      	beq.n	10001e96 <PWM_CCU8_Init+0xc6>
           == handle_ptr->config_ptr->ccu8_cc8_slice_timer_ptr->mcm_ch2_enable))
       {
         XMC_CCU8_SetMultiChannelShadowTransferMode(handle_ptr->ccu8_module_ptr,
-10001e6c:	687b      	ldr	r3, [r7, #4]
-10001e6e:	685a      	ldr	r2, [r3, #4]
+10001e84:	687b      	ldr	r3, [r7, #4]
+10001e86:	685a      	ldr	r2, [r3, #4]
                                                    (uint32_t) handle_ptr->config_ptr->mcm_shadow_txfr_mode);
-10001e70:	687b      	ldr	r3, [r7, #4]
-10001e72:	681b      	ldr	r3, [r3, #0]
-10001e74:	6bdb      	ldr	r3, [r3, #60]	; 0x3c
+10001e88:	687b      	ldr	r3, [r7, #4]
+10001e8a:	681b      	ldr	r3, [r3, #0]
+10001e8c:	6bdb      	ldr	r3, [r3, #60]	; 0x3c
                                           (uint16_t) handle_ptr->config_ptr->compare2_value);
 
       if ((1U == handle_ptr->config_ptr->ccu8_cc8_slice_timer_ptr->mcm_ch1_enable) || (1U
           == handle_ptr->config_ptr->ccu8_cc8_slice_timer_ptr->mcm_ch2_enable))
       {
         XMC_CCU8_SetMultiChannelShadowTransferMode(handle_ptr->ccu8_module_ptr,
-10001e76:	1c10      	adds	r0, r2, #0
-10001e78:	1c19      	adds	r1, r3, #0
-10001e7a:	f7ff fbb9 	bl	100015f0 <XMC_CCU8_SetMultiChannelShadowTransferMode>
+10001e8e:	1c10      	adds	r0, r2, #0
+10001e90:	1c19      	adds	r1, r3, #0
+10001e92:	f7ff fbad 	bl	100015f0 <XMC_CCU8_SetMultiChannelShadowTransferMode>
                                                    (uint32_t) handle_ptr->config_ptr->mcm_shadow_txfr_mode);
       }
 
 #if (UC_SERIES != XMC45) /*STC register not available on XMC45xx devices */
       XMC_CCU8_SLICE_SetShadowTransferMode(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->shadow_transfer_mode);
-10001e7e:	687b      	ldr	r3, [r7, #4]
-10001e80:	6899      	ldr	r1, [r3, #8]
-10001e82:	687b      	ldr	r3, [r7, #4]
-10001e84:	681b      	ldr	r3, [r3, #0]
-10001e86:	2244      	movs	r2, #68	; 0x44
-10001e88:	5c9b      	ldrb	r3, [r3, r2]
-10001e8a:	1c08      	adds	r0, r1, #0
-10001e8c:	1c19      	adds	r1, r3, #0
-10001e8e:	f7ff ff79 	bl	10001d84 <XMC_CCU8_SLICE_SetShadowTransferMode>
+10001e96:	687b      	ldr	r3, [r7, #4]
+10001e98:	6899      	ldr	r1, [r3, #8]
+10001e9a:	687b      	ldr	r3, [r7, #4]
+10001e9c:	681b      	ldr	r3, [r3, #0]
+10001e9e:	2244      	movs	r2, #68	; 0x44
+10001ea0:	5c9b      	ldrb	r3, [r3, r2]
+10001ea2:	1c08      	adds	r0, r1, #0
+10001ea4:	1c19      	adds	r1, r3, #0
+10001ea6:	f7ff ff79 	bl	10001d9c <XMC_CCU8_SLICE_SetShadowTransferMode>
         XMC_CCU8_SLICE_EnableCascadedShadowTransfer(handle_ptr->ccu8_slice_ptr);
       }
 #endif
 
       /* Transfer value from shadow timer registers to actual timer registers */
       XMC_CCU8_EnableShadowTransfer(handle_ptr->ccu8_module_ptr, handle_ptr->shadow_txfr_msk);
-10001e92:	687b      	ldr	r3, [r7, #4]
-10001e94:	685a      	ldr	r2, [r3, #4]
-10001e96:	687b      	ldr	r3, [r7, #4]
-10001e98:	691b      	ldr	r3, [r3, #16]
-10001e9a:	1c10      	adds	r0, r2, #0
-10001e9c:	1c19      	adds	r1, r3, #0
-10001e9e:	f7ff ff4f 	bl	10001d40 <XMC_CCU8_EnableShadowTransfer>
+10001eaa:	687b      	ldr	r3, [r7, #4]
+10001eac:	685a      	ldr	r2, [r3, #4]
+10001eae:	687b      	ldr	r3, [r7, #4]
+10001eb0:	691b      	ldr	r3, [r3, #16]
+10001eb2:	1c10      	adds	r0, r2, #0
+10001eb4:	1c19      	adds	r1, r3, #0
+10001eb6:	f7ff ff4f 	bl	10001d58 <XMC_CCU8_EnableShadowTransfer>
       XMC_CCU8_EnableShadowTransfer(handle_ptr->ccu8_module_ptr, handle_ptr->dither_shadow_txfr_msk);
-10001ea2:	687b      	ldr	r3, [r7, #4]
-10001ea4:	685a      	ldr	r2, [r3, #4]
-10001ea6:	687b      	ldr	r3, [r7, #4]
-10001ea8:	695b      	ldr	r3, [r3, #20]
-10001eaa:	1c10      	adds	r0, r2, #0
-10001eac:	1c19      	adds	r1, r3, #0
-10001eae:	f7ff ff47 	bl	10001d40 <XMC_CCU8_EnableShadowTransfer>
+10001eba:	687b      	ldr	r3, [r7, #4]
+10001ebc:	685a      	ldr	r2, [r3, #4]
+10001ebe:	687b      	ldr	r3, [r7, #4]
+10001ec0:	695b      	ldr	r3, [r3, #20]
+10001ec2:	1c10      	adds	r0, r2, #0
+10001ec4:	1c19      	adds	r1, r3, #0
+10001ec6:	f7ff ff47 	bl	10001d58 <XMC_CCU8_EnableShadowTransfer>
 
       XMC_CCU8_SLICE_DeadTimeInit(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->dt_config_ptr);
-10001eb2:	687b      	ldr	r3, [r7, #4]
-10001eb4:	689a      	ldr	r2, [r3, #8]
-10001eb6:	687b      	ldr	r3, [r7, #4]
-10001eb8:	681b      	ldr	r3, [r3, #0]
-10001eba:	6c1b      	ldr	r3, [r3, #64]	; 0x40
-10001ebc:	1c10      	adds	r0, r2, #0
-10001ebe:	1c19      	adds	r1, r3, #0
-10001ec0:	f7ff fed4 	bl	10001c6c <XMC_CCU8_SLICE_DeadTimeInit>
+10001eca:	687b      	ldr	r3, [r7, #4]
+10001ecc:	689a      	ldr	r2, [r3, #8]
+10001ece:	687b      	ldr	r3, [r7, #4]
+10001ed0:	681b      	ldr	r3, [r3, #0]
+10001ed2:	6c1b      	ldr	r3, [r3, #64]	; 0x40
+10001ed4:	1c10      	adds	r0, r2, #0
+10001ed6:	1c19      	adds	r1, r3, #0
+10001ed8:	f7ff fec8 	bl	10001c6c <XMC_CCU8_SLICE_DeadTimeInit>
 
       /* Configure events */
       PWM_CCU8_lConfigure_Events(handle_ptr);
-10001ec4:	687b      	ldr	r3, [r7, #4]
-10001ec6:	1c18      	adds	r0, r3, #0
-10001ec8:	f000 f962 	bl	10002190 <PWM_CCU8_lConfigure_Events>
+10001edc:	687b      	ldr	r3, [r7, #4]
+10001ede:	1c18      	adds	r0, r3, #0
+10001ee0:	f000 f962 	bl	100021a8 <PWM_CCU8_lConfigure_Events>
 
       /* Enable the interrupts */
       PWM_CCU8_lInit_Interrupt(handle_ptr);
-10001ecc:	687b      	ldr	r3, [r7, #4]
-10001ece:	1c18      	adds	r0, r3, #0
-10001ed0:	f000 f83e 	bl	10001f50 <PWM_CCU8_lInit_Interrupt>
+10001ee4:	687b      	ldr	r3, [r7, #4]
+10001ee6:	1c18      	adds	r0, r3, #0
+10001ee8:	f000 f83e 	bl	10001f68 <PWM_CCU8_lInit_Interrupt>
 
       /*Initializes the GPIO*/
       PWM_CCU8_lInit_GPIO(handle_ptr);
-10001ed4:	687b      	ldr	r3, [r7, #4]
-10001ed6:	1c18      	adds	r0, r3, #0
-10001ed8:	f000 f8fe 	bl	100020d8 <PWM_CCU8_lInit_GPIO>
+10001eec:	687b      	ldr	r3, [r7, #4]
+10001eee:	1c18      	adds	r0, r3, #0
+10001ef0:	f000 f8fe 	bl	100020f0 <PWM_CCU8_lInit_GPIO>
 
       frequency_module = handle_ptr->config_ptr->global_ccu8_handle->module_frequency;
-10001edc:	687b      	ldr	r3, [r7, #4]
-10001ede:	681b      	ldr	r3, [r3, #0]
-10001ee0:	228c      	movs	r2, #140	; 0x8c
-10001ee2:	589b      	ldr	r3, [r3, r2]
-10001ee4:	681b      	ldr	r3, [r3, #0]
-10001ee6:	613b      	str	r3, [r7, #16]
+10001ef4:	687b      	ldr	r3, [r7, #4]
+10001ef6:	681b      	ldr	r3, [r3, #0]
+10001ef8:	228c      	movs	r2, #140	; 0x8c
+10001efa:	589b      	ldr	r3, [r3, r2]
+10001efc:	681b      	ldr	r3, [r3, #0]
+10001efe:	613b      	str	r3, [r7, #16]
       prescalar = (uint32_t) handle_ptr->config_ptr->ccu8_cc8_slice_timer_ptr->prescaler_initval;
-10001ee8:	687b      	ldr	r3, [r7, #4]
-10001eea:	681b      	ldr	r3, [r3, #0]
-10001eec:	6c9b      	ldr	r3, [r3, #72]	; 0x48
-10001eee:	7b1b      	ldrb	r3, [r3, #12]
-10001ef0:	071b      	lsls	r3, r3, #28
-10001ef2:	0f1b      	lsrs	r3, r3, #28
-10001ef4:	b2db      	uxtb	r3, r3
-10001ef6:	60fb      	str	r3, [r7, #12]
+10001f00:	687b      	ldr	r3, [r7, #4]
+10001f02:	681b      	ldr	r3, [r3, #0]
+10001f04:	6c9b      	ldr	r3, [r3, #72]	; 0x48
+10001f06:	7b1b      	ldrb	r3, [r3, #12]
+10001f08:	071b      	lsls	r3, r3, #28
+10001f0a:	0f1b      	lsrs	r3, r3, #28
+10001f0c:	b2db      	uxtb	r3, r3
+10001f0e:	60fb      	str	r3, [r7, #12]
       frequency_module = frequency_module / ((uint32_t) 1 << prescalar);
-10001ef8:	68fb      	ldr	r3, [r7, #12]
-10001efa:	693a      	ldr	r2, [r7, #16]
-10001efc:	40da      	lsrs	r2, r3
-10001efe:	1c13      	adds	r3, r2, #0
-10001f00:	613b      	str	r3, [r7, #16]
+10001f10:	68fb      	ldr	r3, [r7, #12]
+10001f12:	693a      	ldr	r2, [r7, #16]
+10001f14:	40da      	lsrs	r2, r3
+10001f16:	1c13      	adds	r3, r2, #0
+10001f18:	613b      	str	r3, [r7, #16]
       handle_ptr->frequency_tclk = frequency_module;
-10001f02:	687b      	ldr	r3, [r7, #4]
-10001f04:	693a      	ldr	r2, [r7, #16]
-10001f06:	621a      	str	r2, [r3, #32]
+10001f1a:	687b      	ldr	r3, [r7, #4]
+10001f1c:	693a      	ldr	r2, [r7, #16]
+10001f1e:	621a      	str	r2, [r3, #32]
 
       handle_ptr->state = PWM_CCU8_STATE_INITIALIZED;
-10001f08:	687b      	ldr	r3, [r7, #4]
-10001f0a:	2201      	movs	r2, #1
-10001f0c:	771a      	strb	r2, [r3, #28]
+10001f20:	687b      	ldr	r3, [r7, #4]
+10001f22:	2201      	movs	r2, #1
+10001f24:	771a      	strb	r2, [r3, #28]
       status = PWM_CCU8_STATUS_SUCCESS;
-10001f0e:	2317      	movs	r3, #23
-10001f10:	18fb      	adds	r3, r7, r3
-10001f12:	2200      	movs	r2, #0
-10001f14:	701a      	strb	r2, [r3, #0]
+10001f26:	2317      	movs	r3, #23
+10001f28:	18fb      	adds	r3, r7, r3
+10001f2a:	2200      	movs	r2, #0
+10001f2c:	701a      	strb	r2, [r3, #0]
 
       /* Start the PWM generation if start at initialization is enabled */
       if ((bool) true == handle_ptr->config_ptr->start_control)
-10001f16:	687b      	ldr	r3, [r7, #4]
-10001f18:	681b      	ldr	r3, [r3, #0]
-10001f1a:	781b      	ldrb	r3, [r3, #0]
-10001f1c:	2b00      	cmp	r3, #0
-10001f1e:	d010      	beq.n	10001f42 <PWM_CCU8_Init+0x18a>
+10001f2e:	687b      	ldr	r3, [r7, #4]
+10001f30:	681b      	ldr	r3, [r3, #0]
+10001f32:	781b      	ldrb	r3, [r3, #0]
+10001f34:	2b00      	cmp	r3, #0
+10001f36:	d010      	beq.n	10001f5a <PWM_CCU8_Init+0x18a>
       {
         status = PWM_CCU8_Start(handle_ptr);
-10001f20:	2317      	movs	r3, #23
-10001f22:	18fc      	adds	r4, r7, r3
-10001f24:	687b      	ldr	r3, [r7, #4]
-10001f26:	1c18      	adds	r0, r3, #0
-10001f28:	f000 fa1e 	bl	10002368 <PWM_CCU8_Start>
-10001f2c:	1c03      	adds	r3, r0, #0
-10001f2e:	7023      	strb	r3, [r4, #0]
-10001f30:	e007      	b.n	10001f42 <PWM_CCU8_Init+0x18a>
+10001f38:	2317      	movs	r3, #23
+10001f3a:	18fc      	adds	r4, r7, r3
+10001f3c:	687b      	ldr	r3, [r7, #4]
+10001f3e:	1c18      	adds	r0, r3, #0
+10001f40:	f000 fa1e 	bl	10002380 <PWM_CCU8_Start>
+10001f44:	1c03      	adds	r3, r0, #0
+10001f46:	7023      	strb	r3, [r4, #0]
+10001f48:	e007      	b.n	10001f5a <PWM_CCU8_Init+0x18a>
       }
 
     }
     else
     {
       handle_ptr->state = PWM_CCU8_STATE_UNINITIALIZED;
-10001f32:	687b      	ldr	r3, [r7, #4]
-10001f34:	2200      	movs	r2, #0
-10001f36:	771a      	strb	r2, [r3, #28]
-10001f38:	e003      	b.n	10001f42 <PWM_CCU8_Init+0x18a>
+10001f4a:	687b      	ldr	r3, [r7, #4]
+10001f4c:	2200      	movs	r2, #0
+10001f4e:	771a      	strb	r2, [r3, #28]
+10001f50:	e003      	b.n	10001f5a <PWM_CCU8_Init+0x18a>
     }
 
   }
   else
   {
     status = PWM_CCU8_STATUS_ALREADY_INITIALIZED;
-10001f3a:	2317      	movs	r3, #23
-10001f3c:	18fb      	adds	r3, r7, r3
-10001f3e:	2202      	movs	r2, #2
-10001f40:	701a      	strb	r2, [r3, #0]
+10001f52:	2317      	movs	r3, #23
+10001f54:	18fb      	adds	r3, r7, r3
+10001f56:	2202      	movs	r2, #2
+10001f58:	701a      	strb	r2, [r3, #0]
     XMC_DEBUG("PWM_CCU8_Init:PWM_CCU8_STATUS_ALREADY_INITIALIZED");
   }
 
   return (status);
-10001f42:	2317      	movs	r3, #23
-10001f44:	18fb      	adds	r3, r7, r3
-10001f46:	781b      	ldrb	r3, [r3, #0]
+10001f5a:	2317      	movs	r3, #23
+10001f5c:	18fb      	adds	r3, r7, r3
+10001f5e:	781b      	ldrb	r3, [r3, #0]
 } /* end of PWM_CCU8_Init() api */
-10001f48:	1c18      	adds	r0, r3, #0
-10001f4a:	46bd      	mov	sp, r7
-10001f4c:	b007      	add	sp, #28
-10001f4e:	bd90      	pop	{r4, r7, pc}
+10001f60:	1c18      	adds	r0, r3, #0
+10001f62:	46bd      	mov	sp, r7
+10001f64:	b007      	add	sp, #28
+10001f66:	bd90      	pop	{r4, r7, pc}
 
-10001f50 <PWM_CCU8_lInit_Interrupt>:
+10001f68 <PWM_CCU8_lInit_Interrupt>:
 
 static void PWM_CCU8_lInit_Interrupt(PWM_CCU8_t* handle_ptr)
 {
-10001f50:	b580      	push	{r7, lr}
-10001f52:	b082      	sub	sp, #8
-10001f54:	af00      	add	r7, sp, #0
-10001f56:	6078      	str	r0, [r7, #4]
+10001f68:	b580      	push	{r7, lr}
+10001f6a:	b082      	sub	sp, #8
+10001f6c:	af00      	add	r7, sp, #0
+10001f6e:	6078      	str	r0, [r7, #4]
 
   /* Enable events. Bind event to corresponding service request node. */
 
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_PERIOD_MATCH,
-10001f58:	687b      	ldr	r3, [r7, #4]
-10001f5a:	689a      	ldr	r2, [r3, #8]
-                                  handle_ptr->config_ptr->sr_per_match);
-10001f5c:	687b      	ldr	r3, [r7, #4]
-10001f5e:	681b      	ldr	r3, [r3, #0]
-static void PWM_CCU8_lInit_Interrupt(PWM_CCU8_t* handle_ptr)
-{
-
-  /* Enable events. Bind event to corresponding service request node. */
-
-  XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_PERIOD_MATCH,
-10001f60:	7c5b      	ldrb	r3, [r3, #17]
-10001f62:	1c10      	adds	r0, r2, #0
-10001f64:	2100      	movs	r1, #0
-10001f66:	1c1a      	adds	r2, r3, #0
-10001f68:	f7ff fe28 	bl	10001bbc <XMC_CCU8_SLICE_SetInterruptNode>
-                                  handle_ptr->config_ptr->sr_per_match);
-  XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_UP_CH_1,
-10001f6c:	687b      	ldr	r3, [r7, #4]
-10001f6e:	689a      	ldr	r2, [r3, #8]
-                                  handle_ptr->config_ptr->sr_cmp1_match_up);
 10001f70:	687b      	ldr	r3, [r7, #4]
-10001f72:	681b      	ldr	r3, [r3, #0]
+10001f72:	689a      	ldr	r2, [r3, #8]
+                                  handle_ptr->config_ptr->sr_per_match);
+10001f74:	687b      	ldr	r3, [r7, #4]
+10001f76:	681b      	ldr	r3, [r3, #0]
+static void PWM_CCU8_lInit_Interrupt(PWM_CCU8_t* handle_ptr)
+{
+
+  /* Enable events. Bind event to corresponding service request node. */
+
+  XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_PERIOD_MATCH,
+10001f78:	7c5b      	ldrb	r3, [r3, #17]
+10001f7a:	1c10      	adds	r0, r2, #0
+10001f7c:	2100      	movs	r1, #0
+10001f7e:	1c1a      	adds	r2, r3, #0
+10001f80:	f7ff fe1c 	bl	10001bbc <XMC_CCU8_SLICE_SetInterruptNode>
+                                  handle_ptr->config_ptr->sr_per_match);
+  XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_UP_CH_1,
+10001f84:	687b      	ldr	r3, [r7, #4]
+10001f86:	689a      	ldr	r2, [r3, #8]
+                                  handle_ptr->config_ptr->sr_cmp1_match_up);
+10001f88:	687b      	ldr	r3, [r7, #4]
+10001f8a:	681b      	ldr	r3, [r3, #0]
 
   /* Enable events. Bind event to corresponding service request node. */
 
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_PERIOD_MATCH,
                                   handle_ptr->config_ptr->sr_per_match);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_UP_CH_1,
-10001f74:	7c9b      	ldrb	r3, [r3, #18]
-10001f76:	1c10      	adds	r0, r2, #0
-10001f78:	2102      	movs	r1, #2
-10001f7a:	1c1a      	adds	r2, r3, #0
-10001f7c:	f7ff fe1e 	bl	10001bbc <XMC_CCU8_SLICE_SetInterruptNode>
+10001f8c:	7c9b      	ldrb	r3, [r3, #18]
+10001f8e:	1c10      	adds	r0, r2, #0
+10001f90:	2102      	movs	r1, #2
+10001f92:	1c1a      	adds	r2, r3, #0
+10001f94:	f7ff fe12 	bl	10001bbc <XMC_CCU8_SLICE_SetInterruptNode>
                                   handle_ptr->config_ptr->sr_cmp1_match_up);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_DOWN_CH_1,
-10001f80:	687b      	ldr	r3, [r7, #4]
-10001f82:	689a      	ldr	r2, [r3, #8]
+10001f98:	687b      	ldr	r3, [r7, #4]
+10001f9a:	689a      	ldr	r2, [r3, #8]
                                   handle_ptr->config_ptr->sr_cmp1_match_down);
-10001f84:	687b      	ldr	r3, [r7, #4]
-10001f86:	681b      	ldr	r3, [r3, #0]
+10001f9c:	687b      	ldr	r3, [r7, #4]
+10001f9e:	681b      	ldr	r3, [r3, #0]
 
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_PERIOD_MATCH,
                                   handle_ptr->config_ptr->sr_per_match);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_UP_CH_1,
                                   handle_ptr->config_ptr->sr_cmp1_match_up);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_DOWN_CH_1,
-10001f88:	7cdb      	ldrb	r3, [r3, #19]
-10001f8a:	1c10      	adds	r0, r2, #0
-10001f8c:	2103      	movs	r1, #3
-10001f8e:	1c1a      	adds	r2, r3, #0
-10001f90:	f7ff fe14 	bl	10001bbc <XMC_CCU8_SLICE_SetInterruptNode>
+10001fa0:	7cdb      	ldrb	r3, [r3, #19]
+10001fa2:	1c10      	adds	r0, r2, #0
+10001fa4:	2103      	movs	r1, #3
+10001fa6:	1c1a      	adds	r2, r3, #0
+10001fa8:	f7ff fe08 	bl	10001bbc <XMC_CCU8_SLICE_SetInterruptNode>
                                   handle_ptr->config_ptr->sr_cmp1_match_down);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_UP_CH_2,
-10001f94:	687b      	ldr	r3, [r7, #4]
-10001f96:	689a      	ldr	r2, [r3, #8]
+10001fac:	687b      	ldr	r3, [r7, #4]
+10001fae:	689a      	ldr	r2, [r3, #8]
                                   handle_ptr->config_ptr->sr_cmp2_match_up);
-10001f98:	687b      	ldr	r3, [r7, #4]
-10001f9a:	681b      	ldr	r3, [r3, #0]
+10001fb0:	687b      	ldr	r3, [r7, #4]
+10001fb2:	681b      	ldr	r3, [r3, #0]
                                   handle_ptr->config_ptr->sr_per_match);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_UP_CH_1,
                                   handle_ptr->config_ptr->sr_cmp1_match_up);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_DOWN_CH_1,
                                   handle_ptr->config_ptr->sr_cmp1_match_down);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_UP_CH_2,
-10001f9c:	7d1b      	ldrb	r3, [r3, #20]
-10001f9e:	1c10      	adds	r0, r2, #0
-10001fa0:	2104      	movs	r1, #4
-10001fa2:	1c1a      	adds	r2, r3, #0
-10001fa4:	f7ff fe0a 	bl	10001bbc <XMC_CCU8_SLICE_SetInterruptNode>
+10001fb4:	7d1b      	ldrb	r3, [r3, #20]
+10001fb6:	1c10      	adds	r0, r2, #0
+10001fb8:	2104      	movs	r1, #4
+10001fba:	1c1a      	adds	r2, r3, #0
+10001fbc:	f7ff fdfe 	bl	10001bbc <XMC_CCU8_SLICE_SetInterruptNode>
                                   handle_ptr->config_ptr->sr_cmp2_match_up);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_DOWN_CH_2,
-10001fa8:	687b      	ldr	r3, [r7, #4]
-10001faa:	689a      	ldr	r2, [r3, #8]
+10001fc0:	687b      	ldr	r3, [r7, #4]
+10001fc2:	689a      	ldr	r2, [r3, #8]
                                   handle_ptr->config_ptr->sr_cmp2_match_down);
-10001fac:	687b      	ldr	r3, [r7, #4]
-10001fae:	681b      	ldr	r3, [r3, #0]
+10001fc4:	687b      	ldr	r3, [r7, #4]
+10001fc6:	681b      	ldr	r3, [r3, #0]
                                   handle_ptr->config_ptr->sr_cmp1_match_up);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_DOWN_CH_1,
                                   handle_ptr->config_ptr->sr_cmp1_match_down);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_UP_CH_2,
                                   handle_ptr->config_ptr->sr_cmp2_match_up);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_DOWN_CH_2,
-10001fb0:	7d5b      	ldrb	r3, [r3, #21]
-10001fb2:	1c10      	adds	r0, r2, #0
-10001fb4:	2105      	movs	r1, #5
-10001fb6:	1c1a      	adds	r2, r3, #0
-10001fb8:	f7ff fe00 	bl	10001bbc <XMC_CCU8_SLICE_SetInterruptNode>
+10001fc8:	7d5b      	ldrb	r3, [r3, #21]
+10001fca:	1c10      	adds	r0, r2, #0
+10001fcc:	2105      	movs	r1, #5
+10001fce:	1c1a      	adds	r2, r3, #0
+10001fd0:	f7ff fdf4 	bl	10001bbc <XMC_CCU8_SLICE_SetInterruptNode>
                                   handle_ptr->config_ptr->sr_cmp2_match_down);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_ONE_MATCH,
-10001fbc:	687b      	ldr	r3, [r7, #4]
-10001fbe:	689a      	ldr	r2, [r3, #8]
+10001fd4:	687b      	ldr	r3, [r7, #4]
+10001fd6:	689a      	ldr	r2, [r3, #8]
                                   handle_ptr->config_ptr->sr_one_match_down);
-10001fc0:	687b      	ldr	r3, [r7, #4]
-10001fc2:	681b      	ldr	r3, [r3, #0]
+10001fd8:	687b      	ldr	r3, [r7, #4]
+10001fda:	681b      	ldr	r3, [r3, #0]
                                   handle_ptr->config_ptr->sr_cmp1_match_down);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_UP_CH_2,
                                   handle_ptr->config_ptr->sr_cmp2_match_up);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_DOWN_CH_2,
                                   handle_ptr->config_ptr->sr_cmp2_match_down);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_ONE_MATCH,
-10001fc4:	7d9b      	ldrb	r3, [r3, #22]
-10001fc6:	1c10      	adds	r0, r2, #0
-10001fc8:	2101      	movs	r1, #1
-10001fca:	1c1a      	adds	r2, r3, #0
-10001fcc:	f7ff fdf6 	bl	10001bbc <XMC_CCU8_SLICE_SetInterruptNode>
+10001fdc:	7d9b      	ldrb	r3, [r3, #22]
+10001fde:	1c10      	adds	r0, r2, #0
+10001fe0:	2101      	movs	r1, #1
+10001fe2:	1c1a      	adds	r2, r3, #0
+10001fe4:	f7ff fdea 	bl	10001bbc <XMC_CCU8_SLICE_SetInterruptNode>
                                   handle_ptr->config_ptr->sr_one_match_down);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_EVENT0,
-10001fd0:	687b      	ldr	r3, [r7, #4]
-10001fd2:	689a      	ldr	r2, [r3, #8]
+10001fe8:	687b      	ldr	r3, [r7, #4]
+10001fea:	689a      	ldr	r2, [r3, #8]
                                   handle_ptr->config_ptr->sr_e0);
-10001fd4:	687b      	ldr	r3, [r7, #4]
-10001fd6:	681b      	ldr	r3, [r3, #0]
+10001fec:	687b      	ldr	r3, [r7, #4]
+10001fee:	681b      	ldr	r3, [r3, #0]
                                   handle_ptr->config_ptr->sr_cmp2_match_up);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_DOWN_CH_2,
                                   handle_ptr->config_ptr->sr_cmp2_match_down);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_ONE_MATCH,
                                   handle_ptr->config_ptr->sr_one_match_down);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_EVENT0,
-10001fd8:	7ddb      	ldrb	r3, [r3, #23]
-10001fda:	1c10      	adds	r0, r2, #0
-10001fdc:	2108      	movs	r1, #8
-10001fde:	1c1a      	adds	r2, r3, #0
-10001fe0:	f7ff fdec 	bl	10001bbc <XMC_CCU8_SLICE_SetInterruptNode>
+10001ff0:	7ddb      	ldrb	r3, [r3, #23]
+10001ff2:	1c10      	adds	r0, r2, #0
+10001ff4:	2108      	movs	r1, #8
+10001ff6:	1c1a      	adds	r2, r3, #0
+10001ff8:	f7ff fde0 	bl	10001bbc <XMC_CCU8_SLICE_SetInterruptNode>
                                   handle_ptr->config_ptr->sr_e0);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_EVENT1,
-10001fe4:	687b      	ldr	r3, [r7, #4]
-10001fe6:	689a      	ldr	r2, [r3, #8]
+10001ffc:	687b      	ldr	r3, [r7, #4]
+10001ffe:	689a      	ldr	r2, [r3, #8]
                                   handle_ptr->config_ptr->sr_e1);
-10001fe8:	687b      	ldr	r3, [r7, #4]
-10001fea:	681b      	ldr	r3, [r3, #0]
+10002000:	687b      	ldr	r3, [r7, #4]
+10002002:	681b      	ldr	r3, [r3, #0]
                                   handle_ptr->config_ptr->sr_cmp2_match_down);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_ONE_MATCH,
                                   handle_ptr->config_ptr->sr_one_match_down);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_EVENT0,
                                   handle_ptr->config_ptr->sr_e0);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_EVENT1,
-10001fec:	7e1b      	ldrb	r3, [r3, #24]
-10001fee:	1c10      	adds	r0, r2, #0
-10001ff0:	2109      	movs	r1, #9
-10001ff2:	1c1a      	adds	r2, r3, #0
-10001ff4:	f7ff fde2 	bl	10001bbc <XMC_CCU8_SLICE_SetInterruptNode>
+10002004:	7e1b      	ldrb	r3, [r3, #24]
+10002006:	1c10      	adds	r0, r2, #0
+10002008:	2109      	movs	r1, #9
+1000200a:	1c1a      	adds	r2, r3, #0
+1000200c:	f7ff fdd6 	bl	10001bbc <XMC_CCU8_SLICE_SetInterruptNode>
                                   handle_ptr->config_ptr->sr_e1);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_EVENT2,
-10001ff8:	687b      	ldr	r3, [r7, #4]
-10001ffa:	689a      	ldr	r2, [r3, #8]
+10002010:	687b      	ldr	r3, [r7, #4]
+10002012:	689a      	ldr	r2, [r3, #8]
                                   handle_ptr->config_ptr->sr_e2);
-10001ffc:	687b      	ldr	r3, [r7, #4]
-10001ffe:	681b      	ldr	r3, [r3, #0]
+10002014:	687b      	ldr	r3, [r7, #4]
+10002016:	681b      	ldr	r3, [r3, #0]
                                   handle_ptr->config_ptr->sr_one_match_down);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_EVENT0,
                                   handle_ptr->config_ptr->sr_e0);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_EVENT1,
                                   handle_ptr->config_ptr->sr_e1);
   XMC_CCU8_SLICE_SetInterruptNode(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_EVENT2,
-10002000:	7e5b      	ldrb	r3, [r3, #25]
-10002002:	1c10      	adds	r0, r2, #0
-10002004:	210a      	movs	r1, #10
-10002006:	1c1a      	adds	r2, r3, #0
-10002008:	f7ff fdd8 	bl	10001bbc <XMC_CCU8_SLICE_SetInterruptNode>
+10002018:	7e5b      	ldrb	r3, [r3, #25]
+1000201a:	1c10      	adds	r0, r2, #0
+1000201c:	210a      	movs	r1, #10
+1000201e:	1c1a      	adds	r2, r3, #0
+10002020:	f7ff fdcc 	bl	10001bbc <XMC_CCU8_SLICE_SetInterruptNode>
                                   handle_ptr->config_ptr->sr_e2);
 
   if ((bool) true == handle_ptr->config_ptr->int_per_match)
-1000200c:	687b      	ldr	r3, [r7, #4]
-1000200e:	681b      	ldr	r3, [r3, #0]
-10002010:	7a1b      	ldrb	r3, [r3, #8]
-10002012:	2b00      	cmp	r3, #0
-10002014:	d005      	beq.n	10002022 <PWM_CCU8_lInit_Interrupt+0xd2>
+10002024:	687b      	ldr	r3, [r7, #4]
+10002026:	681b      	ldr	r3, [r3, #0]
+10002028:	7a1b      	ldrb	r3, [r3, #8]
+1000202a:	2b00      	cmp	r3, #0
+1000202c:	d005      	beq.n	1000203a <PWM_CCU8_lInit_Interrupt+0xd2>
   {
     XMC_DEBUG("PWM_CCU8_Init: Interrupt period match enable");
     XMC_CCU8_SLICE_EnableEvent(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_PERIOD_MATCH);
-10002016:	687b      	ldr	r3, [r7, #4]
-10002018:	689b      	ldr	r3, [r3, #8]
-1000201a:	1c18      	adds	r0, r3, #0
-1000201c:	2100      	movs	r1, #0
-1000201e:	f7ff fe9b 	bl	10001d58 <XMC_CCU8_SLICE_EnableEvent>
+1000202e:	687b      	ldr	r3, [r7, #4]
+10002030:	689b      	ldr	r3, [r3, #8]
+10002032:	1c18      	adds	r0, r3, #0
+10002034:	2100      	movs	r1, #0
+10002036:	f7ff fe9b 	bl	10001d70 <XMC_CCU8_SLICE_EnableEvent>
   }
 
   if ((bool) true == handle_ptr->config_ptr->int_cmp1_match_up)
-10002022:	687b      	ldr	r3, [r7, #4]
-10002024:	681b      	ldr	r3, [r3, #0]
-10002026:	7a5b      	ldrb	r3, [r3, #9]
-10002028:	2b00      	cmp	r3, #0
-1000202a:	d005      	beq.n	10002038 <PWM_CCU8_lInit_Interrupt+0xe8>
+1000203a:	687b      	ldr	r3, [r7, #4]
+1000203c:	681b      	ldr	r3, [r3, #0]
+1000203e:	7a5b      	ldrb	r3, [r3, #9]
+10002040:	2b00      	cmp	r3, #0
+10002042:	d005      	beq.n	10002050 <PWM_CCU8_lInit_Interrupt+0xe8>
   {
     XMC_DEBUG("PWM_CCU8_Init: Interrupt compare match ch1 up enable");
     XMC_CCU8_SLICE_EnableEvent(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_UP_CH_1);
-1000202c:	687b      	ldr	r3, [r7, #4]
-1000202e:	689b      	ldr	r3, [r3, #8]
-10002030:	1c18      	adds	r0, r3, #0
-10002032:	2102      	movs	r1, #2
-10002034:	f7ff fe90 	bl	10001d58 <XMC_CCU8_SLICE_EnableEvent>
+10002044:	687b      	ldr	r3, [r7, #4]
+10002046:	689b      	ldr	r3, [r3, #8]
+10002048:	1c18      	adds	r0, r3, #0
+1000204a:	2102      	movs	r1, #2
+1000204c:	f7ff fe90 	bl	10001d70 <XMC_CCU8_SLICE_EnableEvent>
   }
 
   if ((bool) true == handle_ptr->config_ptr->int_cmp1_match_down)
-10002038:	687b      	ldr	r3, [r7, #4]
-1000203a:	681b      	ldr	r3, [r3, #0]
-1000203c:	7a9b      	ldrb	r3, [r3, #10]
-1000203e:	2b00      	cmp	r3, #0
-10002040:	d005      	beq.n	1000204e <PWM_CCU8_lInit_Interrupt+0xfe>
+10002050:	687b      	ldr	r3, [r7, #4]
+10002052:	681b      	ldr	r3, [r3, #0]
+10002054:	7a9b      	ldrb	r3, [r3, #10]
+10002056:	2b00      	cmp	r3, #0
+10002058:	d005      	beq.n	10002066 <PWM_CCU8_lInit_Interrupt+0xfe>
   {
     XMC_DEBUG("PWM_CCU8_Init: Interrupt compare match ch1 down enable");
     XMC_CCU8_SLICE_EnableEvent(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_DOWN_CH_1);
-10002042:	687b      	ldr	r3, [r7, #4]
-10002044:	689b      	ldr	r3, [r3, #8]
-10002046:	1c18      	adds	r0, r3, #0
-10002048:	2103      	movs	r1, #3
-1000204a:	f7ff fe85 	bl	10001d58 <XMC_CCU8_SLICE_EnableEvent>
+1000205a:	687b      	ldr	r3, [r7, #4]
+1000205c:	689b      	ldr	r3, [r3, #8]
+1000205e:	1c18      	adds	r0, r3, #0
+10002060:	2103      	movs	r1, #3
+10002062:	f7ff fe85 	bl	10001d70 <XMC_CCU8_SLICE_EnableEvent>
   }
 
   if ((bool) true == handle_ptr->config_ptr->int_cmp2_match_up)
-1000204e:	687b      	ldr	r3, [r7, #4]
-10002050:	681b      	ldr	r3, [r3, #0]
-10002052:	7adb      	ldrb	r3, [r3, #11]
-10002054:	2b00      	cmp	r3, #0
-10002056:	d005      	beq.n	10002064 <PWM_CCU8_lInit_Interrupt+0x114>
+10002066:	687b      	ldr	r3, [r7, #4]
+10002068:	681b      	ldr	r3, [r3, #0]
+1000206a:	7adb      	ldrb	r3, [r3, #11]
+1000206c:	2b00      	cmp	r3, #0
+1000206e:	d005      	beq.n	1000207c <PWM_CCU8_lInit_Interrupt+0x114>
   {
     XMC_DEBUG("PWM_CCU8_Init: Interrupt compare match ch2 up enable");
     XMC_CCU8_SLICE_EnableEvent(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_UP_CH_2);
-10002058:	687b      	ldr	r3, [r7, #4]
-1000205a:	689b      	ldr	r3, [r3, #8]
-1000205c:	1c18      	adds	r0, r3, #0
-1000205e:	2104      	movs	r1, #4
-10002060:	f7ff fe7a 	bl	10001d58 <XMC_CCU8_SLICE_EnableEvent>
+10002070:	687b      	ldr	r3, [r7, #4]
+10002072:	689b      	ldr	r3, [r3, #8]
+10002074:	1c18      	adds	r0, r3, #0
+10002076:	2104      	movs	r1, #4
+10002078:	f7ff fe7a 	bl	10001d70 <XMC_CCU8_SLICE_EnableEvent>
   }
 
   if ((bool) true == handle_ptr->config_ptr->int_cmp2_match_down)
-10002064:	687b      	ldr	r3, [r7, #4]
-10002066:	681b      	ldr	r3, [r3, #0]
-10002068:	7b1b      	ldrb	r3, [r3, #12]
-1000206a:	2b00      	cmp	r3, #0
-1000206c:	d005      	beq.n	1000207a <PWM_CCU8_lInit_Interrupt+0x12a>
+1000207c:	687b      	ldr	r3, [r7, #4]
+1000207e:	681b      	ldr	r3, [r3, #0]
+10002080:	7b1b      	ldrb	r3, [r3, #12]
+10002082:	2b00      	cmp	r3, #0
+10002084:	d005      	beq.n	10002092 <PWM_CCU8_lInit_Interrupt+0x12a>
   {
     XMC_DEBUG("PWM_CCU8_Init: Interrupt compare match ch2 down enable");
     XMC_CCU8_SLICE_EnableEvent(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_COMPARE_MATCH_DOWN_CH_2);
-1000206e:	687b      	ldr	r3, [r7, #4]
-10002070:	689b      	ldr	r3, [r3, #8]
-10002072:	1c18      	adds	r0, r3, #0
-10002074:	2105      	movs	r1, #5
-10002076:	f7ff fe6f 	bl	10001d58 <XMC_CCU8_SLICE_EnableEvent>
+10002086:	687b      	ldr	r3, [r7, #4]
+10002088:	689b      	ldr	r3, [r3, #8]
+1000208a:	1c18      	adds	r0, r3, #0
+1000208c:	2105      	movs	r1, #5
+1000208e:	f7ff fe6f 	bl	10001d70 <XMC_CCU8_SLICE_EnableEvent>
   }
 
   if ((bool) true == handle_ptr->config_ptr->int_one_match_down)
-1000207a:	687b      	ldr	r3, [r7, #4]
-1000207c:	681b      	ldr	r3, [r3, #0]
-1000207e:	7b5b      	ldrb	r3, [r3, #13]
-10002080:	2b00      	cmp	r3, #0
-10002082:	d005      	beq.n	10002090 <PWM_CCU8_lInit_Interrupt+0x140>
+10002092:	687b      	ldr	r3, [r7, #4]
+10002094:	681b      	ldr	r3, [r3, #0]
+10002096:	7b5b      	ldrb	r3, [r3, #13]
+10002098:	2b00      	cmp	r3, #0
+1000209a:	d005      	beq.n	100020a8 <PWM_CCU8_lInit_Interrupt+0x140>
   {
     XMC_DEBUG("PWM_CCU8_Init: Interrupt one match enable");
     XMC_CCU8_SLICE_EnableEvent(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_ONE_MATCH);
-10002084:	687b      	ldr	r3, [r7, #4]
-10002086:	689b      	ldr	r3, [r3, #8]
-10002088:	1c18      	adds	r0, r3, #0
-1000208a:	2101      	movs	r1, #1
-1000208c:	f7ff fe64 	bl	10001d58 <XMC_CCU8_SLICE_EnableEvent>
+1000209c:	687b      	ldr	r3, [r7, #4]
+1000209e:	689b      	ldr	r3, [r3, #8]
+100020a0:	1c18      	adds	r0, r3, #0
+100020a2:	2101      	movs	r1, #1
+100020a4:	f7ff fe64 	bl	10001d70 <XMC_CCU8_SLICE_EnableEvent>
   }
 
   if ((bool) true == handle_ptr->config_ptr->int_e0)
-10002090:	687b      	ldr	r3, [r7, #4]
-10002092:	681b      	ldr	r3, [r3, #0]
-10002094:	7b9b      	ldrb	r3, [r3, #14]
-10002096:	2b00      	cmp	r3, #0
-10002098:	d005      	beq.n	100020a6 <PWM_CCU8_lInit_Interrupt+0x156>
+100020a8:	687b      	ldr	r3, [r7, #4]
+100020aa:	681b      	ldr	r3, [r3, #0]
+100020ac:	7b9b      	ldrb	r3, [r3, #14]
+100020ae:	2b00      	cmp	r3, #0
+100020b0:	d005      	beq.n	100020be <PWM_CCU8_lInit_Interrupt+0x156>
   {
     XMC_DEBUG("PWM_CCU8_Init: Interrupt event 0 enable");
     XMC_CCU8_SLICE_EnableEvent(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_EVENT0);
-1000209a:	687b      	ldr	r3, [r7, #4]
-1000209c:	689b      	ldr	r3, [r3, #8]
-1000209e:	1c18      	adds	r0, r3, #0
-100020a0:	2108      	movs	r1, #8
-100020a2:	f7ff fe59 	bl	10001d58 <XMC_CCU8_SLICE_EnableEvent>
+100020b2:	687b      	ldr	r3, [r7, #4]
+100020b4:	689b      	ldr	r3, [r3, #8]
+100020b6:	1c18      	adds	r0, r3, #0
+100020b8:	2108      	movs	r1, #8
+100020ba:	f7ff fe59 	bl	10001d70 <XMC_CCU8_SLICE_EnableEvent>
   }
 
   if ((bool) true == handle_ptr->config_ptr->int_e1)
-100020a6:	687b      	ldr	r3, [r7, #4]
-100020a8:	681b      	ldr	r3, [r3, #0]
-100020aa:	7bdb      	ldrb	r3, [r3, #15]
-100020ac:	2b00      	cmp	r3, #0
-100020ae:	d005      	beq.n	100020bc <PWM_CCU8_lInit_Interrupt+0x16c>
+100020be:	687b      	ldr	r3, [r7, #4]
+100020c0:	681b      	ldr	r3, [r3, #0]
+100020c2:	7bdb      	ldrb	r3, [r3, #15]
+100020c4:	2b00      	cmp	r3, #0
+100020c6:	d005      	beq.n	100020d4 <PWM_CCU8_lInit_Interrupt+0x16c>
   {
     XMC_DEBUG("PWM_CCU8_Init: Interrupt event 1 enable");
     XMC_CCU8_SLICE_EnableEvent(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_EVENT1);
-100020b0:	687b      	ldr	r3, [r7, #4]
-100020b2:	689b      	ldr	r3, [r3, #8]
-100020b4:	1c18      	adds	r0, r3, #0
-100020b6:	2109      	movs	r1, #9
-100020b8:	f7ff fe4e 	bl	10001d58 <XMC_CCU8_SLICE_EnableEvent>
+100020c8:	687b      	ldr	r3, [r7, #4]
+100020ca:	689b      	ldr	r3, [r3, #8]
+100020cc:	1c18      	adds	r0, r3, #0
+100020ce:	2109      	movs	r1, #9
+100020d0:	f7ff fe4e 	bl	10001d70 <XMC_CCU8_SLICE_EnableEvent>
   }
 
   if ((bool) true == handle_ptr->config_ptr->int_e2)
-100020bc:	687b      	ldr	r3, [r7, #4]
-100020be:	681b      	ldr	r3, [r3, #0]
-100020c0:	7c1b      	ldrb	r3, [r3, #16]
-100020c2:	2b00      	cmp	r3, #0
-100020c4:	d005      	beq.n	100020d2 <PWM_CCU8_lInit_Interrupt+0x182>
+100020d4:	687b      	ldr	r3, [r7, #4]
+100020d6:	681b      	ldr	r3, [r3, #0]
+100020d8:	7c1b      	ldrb	r3, [r3, #16]
+100020da:	2b00      	cmp	r3, #0
+100020dc:	d005      	beq.n	100020ea <PWM_CCU8_lInit_Interrupt+0x182>
   {
     XMC_DEBUG("PWM_CCU8_Init: Interrupt event 2 enable");
     XMC_CCU8_SLICE_EnableEvent(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_IRQ_ID_EVENT2);
-100020c6:	687b      	ldr	r3, [r7, #4]
-100020c8:	689b      	ldr	r3, [r3, #8]
-100020ca:	1c18      	adds	r0, r3, #0
-100020cc:	210a      	movs	r1, #10
-100020ce:	f7ff fe43 	bl	10001d58 <XMC_CCU8_SLICE_EnableEvent>
+100020de:	687b      	ldr	r3, [r7, #4]
+100020e0:	689b      	ldr	r3, [r3, #8]
+100020e2:	1c18      	adds	r0, r3, #0
+100020e4:	210a      	movs	r1, #10
+100020e6:	f7ff fe43 	bl	10001d70 <XMC_CCU8_SLICE_EnableEvent>
   }
 }
-100020d2:	46bd      	mov	sp, r7
-100020d4:	b002      	add	sp, #8
-100020d6:	bd80      	pop	{r7, pc}
+100020ea:	46bd      	mov	sp, r7
+100020ec:	b002      	add	sp, #8
+100020ee:	bd80      	pop	{r7, pc}
 
-100020d8 <PWM_CCU8_lInit_GPIO>:
+100020f0 <PWM_CCU8_lInit_GPIO>:
 static void PWM_CCU8_lInit_GPIO(PWM_CCU8_t* handle_ptr)
 {
-100020d8:	b580      	push	{r7, lr}
-100020da:	b082      	sub	sp, #8
-100020dc:	af00      	add	r7, sp, #0
-100020de:	6078      	str	r0, [r7, #4]
+100020f0:	b580      	push	{r7, lr}
+100020f2:	b082      	sub	sp, #8
+100020f4:	af00      	add	r7, sp, #0
+100020f6:	6078      	str	r0, [r7, #4]
   if ((bool) true == handle_ptr->config_ptr->gpio_ch1_out0_enable)
-100020e0:	687b      	ldr	r3, [r7, #4]
-100020e2:	681b      	ldr	r3, [r3, #0]
-100020e4:	224c      	movs	r2, #76	; 0x4c
-100020e6:	5c9b      	ldrb	r3, [r3, r2]
-100020e8:	2b00      	cmp	r3, #0
-100020ea:	d00e      	beq.n	1000210a <PWM_CCU8_lInit_GPIO+0x32>
+100020f8:	687b      	ldr	r3, [r7, #4]
+100020fa:	681b      	ldr	r3, [r3, #0]
+100020fc:	224c      	movs	r2, #76	; 0x4c
+100020fe:	5c9b      	ldrb	r3, [r3, r2]
+10002100:	2b00      	cmp	r3, #0
+10002102:	d00e      	beq.n	10002122 <PWM_CCU8_lInit_GPIO+0x32>
   {
     XMC_GPIO_Init(handle_ptr->config_ptr->gpio_ch1_out0_ptr, handle_ptr->config_ptr->gpio_ch1_out0_pin,
-100020ec:	687b      	ldr	r3, [r7, #4]
-100020ee:	681b      	ldr	r3, [r3, #0]
-100020f0:	6d19      	ldr	r1, [r3, #80]	; 0x50
-100020f2:	687b      	ldr	r3, [r7, #4]
-100020f4:	681b      	ldr	r3, [r3, #0]
-100020f6:	2254      	movs	r2, #84	; 0x54
-100020f8:	5c9a      	ldrb	r2, [r3, r2]
-                  handle_ptr->config_ptr->gpio_ch1_out0_config_ptr);
-100020fa:	687b      	ldr	r3, [r7, #4]
-100020fc:	681b      	ldr	r3, [r3, #0]
-}
-static void PWM_CCU8_lInit_GPIO(PWM_CCU8_t* handle_ptr)
-{
-  if ((bool) true == handle_ptr->config_ptr->gpio_ch1_out0_enable)
-  {
-    XMC_GPIO_Init(handle_ptr->config_ptr->gpio_ch1_out0_ptr, handle_ptr->config_ptr->gpio_ch1_out0_pin,
-100020fe:	6d9b      	ldr	r3, [r3, #88]	; 0x58
-10002100:	1c08      	adds	r0, r1, #0
-10002102:	1c11      	adds	r1, r2, #0
-10002104:	1c1a      	adds	r2, r3, #0
-10002106:	f7ff f81f 	bl	10001148 <XMC_GPIO_Init>
-                  handle_ptr->config_ptr->gpio_ch1_out0_config_ptr);
-  }
-
-  if ((bool) true == handle_ptr->config_ptr->gpio_ch1_out1_enable)
+10002104:	687b      	ldr	r3, [r7, #4]
+10002106:	681b      	ldr	r3, [r3, #0]
+10002108:	6d19      	ldr	r1, [r3, #80]	; 0x50
 1000210a:	687b      	ldr	r3, [r7, #4]
 1000210c:	681b      	ldr	r3, [r3, #0]
-1000210e:	225c      	movs	r2, #92	; 0x5c
-10002110:	5c9b      	ldrb	r3, [r3, r2]
-10002112:	2b00      	cmp	r3, #0
-10002114:	d00e      	beq.n	10002134 <PWM_CCU8_lInit_GPIO+0x5c>
+1000210e:	2254      	movs	r2, #84	; 0x54
+10002110:	5c9a      	ldrb	r2, [r3, r2]
+                  handle_ptr->config_ptr->gpio_ch1_out0_config_ptr);
+10002112:	687b      	ldr	r3, [r7, #4]
+10002114:	681b      	ldr	r3, [r3, #0]
+}
+static void PWM_CCU8_lInit_GPIO(PWM_CCU8_t* handle_ptr)
+{
+  if ((bool) true == handle_ptr->config_ptr->gpio_ch1_out0_enable)
+  {
+    XMC_GPIO_Init(handle_ptr->config_ptr->gpio_ch1_out0_ptr, handle_ptr->config_ptr->gpio_ch1_out0_pin,
+10002116:	6d9b      	ldr	r3, [r3, #88]	; 0x58
+10002118:	1c08      	adds	r0, r1, #0
+1000211a:	1c11      	adds	r1, r2, #0
+1000211c:	1c1a      	adds	r2, r3, #0
+1000211e:	f7ff f813 	bl	10001148 <XMC_GPIO_Init>
+                  handle_ptr->config_ptr->gpio_ch1_out0_config_ptr);
+  }
+
+  if ((bool) true == handle_ptr->config_ptr->gpio_ch1_out1_enable)
+10002122:	687b      	ldr	r3, [r7, #4]
+10002124:	681b      	ldr	r3, [r3, #0]
+10002126:	225c      	movs	r2, #92	; 0x5c
+10002128:	5c9b      	ldrb	r3, [r3, r2]
+1000212a:	2b00      	cmp	r3, #0
+1000212c:	d00e      	beq.n	1000214c <PWM_CCU8_lInit_GPIO+0x5c>
   {
     XMC_GPIO_Init(handle_ptr->config_ptr->gpio_ch1_out1_ptr, handle_ptr->config_ptr->gpio_ch1_out1_pin,
-10002116:	687b      	ldr	r3, [r7, #4]
-10002118:	681b      	ldr	r3, [r3, #0]
-1000211a:	6e19      	ldr	r1, [r3, #96]	; 0x60
-1000211c:	687b      	ldr	r3, [r7, #4]
-1000211e:	681b      	ldr	r3, [r3, #0]
-10002120:	2264      	movs	r2, #100	; 0x64
-10002122:	5c9a      	ldrb	r2, [r3, r2]
+1000212e:	687b      	ldr	r3, [r7, #4]
+10002130:	681b      	ldr	r3, [r3, #0]
+10002132:	6e19      	ldr	r1, [r3, #96]	; 0x60
+10002134:	687b      	ldr	r3, [r7, #4]
+10002136:	681b      	ldr	r3, [r3, #0]
+10002138:	2264      	movs	r2, #100	; 0x64
+1000213a:	5c9a      	ldrb	r2, [r3, r2]
                   handle_ptr->config_ptr->gpio_ch1_out1_config_ptr);
-10002124:	687b      	ldr	r3, [r7, #4]
-10002126:	681b      	ldr	r3, [r3, #0]
+1000213c:	687b      	ldr	r3, [r7, #4]
+1000213e:	681b      	ldr	r3, [r3, #0]
                   handle_ptr->config_ptr->gpio_ch1_out0_config_ptr);
   }
 
   if ((bool) true == handle_ptr->config_ptr->gpio_ch1_out1_enable)
   {
     XMC_GPIO_Init(handle_ptr->config_ptr->gpio_ch1_out1_ptr, handle_ptr->config_ptr->gpio_ch1_out1_pin,
-10002128:	6e9b      	ldr	r3, [r3, #104]	; 0x68
-1000212a:	1c08      	adds	r0, r1, #0
-1000212c:	1c11      	adds	r1, r2, #0
-1000212e:	1c1a      	adds	r2, r3, #0
-10002130:	f7ff f80a 	bl	10001148 <XMC_GPIO_Init>
+10002140:	6e9b      	ldr	r3, [r3, #104]	; 0x68
+10002142:	1c08      	adds	r0, r1, #0
+10002144:	1c11      	adds	r1, r2, #0
+10002146:	1c1a      	adds	r2, r3, #0
+10002148:	f7fe fffe 	bl	10001148 <XMC_GPIO_Init>
                   handle_ptr->config_ptr->gpio_ch1_out1_config_ptr);
   }
 
   if ((bool) true == handle_ptr->config_ptr->gpio_ch2_out2_enable)
-10002134:	687b      	ldr	r3, [r7, #4]
-10002136:	681b      	ldr	r3, [r3, #0]
-10002138:	226c      	movs	r2, #108	; 0x6c
-1000213a:	5c9b      	ldrb	r3, [r3, r2]
-1000213c:	2b00      	cmp	r3, #0
-1000213e:	d00e      	beq.n	1000215e <PWM_CCU8_lInit_GPIO+0x86>
+1000214c:	687b      	ldr	r3, [r7, #4]
+1000214e:	681b      	ldr	r3, [r3, #0]
+10002150:	226c      	movs	r2, #108	; 0x6c
+10002152:	5c9b      	ldrb	r3, [r3, r2]
+10002154:	2b00      	cmp	r3, #0
+10002156:	d00e      	beq.n	10002176 <PWM_CCU8_lInit_GPIO+0x86>
   {
     XMC_GPIO_Init(handle_ptr->config_ptr->gpio_ch2_out2_ptr, handle_ptr->config_ptr->gpio_ch2_out2_pin,
-10002140:	687b      	ldr	r3, [r7, #4]
-10002142:	681b      	ldr	r3, [r3, #0]
-10002144:	6f19      	ldr	r1, [r3, #112]	; 0x70
-10002146:	687b      	ldr	r3, [r7, #4]
-10002148:	681b      	ldr	r3, [r3, #0]
-1000214a:	2274      	movs	r2, #116	; 0x74
-1000214c:	5c9a      	ldrb	r2, [r3, r2]
-                  handle_ptr->config_ptr->gpio_ch2_out2_config_ptr);
-1000214e:	687b      	ldr	r3, [r7, #4]
-10002150:	681b      	ldr	r3, [r3, #0]
-                  handle_ptr->config_ptr->gpio_ch1_out1_config_ptr);
-  }
-
-  if ((bool) true == handle_ptr->config_ptr->gpio_ch2_out2_enable)
-  {
-    XMC_GPIO_Init(handle_ptr->config_ptr->gpio_ch2_out2_ptr, handle_ptr->config_ptr->gpio_ch2_out2_pin,
-10002152:	6f9b      	ldr	r3, [r3, #120]	; 0x78
-10002154:	1c08      	adds	r0, r1, #0
-10002156:	1c11      	adds	r1, r2, #0
-10002158:	1c1a      	adds	r2, r3, #0
-1000215a:	f7fe fff5 	bl	10001148 <XMC_GPIO_Init>
-                  handle_ptr->config_ptr->gpio_ch2_out2_config_ptr);
-  }
-
-  if ((bool) true == handle_ptr->config_ptr->gpio_ch2_out3_enable)
+10002158:	687b      	ldr	r3, [r7, #4]
+1000215a:	681b      	ldr	r3, [r3, #0]
+1000215c:	6f19      	ldr	r1, [r3, #112]	; 0x70
 1000215e:	687b      	ldr	r3, [r7, #4]
 10002160:	681b      	ldr	r3, [r3, #0]
-10002162:	227c      	movs	r2, #124	; 0x7c
-10002164:	5c9b      	ldrb	r3, [r3, r2]
-10002166:	2b00      	cmp	r3, #0
-10002168:	d00e      	beq.n	10002188 <PWM_CCU8_lInit_GPIO+0xb0>
+10002162:	2274      	movs	r2, #116	; 0x74
+10002164:	5c9a      	ldrb	r2, [r3, r2]
+                  handle_ptr->config_ptr->gpio_ch2_out2_config_ptr);
+10002166:	687b      	ldr	r3, [r7, #4]
+10002168:	681b      	ldr	r3, [r3, #0]
+                  handle_ptr->config_ptr->gpio_ch1_out1_config_ptr);
+  }
+
+  if ((bool) true == handle_ptr->config_ptr->gpio_ch2_out2_enable)
+  {
+    XMC_GPIO_Init(handle_ptr->config_ptr->gpio_ch2_out2_ptr, handle_ptr->config_ptr->gpio_ch2_out2_pin,
+1000216a:	6f9b      	ldr	r3, [r3, #120]	; 0x78
+1000216c:	1c08      	adds	r0, r1, #0
+1000216e:	1c11      	adds	r1, r2, #0
+10002170:	1c1a      	adds	r2, r3, #0
+10002172:	f7fe ffe9 	bl	10001148 <XMC_GPIO_Init>
+                  handle_ptr->config_ptr->gpio_ch2_out2_config_ptr);
+  }
+
+  if ((bool) true == handle_ptr->config_ptr->gpio_ch2_out3_enable)
+10002176:	687b      	ldr	r3, [r7, #4]
+10002178:	681b      	ldr	r3, [r3, #0]
+1000217a:	227c      	movs	r2, #124	; 0x7c
+1000217c:	5c9b      	ldrb	r3, [r3, r2]
+1000217e:	2b00      	cmp	r3, #0
+10002180:	d00e      	beq.n	100021a0 <PWM_CCU8_lInit_GPIO+0xb0>
   {
     XMC_GPIO_Init(handle_ptr->config_ptr->gpio_ch2_out3_ptr, handle_ptr->config_ptr->gpio_ch2_out3_pin,
-1000216a:	687b      	ldr	r3, [r7, #4]
-1000216c:	681b      	ldr	r3, [r3, #0]
-1000216e:	2280      	movs	r2, #128	; 0x80
-10002170:	5898      	ldr	r0, [r3, r2]
-10002172:	687b      	ldr	r3, [r7, #4]
-10002174:	681b      	ldr	r3, [r3, #0]
-10002176:	2284      	movs	r2, #132	; 0x84
-10002178:	5c99      	ldrb	r1, [r3, r2]
+10002182:	687b      	ldr	r3, [r7, #4]
+10002184:	681b      	ldr	r3, [r3, #0]
+10002186:	2280      	movs	r2, #128	; 0x80
+10002188:	5898      	ldr	r0, [r3, r2]
+1000218a:	687b      	ldr	r3, [r7, #4]
+1000218c:	681b      	ldr	r3, [r3, #0]
+1000218e:	2284      	movs	r2, #132	; 0x84
+10002190:	5c99      	ldrb	r1, [r3, r2]
                   handle_ptr->config_ptr->gpio_ch2_out3_config_ptr);
-1000217a:	687b      	ldr	r3, [r7, #4]
-1000217c:	681b      	ldr	r3, [r3, #0]
+10002192:	687b      	ldr	r3, [r7, #4]
+10002194:	681b      	ldr	r3, [r3, #0]
                   handle_ptr->config_ptr->gpio_ch2_out2_config_ptr);
   }
 
   if ((bool) true == handle_ptr->config_ptr->gpio_ch2_out3_enable)
   {
     XMC_GPIO_Init(handle_ptr->config_ptr->gpio_ch2_out3_ptr, handle_ptr->config_ptr->gpio_ch2_out3_pin,
-1000217e:	2288      	movs	r2, #136	; 0x88
-10002180:	589b      	ldr	r3, [r3, r2]
-10002182:	1c1a      	adds	r2, r3, #0
-10002184:	f7fe ffe0 	bl	10001148 <XMC_GPIO_Init>
+10002196:	2288      	movs	r2, #136	; 0x88
+10002198:	589b      	ldr	r3, [r3, r2]
+1000219a:	1c1a      	adds	r2, r3, #0
+1000219c:	f7fe ffd4 	bl	10001148 <XMC_GPIO_Init>
                   handle_ptr->config_ptr->gpio_ch2_out3_config_ptr);
   }
 }
-10002188:	46bd      	mov	sp, r7
-1000218a:	b002      	add	sp, #8
-1000218c:	bd80      	pop	{r7, pc}
-1000218e:	46c0      	nop			; (mov r8, r8)
+100021a0:	46bd      	mov	sp, r7
+100021a2:	b002      	add	sp, #8
+100021a4:	bd80      	pop	{r7, pc}
+100021a6:	46c0      	nop			; (mov r8, r8)
 
-10002190 <PWM_CCU8_lConfigure_Events>:
+100021a8 <PWM_CCU8_lConfigure_Events>:
 
 static void PWM_CCU8_lConfigure_Events(PWM_CCU8_t* handle_ptr)
 {
-10002190:	b590      	push	{r4, r7, lr}
-10002192:	b085      	sub	sp, #20
-10002194:	af02      	add	r7, sp, #8
-10002196:	6078      	str	r0, [r7, #4]
+100021a8:	b590      	push	{r4, r7, lr}
+100021aa:	b085      	sub	sp, #20
+100021ac:	af02      	add	r7, sp, #8
+100021ae:	6078      	str	r0, [r7, #4]
   /* Configure slice to a external event 0 */
   XMC_CCU8_SLICE_ConfigureEvent(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_EVENT_0,
-10002198:	687b      	ldr	r3, [r7, #4]
-1000219a:	689a      	ldr	r2, [r3, #8]
+100021b0:	687b      	ldr	r3, [r7, #4]
+100021b2:	689a      	ldr	r2, [r3, #8]
                                 handle_ptr->config_ptr->event0_config_ptr);
-1000219c:	687b      	ldr	r3, [r7, #4]
-1000219e:	681b      	ldr	r3, [r3, #0]
+100021b4:	687b      	ldr	r3, [r7, #4]
+100021b6:	681b      	ldr	r3, [r3, #0]
 }
 
 static void PWM_CCU8_lConfigure_Events(PWM_CCU8_t* handle_ptr)
 {
   /* Configure slice to a external event 0 */
   XMC_CCU8_SLICE_ConfigureEvent(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_EVENT_0,
-100021a0:	69db      	ldr	r3, [r3, #28]
-100021a2:	1c10      	adds	r0, r2, #0
-100021a4:	2101      	movs	r1, #1
-100021a6:	1c1a      	adds	r2, r3, #0
-100021a8:	f7ff fc50 	bl	10001a4c <XMC_CCU8_SLICE_ConfigureEvent>
+100021b8:	69db      	ldr	r3, [r3, #28]
+100021ba:	1c10      	adds	r0, r2, #0
+100021bc:	2101      	movs	r1, #1
+100021be:	1c1a      	adds	r2, r3, #0
+100021c0:	f7ff fc44 	bl	10001a4c <XMC_CCU8_SLICE_ConfigureEvent>
                                 handle_ptr->config_ptr->event0_config_ptr);
 
   /* Configure slice to a external event 1 */
   XMC_CCU8_SLICE_ConfigureEvent(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_EVENT_1,
-100021ac:	687b      	ldr	r3, [r7, #4]
-100021ae:	689a      	ldr	r2, [r3, #8]
+100021c4:	687b      	ldr	r3, [r7, #4]
+100021c6:	689a      	ldr	r2, [r3, #8]
                                 handle_ptr->config_ptr->event1_config_ptr);
-100021b0:	687b      	ldr	r3, [r7, #4]
-100021b2:	681b      	ldr	r3, [r3, #0]
+100021c8:	687b      	ldr	r3, [r7, #4]
+100021ca:	681b      	ldr	r3, [r3, #0]
   /* Configure slice to a external event 0 */
   XMC_CCU8_SLICE_ConfigureEvent(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_EVENT_0,
                                 handle_ptr->config_ptr->event0_config_ptr);
 
   /* Configure slice to a external event 1 */
   XMC_CCU8_SLICE_ConfigureEvent(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_EVENT_1,
-100021b4:	6a1b      	ldr	r3, [r3, #32]
-100021b6:	1c10      	adds	r0, r2, #0
-100021b8:	2102      	movs	r1, #2
-100021ba:	1c1a      	adds	r2, r3, #0
-100021bc:	f7ff fc46 	bl	10001a4c <XMC_CCU8_SLICE_ConfigureEvent>
+100021cc:	6a1b      	ldr	r3, [r3, #32]
+100021ce:	1c10      	adds	r0, r2, #0
+100021d0:	2102      	movs	r1, #2
+100021d2:	1c1a      	adds	r2, r3, #0
+100021d4:	f7ff fc3a 	bl	10001a4c <XMC_CCU8_SLICE_ConfigureEvent>
                                 handle_ptr->config_ptr->event1_config_ptr);
 
   /* Configure slice to a external event 2 */
   XMC_CCU8_SLICE_ConfigureEvent(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_EVENT_2,
-100021c0:	687b      	ldr	r3, [r7, #4]
-100021c2:	689a      	ldr	r2, [r3, #8]
+100021d8:	687b      	ldr	r3, [r7, #4]
+100021da:	689a      	ldr	r2, [r3, #8]
                                 handle_ptr->config_ptr->event2_config_ptr);
-100021c4:	687b      	ldr	r3, [r7, #4]
-100021c6:	681b      	ldr	r3, [r3, #0]
+100021dc:	687b      	ldr	r3, [r7, #4]
+100021de:	681b      	ldr	r3, [r3, #0]
   /* Configure slice to a external event 1 */
   XMC_CCU8_SLICE_ConfigureEvent(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_EVENT_1,
                                 handle_ptr->config_ptr->event1_config_ptr);
 
   /* Configure slice to a external event 2 */
   XMC_CCU8_SLICE_ConfigureEvent(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_EVENT_2,
-100021c8:	6a5b      	ldr	r3, [r3, #36]	; 0x24
-100021ca:	1c10      	adds	r0, r2, #0
-100021cc:	2103      	movs	r1, #3
-100021ce:	1c1a      	adds	r2, r3, #0
-100021d0:	f7ff fc3c 	bl	10001a4c <XMC_CCU8_SLICE_ConfigureEvent>
+100021e0:	6a5b      	ldr	r3, [r3, #36]	; 0x24
+100021e2:	1c10      	adds	r0, r2, #0
+100021e4:	2103      	movs	r1, #3
+100021e6:	1c1a      	adds	r2, r3, #0
+100021e8:	f7ff fc30 	bl	10001a4c <XMC_CCU8_SLICE_ConfigureEvent>
                                 handle_ptr->config_ptr->event2_config_ptr);
 
   /* External signal controls start of the timer */
   if (XMC_CCU8_SLICE_EVENT_NONE != handle_ptr->config_ptr->ext_start_event)
-100021d4:	687b      	ldr	r3, [r7, #4]
-100021d6:	681b      	ldr	r3, [r3, #0]
-100021d8:	2228      	movs	r2, #40	; 0x28
-100021da:	5c9b      	ldrb	r3, [r3, r2]
-100021dc:	2b00      	cmp	r3, #0
-100021de:	d00c      	beq.n	100021fa <PWM_CCU8_lConfigure_Events+0x6a>
-  {
-    XMC_CCU8_SLICE_StartConfig(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_start_event,
-100021e0:	687b      	ldr	r3, [r7, #4]
-100021e2:	6898      	ldr	r0, [r3, #8]
-100021e4:	687b      	ldr	r3, [r7, #4]
-100021e6:	681b      	ldr	r3, [r3, #0]
-100021e8:	2228      	movs	r2, #40	; 0x28
-100021ea:	5c99      	ldrb	r1, [r3, r2]
-                               handle_ptr->config_ptr->ext_start_mode);
 100021ec:	687b      	ldr	r3, [r7, #4]
 100021ee:	681b      	ldr	r3, [r3, #0]
+100021f0:	2228      	movs	r2, #40	; 0x28
+100021f2:	5c9b      	ldrb	r3, [r3, r2]
+100021f4:	2b00      	cmp	r3, #0
+100021f6:	d00c      	beq.n	10002212 <PWM_CCU8_lConfigure_Events+0x6a>
+  {
+    XMC_CCU8_SLICE_StartConfig(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_start_event,
+100021f8:	687b      	ldr	r3, [r7, #4]
+100021fa:	6898      	ldr	r0, [r3, #8]
+100021fc:	687b      	ldr	r3, [r7, #4]
+100021fe:	681b      	ldr	r3, [r3, #0]
+10002200:	2228      	movs	r2, #40	; 0x28
+10002202:	5c99      	ldrb	r1, [r3, r2]
+                               handle_ptr->config_ptr->ext_start_mode);
+10002204:	687b      	ldr	r3, [r7, #4]
+10002206:	681b      	ldr	r3, [r3, #0]
                                 handle_ptr->config_ptr->event2_config_ptr);
 
   /* External signal controls start of the timer */
   if (XMC_CCU8_SLICE_EVENT_NONE != handle_ptr->config_ptr->ext_start_event)
   {
     XMC_CCU8_SLICE_StartConfig(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_start_event,
-100021f0:	2229      	movs	r2, #41	; 0x29
-100021f2:	5c9b      	ldrb	r3, [r3, r2]
-100021f4:	1c1a      	adds	r2, r3, #0
-100021f6:	f7ff fa15 	bl	10001624 <XMC_CCU8_SLICE_StartConfig>
+10002208:	2229      	movs	r2, #41	; 0x29
+1000220a:	5c9b      	ldrb	r3, [r3, r2]
+1000220c:	1c1a      	adds	r2, r3, #0
+1000220e:	f7ff fa09 	bl	10001624 <XMC_CCU8_SLICE_StartConfig>
                                handle_ptr->config_ptr->ext_start_mode);
   }
 
   /* External signal can stop the timer */
   if (XMC_CCU8_SLICE_EVENT_NONE != handle_ptr->config_ptr->ext_stop_event)
-100021fa:	687b      	ldr	r3, [r7, #4]
-100021fc:	681b      	ldr	r3, [r3, #0]
-100021fe:	222a      	movs	r2, #42	; 0x2a
-10002200:	5c9b      	ldrb	r3, [r3, r2]
-10002202:	2b00      	cmp	r3, #0
-10002204:	d00c      	beq.n	10002220 <PWM_CCU8_lConfigure_Events+0x90>
-  {
-    XMC_CCU8_SLICE_StopConfig(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_stop_event,
-10002206:	687b      	ldr	r3, [r7, #4]
-10002208:	6898      	ldr	r0, [r3, #8]
-1000220a:	687b      	ldr	r3, [r7, #4]
-1000220c:	681b      	ldr	r3, [r3, #0]
-1000220e:	222a      	movs	r2, #42	; 0x2a
-10002210:	5c99      	ldrb	r1, [r3, r2]
-                              handle_ptr->config_ptr->ext_stop_mode);
 10002212:	687b      	ldr	r3, [r7, #4]
 10002214:	681b      	ldr	r3, [r3, #0]
+10002216:	222a      	movs	r2, #42	; 0x2a
+10002218:	5c9b      	ldrb	r3, [r3, r2]
+1000221a:	2b00      	cmp	r3, #0
+1000221c:	d00c      	beq.n	10002238 <PWM_CCU8_lConfigure_Events+0x90>
+  {
+    XMC_CCU8_SLICE_StopConfig(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_stop_event,
+1000221e:	687b      	ldr	r3, [r7, #4]
+10002220:	6898      	ldr	r0, [r3, #8]
+10002222:	687b      	ldr	r3, [r7, #4]
+10002224:	681b      	ldr	r3, [r3, #0]
+10002226:	222a      	movs	r2, #42	; 0x2a
+10002228:	5c99      	ldrb	r1, [r3, r2]
+                              handle_ptr->config_ptr->ext_stop_mode);
+1000222a:	687b      	ldr	r3, [r7, #4]
+1000222c:	681b      	ldr	r3, [r3, #0]
   }
 
   /* External signal can stop the timer */
   if (XMC_CCU8_SLICE_EVENT_NONE != handle_ptr->config_ptr->ext_stop_event)
   {
     XMC_CCU8_SLICE_StopConfig(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_stop_event,
-10002216:	222b      	movs	r2, #43	; 0x2b
-10002218:	5c9b      	ldrb	r3, [r3, r2]
-1000221a:	1c1a      	adds	r2, r3, #0
-1000221c:	f7ff fa36 	bl	1000168c <XMC_CCU8_SLICE_StopConfig>
+1000222e:	222b      	movs	r2, #43	; 0x2b
+10002230:	5c9b      	ldrb	r3, [r3, r2]
+10002232:	1c1a      	adds	r2, r3, #0
+10002234:	f7ff fa2a 	bl	1000168c <XMC_CCU8_SLICE_StopConfig>
                               handle_ptr->config_ptr->ext_stop_mode);
   }
 
   /* External signal can change the timer counting direction */
   if (XMC_CCU8_SLICE_EVENT_NONE != handle_ptr->config_ptr->ext_count_dir_event)
-10002220:	687b      	ldr	r3, [r7, #4]
-10002222:	681b      	ldr	r3, [r3, #0]
-10002224:	222c      	movs	r2, #44	; 0x2c
-10002226:	5c9b      	ldrb	r3, [r3, r2]
-10002228:	2b00      	cmp	r3, #0
-1000222a:	d009      	beq.n	10002240 <PWM_CCU8_lConfigure_Events+0xb0>
+10002238:	687b      	ldr	r3, [r7, #4]
+1000223a:	681b      	ldr	r3, [r3, #0]
+1000223c:	222c      	movs	r2, #44	; 0x2c
+1000223e:	5c9b      	ldrb	r3, [r3, r2]
+10002240:	2b00      	cmp	r3, #0
+10002242:	d009      	beq.n	10002258 <PWM_CCU8_lConfigure_Events+0xb0>
   {
     XMC_CCU8_SLICE_DirectionConfig(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_count_dir_event);
-1000222c:	687b      	ldr	r3, [r7, #4]
-1000222e:	6899      	ldr	r1, [r3, #8]
-10002230:	687b      	ldr	r3, [r7, #4]
-10002232:	681b      	ldr	r3, [r3, #0]
-10002234:	222c      	movs	r2, #44	; 0x2c
-10002236:	5c9b      	ldrb	r3, [r3, r2]
-10002238:	1c08      	adds	r0, r1, #0
-1000223a:	1c19      	adds	r1, r3, #0
-1000223c:	f7ff fb1e 	bl	1000187c <XMC_CCU8_SLICE_DirectionConfig>
+10002244:	687b      	ldr	r3, [r7, #4]
+10002246:	6899      	ldr	r1, [r3, #8]
+10002248:	687b      	ldr	r3, [r7, #4]
+1000224a:	681b      	ldr	r3, [r3, #0]
+1000224c:	222c      	movs	r2, #44	; 0x2c
+1000224e:	5c9b      	ldrb	r3, [r3, r2]
+10002250:	1c08      	adds	r0, r1, #0
+10002252:	1c19      	adds	r1, r3, #0
+10002254:	f7ff fb12 	bl	1000187c <XMC_CCU8_SLICE_DirectionConfig>
   }
   /* External signal can stop the timer and the timer value remains same */
   if (XMC_CCU8_SLICE_EVENT_NONE != handle_ptr->config_ptr->ext_gate_event)
-10002240:	687b      	ldr	r3, [r7, #4]
-10002242:	681b      	ldr	r3, [r3, #0]
-10002244:	222d      	movs	r2, #45	; 0x2d
-10002246:	5c9b      	ldrb	r3, [r3, r2]
-10002248:	2b00      	cmp	r3, #0
-1000224a:	d009      	beq.n	10002260 <PWM_CCU8_lConfigure_Events+0xd0>
+10002258:	687b      	ldr	r3, [r7, #4]
+1000225a:	681b      	ldr	r3, [r3, #0]
+1000225c:	222d      	movs	r2, #45	; 0x2d
+1000225e:	5c9b      	ldrb	r3, [r3, r2]
+10002260:	2b00      	cmp	r3, #0
+10002262:	d009      	beq.n	10002278 <PWM_CCU8_lConfigure_Events+0xd0>
   {
     XMC_CCU8_SLICE_GateConfig(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_gate_event);
-1000224c:	687b      	ldr	r3, [r7, #4]
-1000224e:	6899      	ldr	r1, [r3, #8]
-10002250:	687b      	ldr	r3, [r7, #4]
-10002252:	681b      	ldr	r3, [r3, #0]
-10002254:	222d      	movs	r2, #45	; 0x2d
-10002256:	5c9b      	ldrb	r3, [r3, r2]
-10002258:	1c08      	adds	r0, r1, #0
-1000225a:	1c19      	adds	r1, r3, #0
-1000225c:	f7ff faf2 	bl	10001844 <XMC_CCU8_SLICE_GateConfig>
+10002264:	687b      	ldr	r3, [r7, #4]
+10002266:	6899      	ldr	r1, [r3, #8]
+10002268:	687b      	ldr	r3, [r7, #4]
+1000226a:	681b      	ldr	r3, [r3, #0]
+1000226c:	222d      	movs	r2, #45	; 0x2d
+1000226e:	5c9b      	ldrb	r3, [r3, r2]
+10002270:	1c08      	adds	r0, r1, #0
+10002272:	1c19      	adds	r1, r3, #0
+10002274:	f7ff fae6 	bl	10001844 <XMC_CCU8_SLICE_GateConfig>
   }
   /* Timer increments on external signal */
   if (XMC_CCU8_SLICE_EVENT_NONE != handle_ptr->config_ptr->ext_count_event)
-10002260:	687b      	ldr	r3, [r7, #4]
-10002262:	681b      	ldr	r3, [r3, #0]
-10002264:	222e      	movs	r2, #46	; 0x2e
-10002266:	5c9b      	ldrb	r3, [r3, r2]
-10002268:	2b00      	cmp	r3, #0
-1000226a:	d009      	beq.n	10002280 <PWM_CCU8_lConfigure_Events+0xf0>
+10002278:	687b      	ldr	r3, [r7, #4]
+1000227a:	681b      	ldr	r3, [r3, #0]
+1000227c:	222e      	movs	r2, #46	; 0x2e
+1000227e:	5c9b      	ldrb	r3, [r3, r2]
+10002280:	2b00      	cmp	r3, #0
+10002282:	d009      	beq.n	10002298 <PWM_CCU8_lConfigure_Events+0xf0>
   {
     XMC_CCU8_SLICE_CountConfig(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_count_event);
-1000226c:	687b      	ldr	r3, [r7, #4]
-1000226e:	6899      	ldr	r1, [r3, #8]
-10002270:	687b      	ldr	r3, [r7, #4]
-10002272:	681b      	ldr	r3, [r3, #0]
-10002274:	222e      	movs	r2, #46	; 0x2e
-10002276:	5c9b      	ldrb	r3, [r3, r2]
-10002278:	1c08      	adds	r0, r1, #0
-1000227a:	1c19      	adds	r1, r3, #0
-1000227c:	f7ff fac6 	bl	1000180c <XMC_CCU8_SLICE_CountConfig>
+10002284:	687b      	ldr	r3, [r7, #4]
+10002286:	6899      	ldr	r1, [r3, #8]
+10002288:	687b      	ldr	r3, [r7, #4]
+1000228a:	681b      	ldr	r3, [r3, #0]
+1000228c:	222e      	movs	r2, #46	; 0x2e
+1000228e:	5c9b      	ldrb	r3, [r3, r2]
+10002290:	1c08      	adds	r0, r1, #0
+10002292:	1c19      	adds	r1, r3, #0
+10002294:	f7ff faba 	bl	1000180c <XMC_CCU8_SLICE_CountConfig>
   }
   /* Timer gets loaded with compare register value or period register value on external signal */
   if (XMC_CCU8_SLICE_EVENT_NONE != handle_ptr->config_ptr->ext_load_event)
-10002280:	687b      	ldr	r3, [r7, #4]
-10002282:	681b      	ldr	r3, [r3, #0]
-10002284:	222f      	movs	r2, #47	; 0x2f
-10002286:	5c9b      	ldrb	r3, [r3, r2]
-10002288:	2b00      	cmp	r3, #0
-1000228a:	d013      	beq.n	100022b4 <PWM_CCU8_lConfigure_Events+0x124>
+10002298:	687b      	ldr	r3, [r7, #4]
+1000229a:	681b      	ldr	r3, [r3, #0]
+1000229c:	222f      	movs	r2, #47	; 0x2f
+1000229e:	5c9b      	ldrb	r3, [r3, r2]
+100022a0:	2b00      	cmp	r3, #0
+100022a2:	d013      	beq.n	100022cc <PWM_CCU8_lConfigure_Events+0x124>
   {
     XMC_CCU8_SLICE_LoadConfig(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_load_event);
-1000228c:	687b      	ldr	r3, [r7, #4]
-1000228e:	6899      	ldr	r1, [r3, #8]
-10002290:	687b      	ldr	r3, [r7, #4]
-10002292:	681b      	ldr	r3, [r3, #0]
-10002294:	222f      	movs	r2, #47	; 0x2f
-10002296:	5c9b      	ldrb	r3, [r3, r2]
-10002298:	1c08      	adds	r0, r1, #0
-1000229a:	1c19      	adds	r1, r3, #0
-1000229c:	f7ff fa28 	bl	100016f0 <XMC_CCU8_SLICE_LoadConfig>
-    XMC_CCU8_SLICE_LoadSelector(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_load_selector);
-100022a0:	687b      	ldr	r3, [r7, #4]
-100022a2:	6899      	ldr	r1, [r3, #8]
 100022a4:	687b      	ldr	r3, [r7, #4]
-100022a6:	681b      	ldr	r3, [r3, #0]
-100022a8:	2230      	movs	r2, #48	; 0x30
-100022aa:	5c9b      	ldrb	r3, [r3, r2]
-100022ac:	1c08      	adds	r0, r1, #0
-100022ae:	1c19      	adds	r1, r3, #0
-100022b0:	f7ff fa3a 	bl	10001728 <XMC_CCU8_SLICE_LoadSelector>
+100022a6:	6899      	ldr	r1, [r3, #8]
+100022a8:	687b      	ldr	r3, [r7, #4]
+100022aa:	681b      	ldr	r3, [r3, #0]
+100022ac:	222f      	movs	r2, #47	; 0x2f
+100022ae:	5c9b      	ldrb	r3, [r3, r2]
+100022b0:	1c08      	adds	r0, r1, #0
+100022b2:	1c19      	adds	r1, r3, #0
+100022b4:	f7ff fa1c 	bl	100016f0 <XMC_CCU8_SLICE_LoadConfig>
+    XMC_CCU8_SLICE_LoadSelector(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_load_selector);
+100022b8:	687b      	ldr	r3, [r7, #4]
+100022ba:	6899      	ldr	r1, [r3, #8]
+100022bc:	687b      	ldr	r3, [r7, #4]
+100022be:	681b      	ldr	r3, [r3, #0]
+100022c0:	2230      	movs	r2, #48	; 0x30
+100022c2:	5c9b      	ldrb	r3, [r3, r2]
+100022c4:	1c08      	adds	r0, r1, #0
+100022c6:	1c19      	adds	r1, r3, #0
+100022c8:	f7ff fa2e 	bl	10001728 <XMC_CCU8_SLICE_LoadSelector>
   }
   /* External signal PWM signal (ST bit) output gets modulated by external signal */
   if (XMC_CCU8_SLICE_EVENT_NONE != handle_ptr->config_ptr->ext_mod_event)
-100022b4:	687b      	ldr	r3, [r7, #4]
-100022b6:	681b      	ldr	r3, [r3, #0]
-100022b8:	2231      	movs	r2, #49	; 0x31
-100022ba:	5c9b      	ldrb	r3, [r3, r2]
-100022bc:	2b00      	cmp	r3, #0
-100022be:	d012      	beq.n	100022e6 <PWM_CCU8_lConfigure_Events+0x156>
-  {
-    XMC_CCU8_SLICE_ModulationConfig(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_mod_event,
-100022c0:	687b      	ldr	r3, [r7, #4]
-100022c2:	6898      	ldr	r0, [r3, #8]
-100022c4:	687b      	ldr	r3, [r7, #4]
-100022c6:	681b      	ldr	r3, [r3, #0]
-100022c8:	2231      	movs	r2, #49	; 0x31
-100022ca:	5c99      	ldrb	r1, [r3, r2]
-                                    handle_ptr->config_ptr->ext_mod_mode, XMC_CCU8_SLICE_MODULATION_CHANNEL_1_AND_2,
 100022cc:	687b      	ldr	r3, [r7, #4]
 100022ce:	681b      	ldr	r3, [r3, #0]
+100022d0:	2231      	movs	r2, #49	; 0x31
+100022d2:	5c9b      	ldrb	r3, [r3, r2]
+100022d4:	2b00      	cmp	r3, #0
+100022d6:	d012      	beq.n	100022fe <PWM_CCU8_lConfigure_Events+0x156>
+  {
+    XMC_CCU8_SLICE_ModulationConfig(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_mod_event,
+100022d8:	687b      	ldr	r3, [r7, #4]
+100022da:	6898      	ldr	r0, [r3, #8]
+100022dc:	687b      	ldr	r3, [r7, #4]
+100022de:	681b      	ldr	r3, [r3, #0]
+100022e0:	2231      	movs	r2, #49	; 0x31
+100022e2:	5c99      	ldrb	r1, [r3, r2]
+                                    handle_ptr->config_ptr->ext_mod_mode, XMC_CCU8_SLICE_MODULATION_CHANNEL_1_AND_2,
+100022e4:	687b      	ldr	r3, [r7, #4]
+100022e6:	681b      	ldr	r3, [r3, #0]
     XMC_CCU8_SLICE_LoadSelector(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_load_selector);
   }
   /* External signal PWM signal (ST bit) output gets modulated by external signal */
   if (XMC_CCU8_SLICE_EVENT_NONE != handle_ptr->config_ptr->ext_mod_event)
   {
     XMC_CCU8_SLICE_ModulationConfig(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_mod_event,
-100022d0:	2232      	movs	r2, #50	; 0x32
-100022d2:	5c9c      	ldrb	r4, [r3, r2]
+100022e8:	2232      	movs	r2, #50	; 0x32
+100022ea:	5c9c      	ldrb	r4, [r3, r2]
                                     handle_ptr->config_ptr->ext_mod_mode, XMC_CCU8_SLICE_MODULATION_CHANNEL_1_AND_2,
                                     handle_ptr->config_ptr->ext_mod_sync);
-100022d4:	687b      	ldr	r3, [r7, #4]
-100022d6:	681b      	ldr	r3, [r3, #0]
+100022ec:	687b      	ldr	r3, [r7, #4]
+100022ee:	681b      	ldr	r3, [r3, #0]
     XMC_CCU8_SLICE_LoadSelector(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_load_selector);
   }
   /* External signal PWM signal (ST bit) output gets modulated by external signal */
   if (XMC_CCU8_SLICE_EVENT_NONE != handle_ptr->config_ptr->ext_mod_event)
   {
     XMC_CCU8_SLICE_ModulationConfig(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_mod_event,
-100022d8:	2233      	movs	r2, #51	; 0x33
-100022da:	5c9b      	ldrb	r3, [r3, r2]
-100022dc:	9300      	str	r3, [sp, #0]
-100022de:	1c22      	adds	r2, r4, #0
-100022e0:	2303      	movs	r3, #3
-100022e2:	f7ff fa3b 	bl	1000175c <XMC_CCU8_SLICE_ModulationConfig>
+100022f0:	2233      	movs	r2, #51	; 0x33
+100022f2:	5c9b      	ldrb	r3, [r3, r2]
+100022f4:	9300      	str	r3, [sp, #0]
+100022f6:	1c22      	adds	r2, r4, #0
+100022f8:	2303      	movs	r3, #3
+100022fa:	f7ff fa2f 	bl	1000175c <XMC_CCU8_SLICE_ModulationConfig>
                                     handle_ptr->config_ptr->ext_mod_mode, XMC_CCU8_SLICE_MODULATION_CHANNEL_1_AND_2,
                                     handle_ptr->config_ptr->ext_mod_sync);
   }
 
   /* PWM signal (ST bit) output gets modulated by external signal */
   if (XMC_CCU8_SLICE_EVENT_2 == handle_ptr->config_ptr->ext_trap_event)
-100022e6:	687b      	ldr	r3, [r7, #4]
-100022e8:	681b      	ldr	r3, [r3, #0]
-100022ea:	2237      	movs	r2, #55	; 0x37
-100022ec:	5c9b      	ldrb	r3, [r3, r2]
-100022ee:	2b03      	cmp	r3, #3
-100022f0:	d118      	bne.n	10002324 <PWM_CCU8_lConfigure_Events+0x194>
-  {
-    XMC_CCU8_SLICE_TrapConfig(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_trap_exit,
-100022f2:	687b      	ldr	r3, [r7, #4]
-100022f4:	6898      	ldr	r0, [r3, #8]
-100022f6:	687b      	ldr	r3, [r7, #4]
-100022f8:	681b      	ldr	r3, [r3, #0]
-100022fa:	2239      	movs	r2, #57	; 0x39
-100022fc:	5c99      	ldrb	r1, [r3, r2]
-                              handle_ptr->config_ptr->ext_trap_sync);
 100022fe:	687b      	ldr	r3, [r7, #4]
 10002300:	681b      	ldr	r3, [r3, #0]
+10002302:	2237      	movs	r2, #55	; 0x37
+10002304:	5c9b      	ldrb	r3, [r3, r2]
+10002306:	2b03      	cmp	r3, #3
+10002308:	d118      	bne.n	1000233c <PWM_CCU8_lConfigure_Events+0x194>
+  {
+    XMC_CCU8_SLICE_TrapConfig(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_trap_exit,
+1000230a:	687b      	ldr	r3, [r7, #4]
+1000230c:	6898      	ldr	r0, [r3, #8]
+1000230e:	687b      	ldr	r3, [r7, #4]
+10002310:	681b      	ldr	r3, [r3, #0]
+10002312:	2239      	movs	r2, #57	; 0x39
+10002314:	5c99      	ldrb	r1, [r3, r2]
+                              handle_ptr->config_ptr->ext_trap_sync);
+10002316:	687b      	ldr	r3, [r7, #4]
+10002318:	681b      	ldr	r3, [r3, #0]
   }
 
   /* PWM signal (ST bit) output gets modulated by external signal */
   if (XMC_CCU8_SLICE_EVENT_2 == handle_ptr->config_ptr->ext_trap_event)
   {
     XMC_CCU8_SLICE_TrapConfig(handle_ptr->ccu8_slice_ptr, handle_ptr->config_ptr->ext_trap_exit,
-10002302:	2238      	movs	r2, #56	; 0x38
-10002304:	5c9b      	ldrb	r3, [r3, r2]
-10002306:	1c1a      	adds	r2, r3, #0
-10002308:	f7ff faec 	bl	100018e4 <XMC_CCU8_SLICE_TrapConfig>
+1000231a:	2238      	movs	r2, #56	; 0x38
+1000231c:	5c9b      	ldrb	r3, [r3, r2]
+1000231e:	1c1a      	adds	r2, r3, #0
+10002320:	f7ff fae0 	bl	100018e4 <XMC_CCU8_SLICE_TrapConfig>
                               handle_ptr->config_ptr->ext_trap_sync);
     if ((bool) true == handle_ptr->config_ptr->ext_trap_enable)
-1000230c:	687b      	ldr	r3, [r7, #4]
-1000230e:	681b      	ldr	r3, [r3, #0]
-10002310:	2236      	movs	r2, #54	; 0x36
-10002312:	5c9b      	ldrb	r3, [r3, r2]
-10002314:	2b00      	cmp	r3, #0
-10002316:	d005      	beq.n	10002324 <PWM_CCU8_lConfigure_Events+0x194>
-    {
-      XMC_CCU8_SLICE_EnableTrap(
-10002318:	687b      	ldr	r3, [r7, #4]
-1000231a:	689b      	ldr	r3, [r3, #8]
-1000231c:	1c18      	adds	r0, r3, #0
-1000231e:	210f      	movs	r1, #15
-10002320:	f7ff fcf4 	bl	10001d0c <XMC_CCU8_SLICE_EnableTrap>
-          (uint32_t)(XMC_CCU8_SLICE_OUTPUT_0 | XMC_CCU8_SLICE_OUTPUT_1 | XMC_CCU8_SLICE_OUTPUT_2 | XMC_CCU8_SLICE_OUTPUT_3)
-		  );
-    }
-  }
-
-  if ((XMC_CCU8_SLICE_EVENT_NONE != handle_ptr->config_ptr->ext_override_edge_event) || (XMC_CCU8_SLICE_EVENT_NONE
 10002324:	687b      	ldr	r3, [r7, #4]
 10002326:	681b      	ldr	r3, [r3, #0]
-10002328:	2234      	movs	r2, #52	; 0x34
+10002328:	2236      	movs	r2, #54	; 0x36
 1000232a:	5c9b      	ldrb	r3, [r3, r2]
 1000232c:	2b00      	cmp	r3, #0
-1000232e:	d105      	bne.n	1000233c <PWM_CCU8_lConfigure_Events+0x1ac>
-      != handle_ptr->config_ptr->ext_override_level_event))
+1000232e:	d005      	beq.n	1000233c <PWM_CCU8_lConfigure_Events+0x194>
+    {
+      XMC_CCU8_SLICE_EnableTrap(
 10002330:	687b      	ldr	r3, [r7, #4]
-10002332:	681b      	ldr	r3, [r3, #0]
-10002334:	2235      	movs	r2, #53	; 0x35
-10002336:	5c9b      	ldrb	r3, [r3, r2]
+10002332:	689b      	ldr	r3, [r3, #8]
+10002334:	1c18      	adds	r0, r3, #0
+10002336:	210f      	movs	r1, #15
+10002338:	f7ff fce8 	bl	10001d0c <XMC_CCU8_SLICE_EnableTrap>
           (uint32_t)(XMC_CCU8_SLICE_OUTPUT_0 | XMC_CCU8_SLICE_OUTPUT_1 | XMC_CCU8_SLICE_OUTPUT_2 | XMC_CCU8_SLICE_OUTPUT_3)
 		  );
     }
   }
 
   if ((XMC_CCU8_SLICE_EVENT_NONE != handle_ptr->config_ptr->ext_override_edge_event) || (XMC_CCU8_SLICE_EVENT_NONE
-10002338:	2b00      	cmp	r3, #0
-1000233a:	d011      	beq.n	10002360 <PWM_CCU8_lConfigure_Events+0x1d0>
+1000233c:	687b      	ldr	r3, [r7, #4]
+1000233e:	681b      	ldr	r3, [r3, #0]
+10002340:	2234      	movs	r2, #52	; 0x34
+10002342:	5c9b      	ldrb	r3, [r3, r2]
+10002344:	2b00      	cmp	r3, #0
+10002346:	d105      	bne.n	10002354 <PWM_CCU8_lConfigure_Events+0x1ac>
+      != handle_ptr->config_ptr->ext_override_level_event))
+10002348:	687b      	ldr	r3, [r7, #4]
+1000234a:	681b      	ldr	r3, [r3, #0]
+1000234c:	2235      	movs	r2, #53	; 0x35
+1000234e:	5c9b      	ldrb	r3, [r3, r2]
+          (uint32_t)(XMC_CCU8_SLICE_OUTPUT_0 | XMC_CCU8_SLICE_OUTPUT_1 | XMC_CCU8_SLICE_OUTPUT_2 | XMC_CCU8_SLICE_OUTPUT_3)
+		  );
+    }
+  }
+
+  if ((XMC_CCU8_SLICE_EVENT_NONE != handle_ptr->config_ptr->ext_override_edge_event) || (XMC_CCU8_SLICE_EVENT_NONE
+10002350:	2b00      	cmp	r3, #0
+10002352:	d011      	beq.n	10002378 <PWM_CCU8_lConfigure_Events+0x1d0>
       != handle_ptr->config_ptr->ext_override_level_event))
   {
     XMC_CCU8_SLICE_ConfigureStatusBitOverrideEvent(handle_ptr->ccu8_slice_ptr,
-1000233c:	687b      	ldr	r3, [r7, #4]
-1000233e:	6899      	ldr	r1, [r3, #8]
+10002354:	687b      	ldr	r3, [r7, #4]
+10002356:	6899      	ldr	r1, [r3, #8]
                                                    handle_ptr->config_ptr->event1_config_ptr,
-10002340:	687b      	ldr	r3, [r7, #4]
-10002342:	681b      	ldr	r3, [r3, #0]
+10002358:	687b      	ldr	r3, [r7, #4]
+1000235a:	681b      	ldr	r3, [r3, #0]
   }
 
   if ((XMC_CCU8_SLICE_EVENT_NONE != handle_ptr->config_ptr->ext_override_edge_event) || (XMC_CCU8_SLICE_EVENT_NONE
       != handle_ptr->config_ptr->ext_override_level_event))
   {
     XMC_CCU8_SLICE_ConfigureStatusBitOverrideEvent(handle_ptr->ccu8_slice_ptr,
-10002344:	6a1a      	ldr	r2, [r3, #32]
+1000235c:	6a1a      	ldr	r2, [r3, #32]
                                                    handle_ptr->config_ptr->event1_config_ptr,
                                                    handle_ptr->config_ptr->event2_config_ptr);
-10002346:	687b      	ldr	r3, [r7, #4]
-10002348:	681b      	ldr	r3, [r3, #0]
+1000235e:	687b      	ldr	r3, [r7, #4]
+10002360:	681b      	ldr	r3, [r3, #0]
   }
 
   if ((XMC_CCU8_SLICE_EVENT_NONE != handle_ptr->config_ptr->ext_override_edge_event) || (XMC_CCU8_SLICE_EVENT_NONE
       != handle_ptr->config_ptr->ext_override_level_event))
   {
     XMC_CCU8_SLICE_ConfigureStatusBitOverrideEvent(handle_ptr->ccu8_slice_ptr,
-1000234a:	6a5b      	ldr	r3, [r3, #36]	; 0x24
-1000234c:	1c08      	adds	r0, r1, #0
-1000234e:	1c11      	adds	r1, r2, #0
-10002350:	1c1a      	adds	r2, r3, #0
-10002352:	f7ff fb0d 	bl	10001970 <XMC_CCU8_SLICE_ConfigureStatusBitOverrideEvent>
+10002362:	6a5b      	ldr	r3, [r3, #36]	; 0x24
+10002364:	1c08      	adds	r0, r1, #0
+10002366:	1c11      	adds	r1, r2, #0
+10002368:	1c1a      	adds	r2, r3, #0
+1000236a:	f7ff fb01 	bl	10001970 <XMC_CCU8_SLICE_ConfigureStatusBitOverrideEvent>
                                                    handle_ptr->config_ptr->event1_config_ptr,
                                                    handle_ptr->config_ptr->event2_config_ptr);
     XMC_CCU8_SLICE_StatusBitOverrideConfig(handle_ptr->ccu8_slice_ptr);
-10002356:	687b      	ldr	r3, [r7, #4]
-10002358:	689b      	ldr	r3, [r3, #8]
-1000235a:	1c18      	adds	r0, r3, #0
-1000235c:	f7ff faaa 	bl	100018b4 <XMC_CCU8_SLICE_StatusBitOverrideConfig>
+1000236e:	687b      	ldr	r3, [r7, #4]
+10002370:	689b      	ldr	r3, [r3, #8]
+10002372:	1c18      	adds	r0, r3, #0
+10002374:	f7ff fa9e 	bl	100018b4 <XMC_CCU8_SLICE_StatusBitOverrideConfig>
   }
 
 }
-10002360:	46bd      	mov	sp, r7
-10002362:	b003      	add	sp, #12
-10002364:	bd90      	pop	{r4, r7, pc}
-10002366:	46c0      	nop			; (mov r8, r8)
+10002378:	46bd      	mov	sp, r7
+1000237a:	b003      	add	sp, #12
+1000237c:	bd90      	pop	{r4, r7, pc}
+1000237e:	46c0      	nop			; (mov r8, r8)
 
-10002368 <PWM_CCU8_Start>:
+10002380 <PWM_CCU8_Start>:
 /**********************************************************************************************************/
 /*Starts the CCU8_CC8 slice. This needs to be called even if external start is configured.*/
 PWM_CCU8_STATUS_t PWM_CCU8_Start(PWM_CCU8_t* handle_ptr)
 {
-10002368:	b580      	push	{r7, lr}
-1000236a:	b084      	sub	sp, #16
-1000236c:	af00      	add	r7, sp, #0
-1000236e:	6078      	str	r0, [r7, #4]
+10002380:	b580      	push	{r7, lr}
+10002382:	b084      	sub	sp, #16
+10002384:	af00      	add	r7, sp, #0
+10002386:	6078      	str	r0, [r7, #4]
   PWM_CCU8_STATUS_t status;
 
   status = PWM_CCU8_STATUS_FAILURE;
-10002370:	230f      	movs	r3, #15
-10002372:	18fb      	adds	r3, r7, r3
-10002374:	2201      	movs	r2, #1
-10002376:	701a      	strb	r2, [r3, #0]
+10002388:	230f      	movs	r3, #15
+1000238a:	18fb      	adds	r3, r7, r3
+1000238c:	2201      	movs	r2, #1
+1000238e:	701a      	strb	r2, [r3, #0]
   XMC_ASSERT("PWM_CCU8_Start:handle_ptr NULL", (handle_ptr != NULL));
   if ((PWM_CCU8_STATE_INITIALIZED == handle_ptr->state) || (PWM_CCU8_STATE_STOPPED == handle_ptr->state))
-10002378:	687b      	ldr	r3, [r7, #4]
-1000237a:	7f1b      	ldrb	r3, [r3, #28]
-1000237c:	2b01      	cmp	r3, #1
-1000237e:	d003      	beq.n	10002388 <PWM_CCU8_Start+0x20>
-10002380:	687b      	ldr	r3, [r7, #4]
-10002382:	7f1b      	ldrb	r3, [r3, #28]
-10002384:	2b03      	cmp	r3, #3
-10002386:	d119      	bne.n	100023bc <PWM_CCU8_Start+0x54>
+10002390:	687b      	ldr	r3, [r7, #4]
+10002392:	7f1b      	ldrb	r3, [r3, #28]
+10002394:	2b01      	cmp	r3, #1
+10002396:	d003      	beq.n	100023a0 <PWM_CCU8_Start+0x20>
+10002398:	687b      	ldr	r3, [r7, #4]
+1000239a:	7f1b      	ldrb	r3, [r3, #28]
+1000239c:	2b03      	cmp	r3, #3
+1000239e:	d119      	bne.n	100023d4 <PWM_CCU8_Start+0x54>
   {
     /* clear IDLE mode for the slice; Start timer */
     XMC_CCU8_EnableClock(handle_ptr->ccu8_module_ptr, handle_ptr->slice_number);
-10002388:	687b      	ldr	r3, [r7, #4]
-1000238a:	685a      	ldr	r2, [r3, #4]
-1000238c:	687b      	ldr	r3, [r7, #4]
-1000238e:	7b5b      	ldrb	r3, [r3, #13]
-10002390:	1c10      	adds	r0, r2, #0
-10002392:	1c19      	adds	r1, r3, #0
-10002394:	f7ff fcaa 	bl	10001cec <XMC_CCU8_EnableClock>
+100023a0:	687b      	ldr	r3, [r7, #4]
+100023a2:	685a      	ldr	r2, [r3, #4]
+100023a4:	687b      	ldr	r3, [r7, #4]
+100023a6:	7b5b      	ldrb	r3, [r3, #13]
+100023a8:	1c10      	adds	r0, r2, #0
+100023aa:	1c19      	adds	r1, r3, #0
+100023ac:	f7ff fc9e 	bl	10001cec <XMC_CCU8_EnableClock>
 
     if (XMC_CCU8_SLICE_EVENT_NONE == handle_ptr->config_ptr->ext_start_event)
-10002398:	687b      	ldr	r3, [r7, #4]
-1000239a:	681b      	ldr	r3, [r3, #0]
-1000239c:	2228      	movs	r2, #40	; 0x28
-1000239e:	5c9b      	ldrb	r3, [r3, r2]
-100023a0:	2b00      	cmp	r3, #0
-100023a2:	d104      	bne.n	100023ae <PWM_CCU8_Start+0x46>
+100023b0:	687b      	ldr	r3, [r7, #4]
+100023b2:	681b      	ldr	r3, [r3, #0]
+100023b4:	2228      	movs	r2, #40	; 0x28
+100023b6:	5c9b      	ldrb	r3, [r3, r2]
+100023b8:	2b00      	cmp	r3, #0
+100023ba:	d104      	bne.n	100023c6 <PWM_CCU8_Start+0x46>
     {
       XMC_CCU8_SLICE_StartTimer(handle_ptr->ccu8_slice_ptr);
-100023a4:	687b      	ldr	r3, [r7, #4]
-100023a6:	689b      	ldr	r3, [r3, #8]
-100023a8:	1c18      	adds	r0, r3, #0
-100023aa:	f7ff fcbf 	bl	10001d2c <XMC_CCU8_SLICE_StartTimer>
+100023bc:	687b      	ldr	r3, [r7, #4]
+100023be:	689b      	ldr	r3, [r3, #8]
+100023c0:	1c18      	adds	r0, r3, #0
+100023c2:	f7ff fcb3 	bl	10001d2c <XMC_CCU8_SLICE_StartTimer>
     }
 
     handle_ptr->state = PWM_CCU8_STATE_RUNNING;
-100023ae:	687b      	ldr	r3, [r7, #4]
-100023b0:	2202      	movs	r2, #2
-100023b2:	771a      	strb	r2, [r3, #28]
+100023c6:	687b      	ldr	r3, [r7, #4]
+100023c8:	2202      	movs	r2, #2
+100023ca:	771a      	strb	r2, [r3, #28]
     status = PWM_CCU8_STATUS_SUCCESS;
-100023b4:	230f      	movs	r3, #15
-100023b6:	18fb      	adds	r3, r7, r3
-100023b8:	2200      	movs	r2, #0
-100023ba:	701a      	strb	r2, [r3, #0]
+100023cc:	230f      	movs	r3, #15
+100023ce:	18fb      	adds	r3, r7, r3
+100023d0:	2200      	movs	r2, #0
+100023d2:	701a      	strb	r2, [r3, #0]
     XMC_DEBUG("PWM_CCU8_Start:start PWM");
   }
   return (status);
-100023bc:	230f      	movs	r3, #15
-100023be:	18fb      	adds	r3, r7, r3
-100023c0:	781b      	ldrb	r3, [r3, #0]
+100023d4:	230f      	movs	r3, #15
+100023d6:	18fb      	adds	r3, r7, r3
+100023d8:	781b      	ldrb	r3, [r3, #0]
 } /* end of PWM_CCU8_Start() api */
-100023c2:	1c18      	adds	r0, r3, #0
-100023c4:	46bd      	mov	sp, r7
-100023c6:	b004      	add	sp, #16
-100023c8:	bd80      	pop	{r7, pc}
-100023ca:	46c0      	nop			; (mov r8, r8)
+100023da:	1c18      	adds	r0, r3, #0
+100023dc:	46bd      	mov	sp, r7
+100023de:	b004      	add	sp, #16
+100023e0:	bd80      	pop	{r7, pc}
+100023e2:	46c0      	nop			; (mov r8, r8)
 
-100023cc <PWM_CCU8_SetFreqAsymmetric>:
-
+100023e4 <PWM_CCU8_SetDutyCycleAsymmetric>:
 /**********************************************************************************************************/
 
-/*Sets the frequency for CCU8_CC8 slice Asymmetric Mode. */
-PWM_CCU8_STATUS_t PWM_CCU8_SetFreqAsymmetric(PWM_CCU8_t* handle_ptr, uint32_t pwm_freq_hz)
+/*Sets the duty cycle and shift (uint32_t) for CCU8_CC8 slice in Asymmetric mode. */
+/*(shift + duty_cycle <= 100)  and (shift + duty_cycle >= 50) */
+PWM_CCU8_STATUS_t PWM_CCU8_SetDutyCycleAsymmetric(PWM_CCU8_t* handle_ptr, uint32_t shift, uint32_t duty_cycle)
 {
-100023cc:	b580      	push	{r7, lr}
-100023ce:	b08a      	sub	sp, #40	; 0x28
-100023d0:	af00      	add	r7, sp, #0
-100023d2:	6078      	str	r0, [r7, #4]
-100023d4:	6039      	str	r1, [r7, #0]
-  uint32_t duty_cycle;
-  uint32_t shift;
+100023e4:	b580      	push	{r7, lr}
+100023e6:	b088      	sub	sp, #32
+100023e8:	af00      	add	r7, sp, #0
+100023ea:	60f8      	str	r0, [r7, #12]
+100023ec:	60b9      	str	r1, [r7, #8]
+100023ee:	607a      	str	r2, [r7, #4]
+  PWM_CCU8_STATUS_t status;
+  uint32_t period;
   uint32_t compare_ch1;
   uint32_t compare_ch2;
 
   status = PWM_CCU8_STATUS_FAILURE;
-100023d6:	2327      	movs	r3, #39	; 0x27
-100023d8:	18fb      	adds	r3, r7, r3
-100023da:	2201      	movs	r2, #1
-100023dc:	701a      	strb	r2, [r3, #0]
-  frequency_tclk = 0U;
-100023de:	2300      	movs	r3, #0
-100023e0:	623b      	str	r3, [r7, #32]
-  XMC_ASSERT("PWM_CCU8_SetFreqAsymmetric:handle_ptr NULL", (handle_ptr != NULL));
+100023f0:	231f      	movs	r3, #31
+100023f2:	18fb      	adds	r3, r7, r3
+100023f4:	2201      	movs	r2, #1
+100023f6:	701a      	strb	r2, [r3, #0]
+  XMC_ASSERT("PWM_CCU8_SetDutyCycleAsymmetric:handle_ptr NULL", (handle_ptr != NULL));
   if (PWM_CCU8_STATE_UNINITIALIZED != handle_ptr->state)
-100023e2:	687b      	ldr	r3, [r7, #4]
-100023e4:	7f1b      	ldrb	r3, [r3, #28]
-100023e6:	2b00      	cmp	r3, #0
-100023e8:	d100      	bne.n	100023ec <PWM_CCU8_SetFreqAsymmetric+0x20>
-100023ea:	e0b0      	b.n	1000254e <PWM_CCU8_SetFreqAsymmetric+0x182>
+100023f8:	68fb      	ldr	r3, [r7, #12]
+100023fa:	7f1b      	ldrb	r3, [r3, #28]
+100023fc:	2b00      	cmp	r3, #0
+100023fe:	d100      	bne.n	10002402 <PWM_CCU8_SetDutyCycleAsymmetric+0x1e>
+10002400:	e0a4      	b.n	1000254c <PWM_CCU8_SetDutyCycleAsymmetric+0x168>
   {
-    if (0U == pwm_freq_hz)
-100023ec:	683b      	ldr	r3, [r7, #0]
-100023ee:	2b00      	cmp	r3, #0
-100023f0:	d100      	bne.n	100023f4 <PWM_CCU8_SetFreqAsymmetric+0x28>
-100023f2:	e0ac      	b.n	1000254e <PWM_CCU8_SetFreqAsymmetric+0x182>
+    if ((uint32_t) XMC_CCU8_SLICE_TIMER_COUNT_MODE_CA == handle_ptr->config_ptr->ccu8_cc8_slice_timer_ptr->timer_mode)
+10002402:	68fb      	ldr	r3, [r7, #12]
+10002404:	681b      	ldr	r3, [r3, #0]
+10002406:	6c9b      	ldr	r3, [r3, #72]	; 0x48
+10002408:	781b      	ldrb	r3, [r3, #0]
+1000240a:	2201      	movs	r2, #1
+1000240c:	4013      	ands	r3, r2
+1000240e:	b2db      	uxtb	r3, r3
+10002410:	2b00      	cmp	r3, #0
+10002412:	d056      	beq.n	100024c2 <PWM_CCU8_SetDutyCycleAsymmetric+0xde>
     {
-      XMC_DEBUG("PWM_CCU8_SetPwmFreq:cannot set frequency 0Hz");
-    }
-    else
-    {
-      frequency_tclk = handle_ptr->frequency_tclk;
-100023f4:	687b      	ldr	r3, [r7, #4]
-100023f6:	6a1b      	ldr	r3, [r3, #32]
-100023f8:	623b      	str	r3, [r7, #32]
-      period = frequency_tclk / pwm_freq_hz;
-100023fa:	6a38      	ldr	r0, [r7, #32]
-100023fc:	6839      	ldr	r1, [r7, #0]
-100023fe:	f7ff fc49 	bl	10001c94 <__aeabi_uidiv>
-10002402:	1c03      	adds	r3, r0, #0
-10002404:	61fb      	str	r3, [r7, #28]
-
-      duty_cycle = handle_ptr->asym_duty;
-10002406:	687b      	ldr	r3, [r7, #4]
-10002408:	6adb      	ldr	r3, [r3, #44]	; 0x2c
-1000240a:	61bb      	str	r3, [r7, #24]
-      shift = handle_ptr->asym_shift;
-1000240c:	687b      	ldr	r3, [r7, #4]
-1000240e:	6b1b      	ldr	r3, [r3, #48]	; 0x30
-10002410:	617b      	str	r3, [r7, #20]
-
-      if ((uint32_t) XMC_CCU8_SLICE_TIMER_COUNT_MODE_CA == handle_ptr->config_ptr->ccu8_cc8_slice_timer_ptr->timer_mode)
-10002412:	687b      	ldr	r3, [r7, #4]
-10002414:	681b      	ldr	r3, [r3, #0]
-10002416:	6c9b      	ldr	r3, [r3, #72]	; 0x48
-10002418:	781b      	ldrb	r3, [r3, #0]
-1000241a:	2201      	movs	r2, #1
-1000241c:	4013      	ands	r3, r2
-1000241e:	b2db      	uxtb	r3, r3
-10002420:	2b00      	cmp	r3, #0
-10002422:	d050      	beq.n	100024c6 <PWM_CCU8_SetFreqAsymmetric+0xfa>
+      /*center aligned mode*/
+      if (((shift + duty_cycle) > PWM_CCU8_ASYM_CA_MAX) || ((shift + duty_cycle) < PWM_CCU8_ASYM_CA_MIN))
+10002414:	68ba      	ldr	r2, [r7, #8]
+10002416:	687b      	ldr	r3, [r7, #4]
+10002418:	18d3      	adds	r3, r2, r3
+1000241a:	4a50      	ldr	r2, [pc, #320]	; (1000255c <PWM_CCU8_SetDutyCycleAsymmetric+0x178>)
+1000241c:	4293      	cmp	r3, r2
+1000241e:	d900      	bls.n	10002422 <PWM_CCU8_SetDutyCycleAsymmetric+0x3e>
+10002420:	e094      	b.n	1000254c <PWM_CCU8_SetDutyCycleAsymmetric+0x168>
+10002422:	68ba      	ldr	r2, [r7, #8]
+10002424:	687b      	ldr	r3, [r7, #4]
+10002426:	18d3      	adds	r3, r2, r3
+10002428:	4a4d      	ldr	r2, [pc, #308]	; (10002560 <PWM_CCU8_SetDutyCycleAsymmetric+0x17c>)
+1000242a:	4293      	cmp	r3, r2
+1000242c:	d800      	bhi.n	10002430 <PWM_CCU8_SetDutyCycleAsymmetric+0x4c>
+1000242e:	e08d      	b.n	1000254c <PWM_CCU8_SetDutyCycleAsymmetric+0x168>
       {
-        period = period >> 1U;/*divide by 2*/
-10002424:	69fb      	ldr	r3, [r7, #28]
-10002426:	085b      	lsrs	r3, r3, #1
-10002428:	61fb      	str	r3, [r7, #28]
-
-        if ((period != 0U) && (period <= PWM_CCU8_MAX_TIMER_COUNT))
-1000242a:	69fb      	ldr	r3, [r7, #28]
-1000242c:	2b00      	cmp	r3, #0
-1000242e:	d100      	bne.n	10002432 <PWM_CCU8_SetFreqAsymmetric+0x66>
-10002430:	e08d      	b.n	1000254e <PWM_CCU8_SetFreqAsymmetric+0x182>
-10002432:	69fb      	ldr	r3, [r7, #28]
-10002434:	4a49      	ldr	r2, [pc, #292]	; (1000255c <PWM_CCU8_SetFreqAsymmetric+0x190>)
-10002436:	4293      	cmp	r3, r2
-10002438:	d900      	bls.n	1000243c <PWM_CCU8_SetFreqAsymmetric+0x70>
-1000243a:	e088      	b.n	1000254e <PWM_CCU8_SetFreqAsymmetric+0x182>
-        {
-          compare_ch1 = (2U * period * shift);
-1000243c:	69fb      	ldr	r3, [r7, #28]
-1000243e:	697a      	ldr	r2, [r7, #20]
-10002440:	4353      	muls	r3, r2
-10002442:	005b      	lsls	r3, r3, #1
-10002444:	613b      	str	r3, [r7, #16]
-          compare_ch1 = compare_ch1 / PWM_CCU8_DUTY_FULL_SCALE;
-10002446:	693b      	ldr	r3, [r7, #16]
-10002448:	1c18      	adds	r0, r3, #0
-1000244a:	4945      	ldr	r1, [pc, #276]	; (10002560 <PWM_CCU8_SetFreqAsymmetric+0x194>)
-1000244c:	f7ff fc22 	bl	10001c94 <__aeabi_uidiv>
-10002450:	1c03      	adds	r3, r0, #0
-10002452:	613b      	str	r3, [r7, #16]
-          compare_ch2 = (2U * period * (PWM_CCU8_DUTY_FULL_SCALE - (shift + duty_cycle)));
-10002454:	697a      	ldr	r2, [r7, #20]
-10002456:	69bb      	ldr	r3, [r7, #24]
-10002458:	18d3      	adds	r3, r2, r3
-1000245a:	4a41      	ldr	r2, [pc, #260]	; (10002560 <PWM_CCU8_SetFreqAsymmetric+0x194>)
-1000245c:	1ad3      	subs	r3, r2, r3
-1000245e:	69fa      	ldr	r2, [r7, #28]
-10002460:	4353      	muls	r3, r2
-10002462:	005b      	lsls	r3, r3, #1
-10002464:	60fb      	str	r3, [r7, #12]
-          compare_ch2 = compare_ch2 / PWM_CCU8_DUTY_FULL_SCALE;
-10002466:	68fb      	ldr	r3, [r7, #12]
-10002468:	1c18      	adds	r0, r3, #0
-1000246a:	493d      	ldr	r1, [pc, #244]	; (10002560 <PWM_CCU8_SetFreqAsymmetric+0x194>)
-1000246c:	f7ff fc12 	bl	10001c94 <__aeabi_uidiv>
-10002470:	1c03      	adds	r3, r0, #0
-10002472:	60fb      	str	r3, [r7, #12]
-
-          XMC_CCU8_SLICE_SetTimerPeriodMatch(handle_ptr->ccu8_slice_ptr, (uint16_t)(period - 1U));
-10002474:	687b      	ldr	r3, [r7, #4]
-10002476:	689a      	ldr	r2, [r3, #8]
-10002478:	69fb      	ldr	r3, [r7, #28]
-1000247a:	b29b      	uxth	r3, r3
-1000247c:	3b01      	subs	r3, #1
-1000247e:	b29b      	uxth	r3, r3
-10002480:	1c10      	adds	r0, r2, #0
-10002482:	1c19      	adds	r1, r3, #0
-10002484:	f7ff fb70 	bl	10001b68 <XMC_CCU8_SLICE_SetTimerPeriodMatch>
-          XMC_CCU8_SLICE_SetTimerCompareMatch(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_COMPARE_CHANNEL_1,
-10002488:	687b      	ldr	r3, [r7, #4]
-1000248a:	689a      	ldr	r2, [r3, #8]
-1000248c:	693b      	ldr	r3, [r7, #16]
-1000248e:	b29b      	uxth	r3, r3
-10002490:	1c10      	adds	r0, r2, #0
-10002492:	2100      	movs	r1, #0
-10002494:	1c1a      	adds	r2, r3, #0
-10002496:	f7ff fb75 	bl	10001b84 <XMC_CCU8_SLICE_SetTimerCompareMatch>
-                                              (uint16_t) compare_ch1);
-          XMC_CCU8_SLICE_SetTimerCompareMatch(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_COMPARE_CHANNEL_2,
-1000249a:	687b      	ldr	r3, [r7, #4]
-1000249c:	689a      	ldr	r2, [r3, #8]
-1000249e:	68fb      	ldr	r3, [r7, #12]
-100024a0:	b29b      	uxth	r3, r3
-100024a2:	1c10      	adds	r0, r2, #0
-100024a4:	2101      	movs	r1, #1
-100024a6:	1c1a      	adds	r2, r3, #0
-100024a8:	f7ff fb6c 	bl	10001b84 <XMC_CCU8_SLICE_SetTimerCompareMatch>
-                                              (uint16_t) compare_ch2);
-          XMC_CCU8_EnableShadowTransfer(handle_ptr->ccu8_module_ptr, handle_ptr->shadow_txfr_msk);
-100024ac:	687b      	ldr	r3, [r7, #4]
-100024ae:	685a      	ldr	r2, [r3, #4]
-100024b0:	687b      	ldr	r3, [r7, #4]
-100024b2:	691b      	ldr	r3, [r3, #16]
-100024b4:	1c10      	adds	r0, r2, #0
-100024b6:	1c19      	adds	r1, r3, #0
-100024b8:	f7ff fc42 	bl	10001d40 <XMC_CCU8_EnableShadowTransfer>
-          XMC_DEBUG("PWM_CCU8_SetPwmFreq:frequency set center aligned mode");
-          status = PWM_CCU8_STATUS_SUCCESS;
-100024bc:	2327      	movs	r3, #39	; 0x27
-100024be:	18fb      	adds	r3, r7, r3
-100024c0:	2200      	movs	r2, #0
-100024c2:	701a      	strb	r2, [r3, #0]
-100024c4:	e043      	b.n	1000254e <PWM_CCU8_SetFreqAsymmetric+0x182>
-        }
+        XMC_DEBUG("PWM_CCU8_SetDutyCycleAsymmetric:Cannot set center aligned mode 50%% < (shift + duty_cycle) < 100%%");
+      }
+      else if (shift >= PWM_CCU8_ASYM_CA_SHIFT_MAX)
+10002430:	68bb      	ldr	r3, [r7, #8]
+10002432:	4a4b      	ldr	r2, [pc, #300]	; (10002560 <PWM_CCU8_SetDutyCycleAsymmetric+0x17c>)
+10002434:	4293      	cmp	r3, r2
+10002436:	d900      	bls.n	1000243a <PWM_CCU8_SetDutyCycleAsymmetric+0x56>
+10002438:	e088      	b.n	1000254c <PWM_CCU8_SetDutyCycleAsymmetric+0x168>
+      {
+        XMC_DEBUG("PWM_CCU8_SetDutyCycleAsymmetric:Cannot set center aligned mode shift > 50%%");
       }
       else
       {
-        if (period <= PWM_CCU8_MAX_TIMER_COUNT)
-100024c6:	69fb      	ldr	r3, [r7, #28]
-100024c8:	4a24      	ldr	r2, [pc, #144]	; (1000255c <PWM_CCU8_SetFreqAsymmetric+0x190>)
-100024ca:	4293      	cmp	r3, r2
-100024cc:	d83f      	bhi.n	1000254e <PWM_CCU8_SetFreqAsymmetric+0x182>
-        {
-          compare_ch1 = period * shift;
-100024ce:	69fb      	ldr	r3, [r7, #28]
-100024d0:	697a      	ldr	r2, [r7, #20]
-100024d2:	4353      	muls	r3, r2
-100024d4:	613b      	str	r3, [r7, #16]
-          compare_ch1 = compare_ch1 / PWM_CCU8_DUTY_FULL_SCALE;
-100024d6:	693b      	ldr	r3, [r7, #16]
-100024d8:	1c18      	adds	r0, r3, #0
-100024da:	4921      	ldr	r1, [pc, #132]	; (10002560 <PWM_CCU8_SetFreqAsymmetric+0x194>)
-100024dc:	f7ff fbda 	bl	10001c94 <__aeabi_uidiv>
-100024e0:	1c03      	adds	r3, r0, #0
-100024e2:	613b      	str	r3, [r7, #16]
-          compare_ch2 = period * (shift + duty_cycle);
-100024e4:	697a      	ldr	r2, [r7, #20]
-100024e6:	69bb      	ldr	r3, [r7, #24]
-100024e8:	18d3      	adds	r3, r2, r3
-100024ea:	69fa      	ldr	r2, [r7, #28]
-100024ec:	4353      	muls	r3, r2
-100024ee:	60fb      	str	r3, [r7, #12]
-          compare_ch2 = compare_ch2 / PWM_CCU8_DUTY_FULL_SCALE;
-100024f0:	68fb      	ldr	r3, [r7, #12]
-100024f2:	1c18      	adds	r0, r3, #0
-100024f4:	491a      	ldr	r1, [pc, #104]	; (10002560 <PWM_CCU8_SetFreqAsymmetric+0x194>)
-100024f6:	f7ff fbcd 	bl	10001c94 <__aeabi_uidiv>
-100024fa:	1c03      	adds	r3, r0, #0
-100024fc:	60fb      	str	r3, [r7, #12]
+        period = (uint32_t) XMC_CCU8_SLICE_GetTimerPeriodMatch(handle_ptr->ccu8_slice_ptr);
+1000243a:	68fb      	ldr	r3, [r7, #12]
+1000243c:	689b      	ldr	r3, [r3, #8]
+1000243e:	1c18      	adds	r0, r3, #0
+10002440:	f7ff fc7e 	bl	10001d40 <XMC_CCU8_SLICE_GetTimerPeriodMatch>
+10002444:	1c03      	adds	r3, r0, #0
+10002446:	61bb      	str	r3, [r7, #24]
 
-          XMC_CCU8_SLICE_SetTimerPeriodMatch(handle_ptr->ccu8_slice_ptr, (uint16_t)(period - 1U));
-100024fe:	687b      	ldr	r3, [r7, #4]
-10002500:	689a      	ldr	r2, [r3, #8]
-10002502:	69fb      	ldr	r3, [r7, #28]
-10002504:	b29b      	uxth	r3, r3
-10002506:	3b01      	subs	r3, #1
-10002508:	b29b      	uxth	r3, r3
-1000250a:	1c10      	adds	r0, r2, #0
-1000250c:	1c19      	adds	r1, r3, #0
-1000250e:	f7ff fb2b 	bl	10001b68 <XMC_CCU8_SLICE_SetTimerPeriodMatch>
-          XMC_CCU8_SLICE_SetTimerCompareMatch(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_COMPARE_CHANNEL_1,
-10002512:	687b      	ldr	r3, [r7, #4]
-10002514:	689a      	ldr	r2, [r3, #8]
-10002516:	693b      	ldr	r3, [r7, #16]
-10002518:	b29b      	uxth	r3, r3
-1000251a:	1c10      	adds	r0, r2, #0
-1000251c:	2100      	movs	r1, #0
-1000251e:	1c1a      	adds	r2, r3, #0
-10002520:	f7ff fb30 	bl	10001b84 <XMC_CCU8_SLICE_SetTimerCompareMatch>
-                                              (uint16_t) compare_ch1);
-          XMC_CCU8_SLICE_SetTimerCompareMatch(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_COMPARE_CHANNEL_2,
-10002524:	687b      	ldr	r3, [r7, #4]
-10002526:	689a      	ldr	r2, [r3, #8]
+        compare_ch1 = ((2U * period * shift) / PWM_CCU8_DUTY_FULL_SCALE);
+10002448:	69bb      	ldr	r3, [r7, #24]
+1000244a:	68ba      	ldr	r2, [r7, #8]
+1000244c:	4353      	muls	r3, r2
+1000244e:	005b      	lsls	r3, r3, #1
+10002450:	1c18      	adds	r0, r3, #0
+10002452:	4942      	ldr	r1, [pc, #264]	; (1000255c <PWM_CCU8_SetDutyCycleAsymmetric+0x178>)
+10002454:	f7ff fc1e 	bl	10001c94 <__aeabi_uidiv>
+10002458:	1c03      	adds	r3, r0, #0
+1000245a:	617b      	str	r3, [r7, #20]
+        compare_ch2 = ((2U * period * (PWM_CCU8_DUTY_FULL_SCALE - (shift + duty_cycle))) / PWM_CCU8_DUTY_FULL_SCALE);
+1000245c:	68ba      	ldr	r2, [r7, #8]
+1000245e:	687b      	ldr	r3, [r7, #4]
+10002460:	18d3      	adds	r3, r2, r3
+10002462:	4a3e      	ldr	r2, [pc, #248]	; (1000255c <PWM_CCU8_SetDutyCycleAsymmetric+0x178>)
+10002464:	1ad3      	subs	r3, r2, r3
+10002466:	69ba      	ldr	r2, [r7, #24]
+10002468:	4353      	muls	r3, r2
+1000246a:	005b      	lsls	r3, r3, #1
+1000246c:	1c18      	adds	r0, r3, #0
+1000246e:	493b      	ldr	r1, [pc, #236]	; (1000255c <PWM_CCU8_SetDutyCycleAsymmetric+0x178>)
+10002470:	f7ff fc10 	bl	10001c94 <__aeabi_uidiv>
+10002474:	1c03      	adds	r3, r0, #0
+10002476:	613b      	str	r3, [r7, #16]
+
+        XMC_CCU8_SLICE_SetTimerCompareMatch(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_COMPARE_CHANNEL_1,
+10002478:	68fb      	ldr	r3, [r7, #12]
+1000247a:	689a      	ldr	r2, [r3, #8]
+1000247c:	697b      	ldr	r3, [r7, #20]
+1000247e:	b29b      	uxth	r3, r3
+10002480:	1c10      	adds	r0, r2, #0
+10002482:	2100      	movs	r1, #0
+10002484:	1c1a      	adds	r2, r3, #0
+10002486:	f7ff fb7d 	bl	10001b84 <XMC_CCU8_SLICE_SetTimerCompareMatch>
+                                            (uint16_t) compare_ch1);
+        XMC_CCU8_SLICE_SetTimerCompareMatch(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_COMPARE_CHANNEL_2,
+1000248a:	68fb      	ldr	r3, [r7, #12]
+1000248c:	689a      	ldr	r2, [r3, #8]
+1000248e:	693b      	ldr	r3, [r7, #16]
+10002490:	b29b      	uxth	r3, r3
+10002492:	1c10      	adds	r0, r2, #0
+10002494:	2101      	movs	r1, #1
+10002496:	1c1a      	adds	r2, r3, #0
+10002498:	f7ff fb74 	bl	10001b84 <XMC_CCU8_SLICE_SetTimerCompareMatch>
+                                            (uint16_t) compare_ch2);
+        XMC_CCU8_EnableShadowTransfer(handle_ptr->ccu8_module_ptr, handle_ptr->shadow_txfr_msk);
+1000249c:	68fb      	ldr	r3, [r7, #12]
+1000249e:	685a      	ldr	r2, [r3, #4]
+100024a0:	68fb      	ldr	r3, [r7, #12]
+100024a2:	691b      	ldr	r3, [r3, #16]
+100024a4:	1c10      	adds	r0, r2, #0
+100024a6:	1c19      	adds	r1, r3, #0
+100024a8:	f7ff fc56 	bl	10001d58 <XMC_CCU8_EnableShadowTransfer>
+
+        handle_ptr->asym_duty = duty_cycle;
+100024ac:	68fb      	ldr	r3, [r7, #12]
+100024ae:	687a      	ldr	r2, [r7, #4]
+100024b0:	62da      	str	r2, [r3, #44]	; 0x2c
+        handle_ptr->asym_shift = shift;
+100024b2:	68fb      	ldr	r3, [r7, #12]
+100024b4:	68ba      	ldr	r2, [r7, #8]
+100024b6:	631a      	str	r2, [r3, #48]	; 0x30
+
+        XMC_DEBUG("PWM_CCU8_SetDutyCycleAsymmetric:dutycycle set center aligned mode");
+        status = PWM_CCU8_STATUS_SUCCESS;
+100024b8:	231f      	movs	r3, #31
+100024ba:	18fb      	adds	r3, r7, r3
+100024bc:	2200      	movs	r2, #0
+100024be:	701a      	strb	r2, [r3, #0]
+100024c0:	e044      	b.n	1000254c <PWM_CCU8_SetDutyCycleAsymmetric+0x168>
+
+    }
+    else
+    {
+      /*edge aligned mode*/
+      if (((shift + duty_cycle) > PWM_CCU8_ASYM_EA_MAX))
+100024c2:	68ba      	ldr	r2, [r7, #8]
+100024c4:	687b      	ldr	r3, [r7, #4]
+100024c6:	18d3      	adds	r3, r2, r3
+100024c8:	4a24      	ldr	r2, [pc, #144]	; (1000255c <PWM_CCU8_SetDutyCycleAsymmetric+0x178>)
+100024ca:	4293      	cmp	r3, r2
+100024cc:	d83e      	bhi.n	1000254c <PWM_CCU8_SetDutyCycleAsymmetric+0x168>
+      {
+        XMC_DEBUG("PWM_CCU8_SetDutyCycleAsymmetric:Cannot set edge aligned mode (shift + duty_cycle) > 100%%");
+      }
+      else
+      {
+        period = (uint32_t) XMC_CCU8_SLICE_GetTimerPeriodMatch(handle_ptr->ccu8_slice_ptr);
+100024ce:	68fb      	ldr	r3, [r7, #12]
+100024d0:	689b      	ldr	r3, [r3, #8]
+100024d2:	1c18      	adds	r0, r3, #0
+100024d4:	f7ff fc34 	bl	10001d40 <XMC_CCU8_SLICE_GetTimerPeriodMatch>
+100024d8:	1c03      	adds	r3, r0, #0
+100024da:	61bb      	str	r3, [r7, #24]
+
+        compare_ch1 = ((period * shift) / PWM_CCU8_DUTY_FULL_SCALE);
+100024dc:	69bb      	ldr	r3, [r7, #24]
+100024de:	68ba      	ldr	r2, [r7, #8]
+100024e0:	4353      	muls	r3, r2
+100024e2:	1c18      	adds	r0, r3, #0
+100024e4:	491d      	ldr	r1, [pc, #116]	; (1000255c <PWM_CCU8_SetDutyCycleAsymmetric+0x178>)
+100024e6:	f7ff fbd5 	bl	10001c94 <__aeabi_uidiv>
+100024ea:	1c03      	adds	r3, r0, #0
+100024ec:	617b      	str	r3, [r7, #20]
+        compare_ch2 = ((period * (shift + duty_cycle)) / PWM_CCU8_DUTY_FULL_SCALE);
+100024ee:	68ba      	ldr	r2, [r7, #8]
+100024f0:	687b      	ldr	r3, [r7, #4]
+100024f2:	18d3      	adds	r3, r2, r3
+100024f4:	69ba      	ldr	r2, [r7, #24]
+100024f6:	4353      	muls	r3, r2
+100024f8:	1c18      	adds	r0, r3, #0
+100024fa:	4918      	ldr	r1, [pc, #96]	; (1000255c <PWM_CCU8_SetDutyCycleAsymmetric+0x178>)
+100024fc:	f7ff fbca 	bl	10001c94 <__aeabi_uidiv>
+10002500:	1c03      	adds	r3, r0, #0
+10002502:	613b      	str	r3, [r7, #16]
+
+        XMC_CCU8_SLICE_SetTimerCompareMatch(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_COMPARE_CHANNEL_1,
+10002504:	68fb      	ldr	r3, [r7, #12]
+10002506:	689a      	ldr	r2, [r3, #8]
+10002508:	697b      	ldr	r3, [r7, #20]
+1000250a:	b29b      	uxth	r3, r3
+1000250c:	1c10      	adds	r0, r2, #0
+1000250e:	2100      	movs	r1, #0
+10002510:	1c1a      	adds	r2, r3, #0
+10002512:	f7ff fb37 	bl	10001b84 <XMC_CCU8_SLICE_SetTimerCompareMatch>
+                                            (uint16_t) compare_ch1);
+        XMC_CCU8_SLICE_SetTimerCompareMatch(handle_ptr->ccu8_slice_ptr, XMC_CCU8_SLICE_COMPARE_CHANNEL_2,
+10002516:	68fb      	ldr	r3, [r7, #12]
+10002518:	689a      	ldr	r2, [r3, #8]
+1000251a:	693b      	ldr	r3, [r7, #16]
+1000251c:	b29b      	uxth	r3, r3
+1000251e:	1c10      	adds	r0, r2, #0
+10002520:	2101      	movs	r1, #1
+10002522:	1c1a      	adds	r2, r3, #0
+10002524:	f7ff fb2e 	bl	10001b84 <XMC_CCU8_SLICE_SetTimerCompareMatch>
+                                            (uint16_t) compare_ch2);
+        XMC_CCU8_EnableShadowTransfer(handle_ptr->ccu8_module_ptr, handle_ptr->shadow_txfr_msk);
 10002528:	68fb      	ldr	r3, [r7, #12]
-1000252a:	b29b      	uxth	r3, r3
-1000252c:	1c10      	adds	r0, r2, #0
-1000252e:	2101      	movs	r1, #1
-10002530:	1c1a      	adds	r2, r3, #0
-10002532:	f7ff fb27 	bl	10001b84 <XMC_CCU8_SLICE_SetTimerCompareMatch>
-                                              (uint16_t) compare_ch2);
-          XMC_CCU8_EnableShadowTransfer(handle_ptr->ccu8_module_ptr, handle_ptr->shadow_txfr_msk);
-10002536:	687b      	ldr	r3, [r7, #4]
-10002538:	685a      	ldr	r2, [r3, #4]
-1000253a:	687b      	ldr	r3, [r7, #4]
-1000253c:	691b      	ldr	r3, [r3, #16]
-1000253e:	1c10      	adds	r0, r2, #0
-10002540:	1c19      	adds	r1, r3, #0
-10002542:	f7ff fbfd 	bl	10001d40 <XMC_CCU8_EnableShadowTransfer>
-          XMC_DEBUG("PWM_CCU8_SetPwmFreq:frequency set edge aligned mode");
-          status = PWM_CCU8_STATUS_SUCCESS;
-10002546:	2327      	movs	r3, #39	; 0x27
-10002548:	18fb      	adds	r3, r7, r3
-1000254a:	2200      	movs	r2, #0
-1000254c:	701a      	strb	r2, [r3, #0]
-        }
+1000252a:	685a      	ldr	r2, [r3, #4]
+1000252c:	68fb      	ldr	r3, [r7, #12]
+1000252e:	691b      	ldr	r3, [r3, #16]
+10002530:	1c10      	adds	r0, r2, #0
+10002532:	1c19      	adds	r1, r3, #0
+10002534:	f7ff fc10 	bl	10001d58 <XMC_CCU8_EnableShadowTransfer>
+
+        handle_ptr->asym_duty = duty_cycle;
+10002538:	68fb      	ldr	r3, [r7, #12]
+1000253a:	687a      	ldr	r2, [r7, #4]
+1000253c:	62da      	str	r2, [r3, #44]	; 0x2c
+        handle_ptr->asym_shift = shift;
+1000253e:	68fb      	ldr	r3, [r7, #12]
+10002540:	68ba      	ldr	r2, [r7, #8]
+10002542:	631a      	str	r2, [r3, #48]	; 0x30
+
+        XMC_DEBUG("PWM_CCU8_SetDutyCycleAsymmetric:dutycycle set edge aligned mode");
+        status = PWM_CCU8_STATUS_SUCCESS;
+10002544:	231f      	movs	r3, #31
+10002546:	18fb      	adds	r3, r7, r3
+10002548:	2200      	movs	r2, #0
+1000254a:	701a      	strb	r2, [r3, #0]
       }
     }
   }
   return (status);
-1000254e:	2327      	movs	r3, #39	; 0x27
-10002550:	18fb      	adds	r3, r7, r3
-10002552:	781b      	ldrb	r3, [r3, #0]
-}/* end of PWM_CCU8_SetFreqAsymmetric() api */
-10002554:	1c18      	adds	r0, r3, #0
-10002556:	46bd      	mov	sp, r7
-10002558:	b00a      	add	sp, #40	; 0x28
-1000255a:	bd80      	pop	{r7, pc}
-1000255c:	0000ffff 	.word	0x0000ffff
-10002560:	00002710 	.word	0x00002710
+1000254c:	231f      	movs	r3, #31
+1000254e:	18fb      	adds	r3, r7, r3
+10002550:	781b      	ldrb	r3, [r3, #0]
+}/* end of PWM_CCU8_SetDutyCycleAsymmetric() api */
+10002552:	1c18      	adds	r0, r3, #0
+10002554:	46bd      	mov	sp, r7
+10002556:	b008      	add	sp, #32
+10002558:	bd80      	pop	{r7, pc}
+1000255a:	46c0      	nop			; (mov r8, r8)
+1000255c:	00002710 	.word	0x00002710
+10002560:	00001387 	.word	0x00001387
 
 10002564 <XMC_CCU8_StartPrescaler>:
  * \par<b>Related APIs:</b><br>
@@ -4596,7 +4612,7 @@ const XMC_SCU_CLOCK_CONFIG_t CLOCK_XMC1_0_CONFIG =
 10002656:	46bd      	mov	sp, r7
 10002658:	b005      	add	sp, #20
 1000265a:	bd90      	pop	{r4, r7, pc}
-1000265c:	10002868 	.word	0x10002868
+1000265c:	10002858 	.word	0x10002858
 
 10002660 <DAVE_Init>:
  * @param[in]  None
@@ -4634,7 +4650,7 @@ __WEAK DAVE_STATUS_t DAVE_Init(void)
 10002682:	1dfc      	adds	r4, r7, #7
 10002684:	4b06      	ldr	r3, [pc, #24]	; (100026a0 <DAVE_Init+0x40>)
 10002686:	1c18      	adds	r0, r3, #0
-10002688:	f7ff fb96 	bl	10001db8 <PWM_CCU8_Init>
+10002688:	f7ff fba2 	bl	10001dd0 <PWM_CCU8_Init>
 1000268c:	1c03      	adds	r3, r0, #0
 1000268e:	7023      	strb	r3, [r4, #0]
    }  
@@ -4656,177 +4672,157 @@ __WEAK DAVE_STATUS_t DAVE_Init(void)
 
 int main(void)
 {
-100026a4:	b590      	push	{r4, r7, lr}
-100026a6:	b087      	sub	sp, #28
+100026a4:	b580      	push	{r7, lr}
+100026a6:	b084      	sub	sp, #16
 100026a8:	af00      	add	r7, sp, #0
-  DAVE_STATUS_t status;
+  DAVE_Init();           /* Initialization of DAVE APPs  */
+100026aa:	f7ff ffd9 	bl	10002660 <DAVE_Init>
 
-  status = DAVE_Init();           /* Initialization of DAVE APPs  */
-100026aa:	230f      	movs	r3, #15
-100026ac:	18fc      	adds	r4, r7, r3
-100026ae:	f7ff ffd7 	bl	10002660 <DAVE_Init>
-100026b2:	1c03      	adds	r3, r0, #0
-100026b4:	7023      	strb	r3, [r4, #0]
+  int duty_A=1000; //duty cycle = 10%
+100026ae:	23fa      	movs	r3, #250	; 0xfa
+100026b0:	009b      	lsls	r3, r3, #2
+100026b2:	607b      	str	r3, [r7, #4]
+  int duty_B=9000; //duty cycle = 90%
+100026b4:	4b11      	ldr	r3, [pc, #68]	; (100026fc <main+0x58>)
+100026b6:	603b      	str	r3, [r7, #0]
+  int duty=5000; //duty cycle = 50%
+100026b8:	4b11      	ldr	r3, [pc, #68]	; (10002700 <main+0x5c>)
+100026ba:	60fb      	str	r3, [r7, #12]
+  int i=0; //counter variable
+100026bc:	2300      	movs	r3, #0
+100026be:	60bb      	str	r3, [r7, #8]
 
-  if (status != DAVE_STATUS_SUCCESS)
-100026b6:	230f      	movs	r3, #15
-100026b8:	18fb      	adds	r3, r7, r3
-100026ba:	781b      	ldrb	r3, [r3, #0]
-100026bc:	2b00      	cmp	r3, #0
-100026be:	d000      	beq.n	100026c2 <main+0x1e>
-    XMC_DEBUG("DAVE APPs initialization failed\n");
-
-    while(1U)
-    {
-
-    }
-100026c0:	e7fe      	b.n	100026c0 <main+0x1c>
-  }
-
-  int duty_A=1000;
-100026c2:	23fa      	movs	r3, #250	; 0xfa
-100026c4:	009b      	lsls	r3, r3, #2
-100026c6:	60bb      	str	r3, [r7, #8]
-  int duty_B=9000;
-100026c8:	4b10      	ldr	r3, [pc, #64]	; (1000270c <main+0x68>)
-100026ca:	607b      	str	r3, [r7, #4]
-  int duty=5000;
-100026cc:	4b10      	ldr	r3, [pc, #64]	; (10002710 <main+0x6c>)
-100026ce:	617b      	str	r3, [r7, #20]
-  int i=0;
-100026d0:	2300      	movs	r3, #0
-100026d2:	613b      	str	r3, [r7, #16]
-
-  /* Placeholder for user application code. The while loop below can be replaced with user application code. */
   while(1U)
   {
 	  if(i==50000){
-100026d4:	693b      	ldr	r3, [r7, #16]
-100026d6:	4a0f      	ldr	r2, [pc, #60]	; (10002714 <main+0x70>)
-100026d8:	4293      	cmp	r3, r2
-100026da:	d101      	bne.n	100026e0 <main+0x3c>
+100026c0:	68bb      	ldr	r3, [r7, #8]
+100026c2:	4a10      	ldr	r2, [pc, #64]	; (10002704 <main+0x60>)
+100026c4:	4293      	cmp	r3, r2
+100026c6:	d101      	bne.n	100026cc <main+0x28>
 		  duty=duty_A;
-100026dc:	68bb      	ldr	r3, [r7, #8]
-100026de:	617b      	str	r3, [r7, #20]
+100026c8:	687b      	ldr	r3, [r7, #4]
+100026ca:	60fb      	str	r3, [r7, #12]
 	  }
 	  if(i==100000){
-100026e0:	693b      	ldr	r3, [r7, #16]
-100026e2:	4a0d      	ldr	r2, [pc, #52]	; (10002718 <main+0x74>)
-100026e4:	4293      	cmp	r3, r2
-100026e6:	d101      	bne.n	100026ec <main+0x48>
+100026cc:	68bb      	ldr	r3, [r7, #8]
+100026ce:	4a0e      	ldr	r2, [pc, #56]	; (10002708 <main+0x64>)
+100026d0:	4293      	cmp	r3, r2
+100026d2:	d101      	bne.n	100026d8 <main+0x34>
 		  duty=duty_B;
-100026e8:	687b      	ldr	r3, [r7, #4]
-100026ea:	617b      	str	r3, [r7, #20]
+100026d4:	683b      	ldr	r3, [r7, #0]
+100026d6:	60fb      	str	r3, [r7, #12]
 	  }
 	  if(i==150000){
-100026ec:	693b      	ldr	r3, [r7, #16]
-100026ee:	4a0b      	ldr	r2, [pc, #44]	; (1000271c <main+0x78>)
-100026f0:	4293      	cmp	r3, r2
-100026f2:	d101      	bne.n	100026f8 <main+0x54>
+100026d8:	68bb      	ldr	r3, [r7, #8]
+100026da:	4a0c      	ldr	r2, [pc, #48]	; (1000270c <main+0x68>)
+100026dc:	4293      	cmp	r3, r2
+100026de:	d101      	bne.n	100026e4 <main+0x40>
 		  i=0;
-100026f4:	2300      	movs	r3, #0
-100026f6:	613b      	str	r3, [r7, #16]
+100026e0:	2300      	movs	r3, #0
+100026e2:	60bb      	str	r3, [r7, #8]
 	  }
 
-	  PWM_CCU8_SetFreqAsymmetric(&PWM_CCU8_0, duty);
-100026f8:	697b      	ldr	r3, [r7, #20]
-100026fa:	4a09      	ldr	r2, [pc, #36]	; (10002720 <main+0x7c>)
-100026fc:	1c10      	adds	r0, r2, #0
-100026fe:	1c19      	adds	r1, r3, #0
-10002700:	f7ff fe64 	bl	100023cc <PWM_CCU8_SetFreqAsymmetric>
-	  i++;
-10002704:	693b      	ldr	r3, [r7, #16]
-10002706:	3301      	adds	r3, #1
-10002708:	613b      	str	r3, [r7, #16]
+	  PWM_CCU8_SetDutyCycleAsymmetric(&PWM_CCU8_0, 0, duty); //sets the duty cycle to value of duty
+100026e4:	68fb      	ldr	r3, [r7, #12]
+100026e6:	4a0a      	ldr	r2, [pc, #40]	; (10002710 <main+0x6c>)
+100026e8:	1c10      	adds	r0, r2, #0
+100026ea:	2100      	movs	r1, #0
+100026ec:	1c1a      	adds	r2, r3, #0
+100026ee:	f7ff fe79 	bl	100023e4 <PWM_CCU8_SetDutyCycleAsymmetric>
+	  i++; //counter i + 1
+100026f2:	68bb      	ldr	r3, [r7, #8]
+100026f4:	3301      	adds	r3, #1
+100026f6:	60bb      	str	r3, [r7, #8]
   }
-1000270a:	e7e3      	b.n	100026d4 <main+0x30>
-1000270c:	00002328 	.word	0x00002328
-10002710:	00001388 	.word	0x00001388
-10002714:	0000c350 	.word	0x0000c350
-10002718:	000186a0 	.word	0x000186a0
-1000271c:	000249f0 	.word	0x000249f0
-10002720:	20000548 	.word	0x20000548
+100026f8:	e7e2      	b.n	100026c0 <main+0x1c>
+100026fa:	46c0      	nop			; (mov r8, r8)
+100026fc:	00002328 	.word	0x00002328
+10002700:	00001388 	.word	0x00001388
+10002704:	0000c350 	.word	0x0000c350
+10002708:	000186a0 	.word	0x000186a0
+1000270c:	000249f0 	.word	0x000249f0
+10002710:	20000548 	.word	0x20000548
 
-10002724 <__libc_init_array>:
-10002724:	4b0e      	ldr	r3, [pc, #56]	; (10002760 <__libc_init_array+0x3c>)
-10002726:	b570      	push	{r4, r5, r6, lr}
-10002728:	2500      	movs	r5, #0
-1000272a:	1c1e      	adds	r6, r3, #0
-1000272c:	4c0d      	ldr	r4, [pc, #52]	; (10002764 <__libc_init_array+0x40>)
-1000272e:	1ae4      	subs	r4, r4, r3
-10002730:	10a4      	asrs	r4, r4, #2
-10002732:	42a5      	cmp	r5, r4
-10002734:	d004      	beq.n	10002740 <__libc_init_array+0x1c>
-10002736:	00ab      	lsls	r3, r5, #2
-10002738:	58f3      	ldr	r3, [r6, r3]
-1000273a:	4798      	blx	r3
-1000273c:	3501      	adds	r5, #1
-1000273e:	e7f8      	b.n	10002732 <__libc_init_array+0xe>
-10002740:	f7ff fad0 	bl	10001ce4 <_init>
-10002744:	4b08      	ldr	r3, [pc, #32]	; (10002768 <__libc_init_array+0x44>)
-10002746:	2500      	movs	r5, #0
-10002748:	1c1e      	adds	r6, r3, #0
-1000274a:	4c08      	ldr	r4, [pc, #32]	; (1000276c <__libc_init_array+0x48>)
-1000274c:	1ae4      	subs	r4, r4, r3
-1000274e:	10a4      	asrs	r4, r4, #2
-10002750:	42a5      	cmp	r5, r4
-10002752:	d004      	beq.n	1000275e <__libc_init_array+0x3a>
-10002754:	00ab      	lsls	r3, r5, #2
-10002756:	58f3      	ldr	r3, [r6, r3]
-10002758:	4798      	blx	r3
-1000275a:	3501      	adds	r5, #1
-1000275c:	e7f8      	b.n	10002750 <__libc_init_array+0x2c>
-1000275e:	bd70      	pop	{r4, r5, r6, pc}
-10002760:	2000058c 	.word	0x2000058c
-10002764:	2000058c 	.word	0x2000058c
-10002768:	2000058c 	.word	0x2000058c
-1000276c:	2000058c 	.word	0x2000058c
-10002770:	10001be6 	.word	0x10001be6
-10002774:	10001be6 	.word	0x10001be6
-10002778:	10001bf0 	.word	0x10001bf0
-1000277c:	10001bf0 	.word	0x10001bf0
-10002780:	10001bfa 	.word	0x10001bfa
-10002784:	10001bfa 	.word	0x10001bfa
-10002788:	10001c28 	.word	0x10001c28
-1000278c:	10001c28 	.word	0x10001c28
-10002790:	10001c04 	.word	0x10001c04
-10002794:	10001c10 	.word	0x10001c10
-10002798:	10001c1c 	.word	0x10001c1c
-1000279c:	10001c1c 	.word	0x10001c1c
+10002714 <__libc_init_array>:
+10002714:	4b0e      	ldr	r3, [pc, #56]	; (10002750 <__libc_init_array+0x3c>)
+10002716:	b570      	push	{r4, r5, r6, lr}
+10002718:	2500      	movs	r5, #0
+1000271a:	1c1e      	adds	r6, r3, #0
+1000271c:	4c0d      	ldr	r4, [pc, #52]	; (10002754 <__libc_init_array+0x40>)
+1000271e:	1ae4      	subs	r4, r4, r3
+10002720:	10a4      	asrs	r4, r4, #2
+10002722:	42a5      	cmp	r5, r4
+10002724:	d004      	beq.n	10002730 <__libc_init_array+0x1c>
+10002726:	00ab      	lsls	r3, r5, #2
+10002728:	58f3      	ldr	r3, [r6, r3]
+1000272a:	4798      	blx	r3
+1000272c:	3501      	adds	r5, #1
+1000272e:	e7f8      	b.n	10002722 <__libc_init_array+0xe>
+10002730:	f7ff fad8 	bl	10001ce4 <_init>
+10002734:	4b08      	ldr	r3, [pc, #32]	; (10002758 <__libc_init_array+0x44>)
+10002736:	2500      	movs	r5, #0
+10002738:	1c1e      	adds	r6, r3, #0
+1000273a:	4c08      	ldr	r4, [pc, #32]	; (1000275c <__libc_init_array+0x48>)
+1000273c:	1ae4      	subs	r4, r4, r3
+1000273e:	10a4      	asrs	r4, r4, #2
+10002740:	42a5      	cmp	r5, r4
+10002742:	d004      	beq.n	1000274e <__libc_init_array+0x3a>
+10002744:	00ab      	lsls	r3, r5, #2
+10002746:	58f3      	ldr	r3, [r6, r3]
+10002748:	4798      	blx	r3
+1000274a:	3501      	adds	r5, #1
+1000274c:	e7f8      	b.n	10002740 <__libc_init_array+0x2c>
+1000274e:	bd70      	pop	{r4, r5, r6, pc}
+10002750:	2000058c 	.word	0x2000058c
+10002754:	2000058c 	.word	0x2000058c
+10002758:	2000058c 	.word	0x2000058c
+1000275c:	2000058c 	.word	0x2000058c
+10002760:	10001be6 	.word	0x10001be6
+10002764:	10001be6 	.word	0x10001be6
+10002768:	10001bf0 	.word	0x10001bf0
+1000276c:	10001bf0 	.word	0x10001bf0
+10002770:	10001bfa 	.word	0x10001bfa
+10002774:	10001bfa 	.word	0x10001bfa
+10002778:	10001c28 	.word	0x10001c28
+1000277c:	10001c28 	.word	0x10001c28
+10002780:	10001c04 	.word	0x10001c04
+10002784:	10001c10 	.word	0x10001c10
+10002788:	10001c1c 	.word	0x10001c1c
+1000278c:	10001c1c 	.word	0x10001c1c
 
-100027a0 <PWM_CCU8_0_timer_handle>:
+10002790 <PWM_CCU8_0_timer_handle>:
 	...
-100027a8:	00000014 00000000                       ........
+10002798:	00000014 00000000                       ........
 
-100027b0 <PWM_CCU8_0_event0_config>:
-100027b0:	00010000                                ....
+100027a0 <PWM_CCU8_0_event0_config>:
+100027a0:	00010000                                ....
 
-100027b4 <PWM_CCU8_0_event1_config>:
-100027b4:	00010000                                ....
+100027a4 <PWM_CCU8_0_event1_config>:
+100027a4:	00010000                                ....
 
-100027b8 <PWM_CCU8_0_event2_config>:
-100027b8:	00010000                                ....
+100027a8 <PWM_CCU8_0_event2_config>:
+100027a8:	00010000                                ....
 
-100027bc <PWM_CCU8_0_dt_config>:
-100027bc:	0000000d 00000404 00000000              ............
+100027ac <PWM_CCU8_0_dt_config>:
+100027ac:	0000000d 00000404 00000000              ............
 
-100027c8 <PWM_CCU8_0_ch1_out0_config>:
-100027c8:	000000a8 00010000                       ........
+100027b8 <PWM_CCU8_0_ch1_out0_config>:
+100027b8:	000000a8 00010000                       ........
 
-100027d0 <PWM_CCU8_0_ch1_out1_config>:
-100027d0:	000000b8 00010000                       ........
+100027c0 <PWM_CCU8_0_ch1_out1_config>:
+100027c0:	000000b8 00010000                       ........
 
-100027d8 <PWM_CCU8_0_config_handle>:
-100027d8:	013f0000 009f00dc 00000000 00000000     ..?.............
+100027c8 <PWM_CCU8_0_config_handle>:
+100027c8:	013f0001 009f00dc 00000000 00000000     ..?.............
 	...
-100027f4:	100027b0 100027b4 100027b8 00000000     .'...'...'......
+100027e4:	100027a0 100027a4 100027a8 00000000     .'...'...'......
 	...
-10002810:	00000001 04000000 100027bc 00000001     .........'......
-10002820:	100027a0 00000001 40040000 00000000     .'.........@....
-10002830:	100027c8 00000001 40040000 00000005     .'.........@....
-10002840:	100027d0 00000000 00000000 00000000     .'..............
+10002800:	00000001 04000000 100027ac 00000001     .........'......
+10002810:	10002790 00000001 40040000 00000000     .'.........@....
+10002820:	100027b8 00000001 40040000 00000005     .'.........@....
+10002830:	100027c0 00000000 00000000 00000000     .'..............
 	...
-10002864:	2000057c 00000100 00010000 00000000     |.. ............
+10002854:	2000057c 00000100 00010000 00000000     |.. ............
 
 Disassembly of section .VENEER_Code:
 

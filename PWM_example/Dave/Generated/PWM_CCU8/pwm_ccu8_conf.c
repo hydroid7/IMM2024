@@ -187,7 +187,7 @@
 
         const PWM_CCU8_CONFIG_t  PWM_CCU8_0_config_handle =
             {
-                .start_control                       = false,      
+                .start_control                       = true,      
                 .period_value                        = 319U,
                 .compare1_value                      = 220U,
                 .compare2_value                      = 159U,

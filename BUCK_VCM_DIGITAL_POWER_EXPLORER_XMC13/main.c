@@ -87,8 +87,8 @@
 #define A2 (-0.128482591507)
 #define A3 (-0.100035918339)
 #define K (+1.0 )//K (+2.709991763927)
-//#define REF (755) //VOUT=20V
-#define REF (1125) //VOUT=30V
+#define REF (755) //VOUT=20V
+//#define REF (1125) //VOUT=30V
 //#define REF (3000) //VOUT=30V @150kHz
 //#define REF (389) //VOUT=10V
 #define DUTY_TICKS_MIN (0)

@@ -85,7 +85,7 @@
   99              	 .section .rodata.PWM_CCU8_0_config_handle,"a",%progbits
  100              	 .align 2
  103              	PWM_CCU8_0_config_handle:
- 104 0000 00       	 .byte 0
+ 104 0000 01       	 .byte 1
  105 0001 00       	 .space 1
  106 0002 3F01     	 .short 319
  107 0004 DC00     	 .short 220

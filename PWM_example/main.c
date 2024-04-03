@@ -22,9 +22,7 @@
 
 int main(void)
 {
-  DAVE_STATUS_t status;
-
-  status = DAVE_Init();           /* Initialization of DAVE APPs  */
+  DAVE_Init();           /* Initialization of DAVE APPs  */
 
   int duty_A=1000; //duty cycle = 10%
   int duty_B=9000; //duty cycle = 90%
@@ -43,7 +41,7 @@ int main(void)
 		  i=0;
 	  }
 
-	  PWM_CCU8_SetFreqAsymmetric(&PWM_CCU8_0, duty); //sets the duty cycle to value of duty
+	  PWM_CCU8_SetDutyCycleAsymmetric(&PWM_CCU8_0, 0, duty); //sets the duty cycle to value of duty
 	  i++; //counter i + 1
   }
 }
