@@ -1,9 +1,5 @@
 # Industry Meets Makers 2024 @ Infineon \#IMM24
 
-<a href="https://www.infineon.com">
-<img src="./assets/images/Logo.svg" align="right" alt="Infineon logo">
-</a>
-
 <p>This is the official Infineon GitHub repository for Industry Meets Makers 2024.</p>
 
 ## Intended use cases
