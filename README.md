@@ -14,3 +14,7 @@
     - Testing
     - Documentation
 - Optional: Use boost circuit to keep highside constant on to lower the materials count.
+
+# Device Details
+
+[](./pinout.png)
