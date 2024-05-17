@@ -6,11 +6,11 @@
 
 <p>These examples can be used as a starting point for your project. They are meant to be used with DAVE 4.5.0</p>
 
-# How to use this repository
-<ol>
-<li> Start DAVE 4.5.0
-<li> Import the project by clicking 'File', 'Import...', 'Infineon/DAVE Project', 'Next', 'Select Root Directory', check 'Copy Projects Into Workspace', selecting the folder 'BUCK_VCM_DIGITAL_POWER_EXPLORER_XMC13' and 'Finish'
-</ol>
+# Tasks
 
-
-
+- Create a Maximum Power Point Tracking (MPPT) algorithm.
+- Develop a MPPT control structure to be integrated into the existing SW framework:
+    - Firmware implementation
+    - Testing
+    - Documentation
+- Optional: Use boost circuit to keep highside constant on to lower the materials count.
