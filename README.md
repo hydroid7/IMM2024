@@ -17,4 +17,4 @@
 
 # Device Details
 
-[](./pinout.png)
+![](./pinout.png)
