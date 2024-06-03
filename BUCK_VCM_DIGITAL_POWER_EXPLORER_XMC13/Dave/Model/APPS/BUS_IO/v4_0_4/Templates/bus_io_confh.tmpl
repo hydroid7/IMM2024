@@ -1,6 +1,6 @@
-package Model.APPS.DIGITAL_IO.v4_0_18.Templates;
+package Model.APPS.BUS_IO.v4_0_4.Templates;
 
-import Model.APPS.DIGITAL_IO.v4_0_18.DIGITAL_IO
+import Model.APPS.BUS_IO.v4_0_4.BUS_IO
 
 out.print("""
 /**
@@ -37,10 +37,8 @@ out.print("""
  * Change History
  * --------------
  *
- * 2015-02-16:
+ * 2016-04-06
  *     - Initial version<br>
- * 2016-07-08:
- *     - Fixed incorrect case for an included header.<br>
  *
  * @endcond
  *
@@ -54,16 +52,14 @@ out.print("""
  * MACROS
  **********************************************************************************************************************/
 
-#ifndef DIGITAL_IO_CONF_H_
-#define DIGITAL_IO_CONF_H_
+#ifndef BUS_IO_CONF_H_
+#define BUS_IO_CONF_H_
 
 
-#define DIGITAL_IO_MAJOR_VERSION (${(DIGITAL_IO.version).findAll( /\d+/ )*.toInteger()[0]}U)
-#define DIGITAL_IO_MINOR_VERSION (${(DIGITAL_IO.version).findAll( /\d+/ )*.toInteger()[1]}U)
-#define DIGITAL_IO_PATCH_VERSION (${(DIGITAL_IO.version).findAll( /\d+/ )*.toInteger()[2]}U)
+#define BUS_IO_MAJOR_VERSION (${BUS_IO.version.split("\\.")[0]}U)
+#define BUS_IO_MINOR_VERSION (${BUS_IO.version.split("\\.")[1]}U)
+#define BUS_IO_PATCH_VERSION (${BUS_IO.version.split("\\.")[2]}U)
 
-#endif /* End of _CONF_DIGITAL_IO_H_ */
+#endif /* End of _CONF_BUS_IO_H_ */
 
-/*CODE_BLOCK_END*/
-
-""");
+/*CODE_BLOCK_END*/ """);

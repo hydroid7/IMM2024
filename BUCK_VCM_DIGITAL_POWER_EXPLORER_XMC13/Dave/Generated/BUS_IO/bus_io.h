@@ -1,6 +1,5 @@
 /*
- *
- * @file digital_io.h
+ * @file bus_io.h
  * @date 2021-01-08
  *
  * NOTE:
@@ -8,7 +7,7 @@
  *
  * @cond
  ***********************************************************************************************************************
- * DIGITAL_IO v4.0.18 - The DIGITAL_IO APP is used to configure a port pin as digital Input/Output.
+ * BUS_IO v4.0.4 - BUS_IO APP is used to configure/control several GPIO pins as one entity.
  *
  * Copyright (c) 2015-2020, Infineon Technologies AG
  * All rights reserved.
@@ -40,19 +39,9 @@
  * Change History
  * --------------
  *
- * 2015-02-16
- *     - Initial version
+ * 2016-04-01
+ *     - Initial version.<br>
  *
- * 2015-04-22
- *     - XMC_ASSERT is added in static inline functions.<br>
- *
- * 2015-06-20
- *     - Version check added for XMCLib dependency.<br>
- *
- * 2015-12-22
- *     - Added hardware controlled IO feature.
- * 2016-07-08:
- *     - Fixed incorrect case for an included header.<br>
  * 2021-01-08:
  *     - Modified check for minimum XMCLib version
  *
@@ -64,24 +53,24 @@
  * HEADER FILES
  **********************************************************************************************************************/
 
-#ifndef DIGITAL_IO_H
-#define DIGITAL_IO_H
+#ifndef BUS_IO_H
+#define BUS_IO_H
 
 #include "xmc_gpio.h"
 #include "DAVE_Common.h"
-#include "digital_io_conf.h"
+#include "bus_io_conf.h"
 
 /***********************************************************************************************************************
  * MACROS
  **********************************************************************************************************************/
-#define DIGITAL_IO_XMC_LIB_MAJOR_VERSION 2
-#define DIGITAL_IO_XMC_LIB_MINOR_VERSION 0
-#define DIGITAL_IO_XMC_LIB_PATCH_VERSION 0
+#define BUS_IO_XMC_LIB_MAJOR_VERSION 2
+#define BUS_IO_XMC_LIB_MINOR_VERSION 0
+#define BUS_IO_XMC_LIB_PATCH_VERSION 0
 
-#if !((XMC_LIB_MAJOR_VERSION > DIGITAL_IO_XMC_LIB_MAJOR_VERSION) ||\
-      ((XMC_LIB_MAJOR_VERSION == DIGITAL_IO_XMC_LIB_MAJOR_VERSION) && (XMC_LIB_MINOR_VERSION > DIGITAL_IO_XMC_LIB_MINOR_VERSION)) ||\
-      ((XMC_LIB_MAJOR_VERSION == DIGITAL_IO_XMC_LIB_MAJOR_VERSION) && (XMC_LIB_MINOR_VERSION == DIGITAL_IO_XMC_LIB_MINOR_VERSION) && (XMC_LIB_PATCH_VERSION >= DIGITAL_IO_XMC_LIB_PATCH_VERSION)))
-#error "DIGITAL_IO requires XMC Peripheral Library v2.0.0 or higher"
+#if !((XMC_LIB_MAJOR_VERSION > BUS_IO_XMC_LIB_MAJOR_VERSION) ||\
+      ((XMC_LIB_MAJOR_VERSION == BUS_IO_XMC_LIB_MAJOR_VERSION) && (XMC_LIB_MINOR_VERSION > BUS_IO_XMC_LIB_MINOR_VERSION)) ||\
+      ((XMC_LIB_MAJOR_VERSION == BUS_IO_XMC_LIB_MAJOR_VERSION) && (XMC_LIB_MINOR_VERSION == BUS_IO_XMC_LIB_MINOR_VERSION) && (XMC_LIB_PATCH_VERSION >= BUS_IO_XMC_LIB_PATCH_VERSION)))
+#error "BUS_IO requires XMC Peripheral Library v2.0.0 or higher"
 #endif
 
  /**********************************************************************************************************************
@@ -89,18 +78,18 @@
  **********************************************************************************************************************/
 
 /**
-* @ingroup DIGITAL_IO_enumerations
+* @ingroup BUS_IO_enumerations
 * @{
 */
 
 /**
-* @brief Initialization status of DIGITAL_IO APP.
+* @brief Initialization status of BUS_IO APP.
 */
-typedef enum DIGITAL_IO_STATUS
+typedef enum BUS_IO_STATUS
 {
-  DIGITAL_IO_STATUS_OK = 0U,/**< 0=Status OK */
-  DIGITAL_IO_STATUS_FAILURE = 1U/**< 1=Status Failed */
-} DIGITAL_IO_STATUS_t;
+  BUS_IO_STATUS_OK = 0U,/**< 0=Status OK */
+  BUS_IO_STATUS_FAILURE = 1U/**< 1=Status Failed */
+} BUS_IO_STATUS_t;
 
 /**
 * @}
@@ -110,22 +99,28 @@ typedef enum DIGITAL_IO_STATUS
  * DATA STRUCTURES
  **********************************************************************************************************************/
 /**
-* @ingroup DIGITAL_IO_datastructures
+* @ingroup BUS_IO_datastructures
 * @{
 */
 
-/**
-* @brief Initialization data structure of DIGITAL_IO APP
-*/
-typedef struct DIGITAL_IO
+typedef struct BUS_IO_PORT_PIN
 {
-  XMC_GPIO_PORT_t *const gpio_port;             /**< port number */
-  const XMC_GPIO_CONFIG_t gpio_config;          /**< mode, initial output level and pad driver strength / hysteresis */
-  const uint8_t gpio_pin;                       /**< pin number */
-  const XMC_GPIO_HWCTRL_t hwctrl;               /**< Hardware port control */
-} DIGITAL_IO_t;
+  XMC_GPIO_PORT_t *const gpio_port;  /**< port number */
+  uint8_t gpio_pin;  /**< pin number */
+} BUS_IO_PORT_PIN_t;
 
+/**
+* @brief Initialization data structure of BUS_IO APP
+*/
+typedef struct BUS_IO
+{
+  const BUS_IO_PORT_PIN_t *const pin_array;  /**< pointer to pin configuration */
+  XMC_GPIO_CONFIG_t gpio_config;  /**< mode, initial output level and pad driver strength / hysteresis */
+  uint8_t number_of_pins;  /**< total number of pins required */
+  bool initialized;  /**< APP initialization status */
+} BUS_IO_t;
 
+typedef XMC_GPIO_MODE_t BUS_IO_MODE_t;
 /**
 * @}
 */
@@ -141,14 +136,12 @@ extern "C" {
 #endif
 
 /**
-* @ingroup DIGITAL_IO_apidoc
+* @ingroup BUS_IO_apidoc
 * @{
 */
 
-
-
 /**
-* @brief Get DIGITAL_IO APP version
+* @brief Get BUS_IO APP version
 * @return DAVE_APP_VERSION_t APP version information (major, minor and patch number)
 *
 * \par<b>Description: </b><br>
@@ -165,12 +158,12 @@ extern "C" {
 *   DAVE_STATUS_t init_status;
 *   DAVE_APP_VERSION_t version;
 *
-*   // Initialize DIGITAL_IO APP:
-*   // DIGITAL_IO_Init() is called from within DAVE_Init().
+*   // Initialize BUS_IO APP:
+*   // BUS_IO_Init() is called from within DAVE_Init().
 *   init_status = DAVE_Init();
 *   if(init_status == DAVE_STATUS_SUCCESS)
 *   {
-*     version = DIGITAL_IO_GetAppVersion();
+*     version = BUS_IO_GetAppVersion();
 *     if (version.major != 4U) {
 *     // Probably, not the right version.
 *     }
@@ -184,30 +177,26 @@ extern "C" {
 *  }
 * @endcode<BR>
 */
-
-DAVE_APP_VERSION_t DIGITAL_IO_GetAppVersion(void);
+DAVE_APP_VERSION_t BUS_IO_GetAppVersion(void);
 
 /**
 *
 * @brief Function to initialize the port pin as per UI settings.
-* @param handler Pointer pointing to APP data structure. Refer @ref DIGITAL_IO_t for details.
-* @return DIGITAL_IO_STATUS_t DIGITAL_IO APP status. Refer @ref DIGITAL_IO_STATUS_t structure for details.
+* @param handler Constant pointer to APP data structure. Refer @ref BUS_IO_t for details.
+* @return BUS_IO_STATUS_t BUS_IO APP status. Refer @ref BUS_IO_STATUS_t structure for details.
 *
 * \par<b>Description:</b><br>
-* This function initializes GPIO port registers IOCR,PDISC,OMR,PDR/PHCR to configure pin direction,initial output level,
-* and pad driver strength/hysteresis.
+* This function initializes GPIO port registers IOCR, PDISC, OMR, PDR/PHCR to configure pin direction,
+* initial output level and pad driver strength/hysteresis.
 *
-* \par<b>Related APIs:</b><BR>
-* None
 *
 * Example Usage:
 * @code
-* #include "DAVE.h" //Declarations from DAVE Code Generation (includes SFR declaration)
-*
+* #include "DAVE.h"//Declarations from DAVE Code Generation (includes SFR declaration)
 * int main(void)
 * {
 *   DAVE_STATUS_t status;
-*   status = DAVE_Init();  //(DAVE_STATUS_t)DIGITAL_IO_Init(&DIGITAL_IO_0) is called within DAVE_Init()
+*   status = DAVE_Init();  //(DAVE_STATUS_t)BUS_IO_Init(&BUS_IO_0) is called within DAVE_Init()
 *   if(status == DAVE_STATUS_SUCCESS)
 *   {
 *     XMC_DEBUG("DAVE Apps initialization success\n");
@@ -227,29 +216,26 @@ DAVE_APP_VERSION_t DIGITAL_IO_GetAppVersion(void);
 *  }
 *  @endcode
 */
-
-DIGITAL_IO_STATUS_t DIGITAL_IO_Init(const DIGITAL_IO_t *const handler);
+BUS_IO_STATUS_t BUS_IO_Init(BUS_IO_t *const handle_ptr);
 
 /**
 *
-* @brief Function to set port pin high.
-* @param handler Pointer pointing to APP data structure. Refer @ref DIGITAL_IO_t for details.
+* @brief Function to set the mode of the bus.
+* @param handler Constant pointer to APP data structure. Refer @ref BUS_IO_t and @ref BUS_IO_MODE_t for details.
 * @return None
 *
 * \par<b>Description:</b><br>
-* This function configures port output modification register Pn_OMR, to make port pin to high level.
+* This function configures bus as input or output by setting port input output control register Pn_IOCR,
+* to make port pins as input or output.
 *
-* \par<b>Related APIs:</b><BR>
-*  DIGITAL_IO_SetOutputLow()
 *
 * Example Usage:
 * @code
-* #include "DAVE.h" //Declarations from DAVE Code Generation (includes SFR declaration)
-*
+* #include "DAVE.h"//Declarations from DAVE Code Generation (includes SFR declaration)
 * int main(void)
 * {
 *   DAVE_STATUS_t status;
-*   status = DAVE_Init();  //(DAVE_STATUS_t)DIGITAL_IO_Init(&DIGITAL_IO_0) is called within DAVE_Init()
+*   status = DAVE_Init();  //(DAVE_STATUS_t)BUS_IO_Init(&BUS_IO_0) is called within DAVE_Init()
 *   if(status == DAVE_STATUS_SUCCESS)
 *   {
 *     XMC_DEBUG("DAVE Apps initialization success\n");
@@ -262,7 +248,7 @@ DIGITAL_IO_STATUS_t DIGITAL_IO_Init(const DIGITAL_IO_t *const handler);
 *     }
 *   }
 *   //Placeholder for user application code. The while loop below can be replaced with user application code.
-*   DIGITAL_IO_SetOutputHigh(&DIGITAL_IO_0);
+*   BUS_IO_SetMode(&BUS_IO_0, XMC_GPIO_MODE_INPUT_TRISTATE);
 *   while(1U)
 *   {
 *     // Add application code here
@@ -272,32 +258,29 @@ DIGITAL_IO_STATUS_t DIGITAL_IO_Init(const DIGITAL_IO_t *const handler);
 * }
 *  @endcode
 */
-
-__STATIC_INLINE void DIGITAL_IO_SetOutputHigh(const DIGITAL_IO_t *const handler)
-{
-  XMC_ASSERT("DIGITAL_IO_SetOutputHigh: handler null pointer", handler != NULL);
-  XMC_GPIO_SetOutputHigh(handler->gpio_port, handler->gpio_pin);
-}
+void  BUS_IO_SetMode(BUS_IO_t *const handle_ptr, const BUS_IO_MODE_t mode);
 
 /**
-* @brief Function to reset port pin.
-* @param handler Pointer pointing to APP data structure. Refer @ref DIGITAL_IO_t for details.
-* @return None
+* @brief Function to read the bus pins state.
+* @param handler Constant pointer to APP data structure. Refer @ref BUS_IO_t for details.
+* @return uint16_t, reading the pin state and packing the result according to the pin position in
+*                   the list, from LSB to MSB
 *
 * \par<b>Description:</b><br>
-* This function configures port output modification register Pn_OMR, to make port pin to low level.
+* This function reads the Pn_IN register and returns the current logical value at the GPIO pin.
 *
 * \par<b>Related APIs:</b><BR>
-* DIGITAL_IO_SetOutputHigh()
+* BUS_IO_Write(), BUS_IO_Toggle()
 *
 * Example Usage:
 * @code
-*  #include "DAVE.h" //Declarations from DAVE Code Generation (includes SFR declaration)
-*
+*  #include "DAVE.h"//Declarations from DAVE Code Generation (includes SFR declaration)
 *  int main(void)
 *  {
 *    DAVE_STATUS_t status;
-*    status = DAVE_Init();  //(DAVE_STATUS_t)DIGITAL_IO_Init(&DIGITAL_IO_0) is called within DAVE_Init()
+*    uint16_t count = 0;
+*
+*    status = DAVE_Init();  //(DAVE_STATUS_t)BUS_IO_Init(&BUS_IO_0) is called within DAVE_Init()
 *    if(status == DAVE_STATUS_SUCCESS)
 *    {
 *      XMC_DEBUG("DAVE Apps initialization success\n");
@@ -310,7 +293,8 @@ __STATIC_INLINE void DIGITAL_IO_SetOutputHigh(const DIGITAL_IO_t *const handler)
 *      }
 *    }
 *    //Placeholder for user application code. The while loop below can be replaced with user application code.
-*    DIGITAL_IO_SetOutputLow(&DIGITAL_IO_0);
+*    count = BUS_IO_Read(&BUS_IO_0);
+*    // Use count for validation purpose
 *    while(1U)
 *    {
 *      // Add application code here
@@ -320,34 +304,71 @@ __STATIC_INLINE void DIGITAL_IO_SetOutputHigh(const DIGITAL_IO_t *const handler)
 * }
 *  @endcode
 */
-
-__STATIC_INLINE void DIGITAL_IO_SetOutputLow(const DIGITAL_IO_t *const handler)
-{
-  XMC_ASSERT("DIGITAL_IO_SetOutputLow: handler null pointer", handler != NULL);
-  XMC_GPIO_SetOutputLow(handler->gpio_port,handler->gpio_pin);
-}
+uint16_t BUS_IO_Read(BUS_IO_t *const handle_ptr);
 
 /**
-* @brief Function to Toggle port pin.
-* @param handler Pointer pointing to APP data structure. Refer @ref DIGITAL_IO_t for details.
+* @brief Function to program the bus state.
+* @param handler Constant pointer to APP data structure. Refer @ref BUS_IO_t for details.
 * @return None
 *
 * \par<b>Description:</b><br>
-* This function configures port output modification register Pn_OMR, to toggle port pin.
+* This function setting the pin state according the pin position in the list, from LSB to MSB.
 *
 * \par<b>Related APIs:</b><BR>
-* DIGITAL_IO_SetOutputLow(), DIGITAL_IO_SetOutputHigh()
+* BUS_IO_Read(), BUS_IO_Toggle()
+*
+* Example Usage:
+* @code
+*  #include "DAVE.h"//Declarations from DAVE Code Generation (includes SFR declaration)
+*  int main(void)
+*  {
+*    DAVE_STATUS_t status;
+*    uint16_t data = 1;
+*    status = DAVE_Init();  //(DAVE_STATUS_t)BUS_IO_Init(&BUS_IO_0) is called within DAVE_Init()
+*    if(status == DAVE_STATUS_SUCCESS)
+*    {
+*      XMC_DEBUG("DAVE Apps initialization success\n");
+*    }
+*    else
+*    {
+*      XMC_DEBUG(("DAVE Apps initialization failed with status %d\n", status));
+*      while(1U)
+*      {
+*      }
+*    }
+*    //Placeholder for user application code. The while loop below can be replaced with user application code.
+*    BUS_IO_Write(&BUS_IO_0, data);
+*    while(1U)
+*    {
+*      // Add application code here
+*    }
+*
+*   return (1);
+* }
+*  @endcode
+*/
+void BUS_IO_Write(BUS_IO_t *const handle_ptr, const uint16_t data);
+
+/**
+* @brief Toggles the complete pins associated with the bus.
+* @param handler Constant pointer to APP data structure. Refer @ref BUS_IO_t for details.
+* @return None
+*
+* \par<b>Description:</b><br>
+* This function toggles the bus pins state.
+*
+* \par<b>Related APIs:</b><BR>
+* BUS_IO_Read(), BUS_IO_Write()
 *
 * Example Usage:
 *
 * @code
-* #include "DAVE.h" //Declarations from DAVE Code Generation (includes SFR declaration)
-*
+* #include "DAVE.h"//Declarations from DAVE Code Generation (includes SFR declaration)
 * int main(void)
 * {
 *   DAVE_STATUS_t status;
-*   uint32_t delay_count;;
-*   status = DAVE_Init();  //(DAVE_STATUS_t)DIGITAL_IO_Init(&DIGITAL_IO_0) is called within DAVE_Init()
+*   volatile uint32_t delay_count;
+*   status = DAVE_Init();  //(DAVE_STATUS_t)BUS_IO_Init(&BUS_IO_0) is called within DAVE_Init()
 *   if(status == DAVE_STATUS_SUCCESS)
 *   {
 *     XMC_DEBUG("DAVE Apps initialization success\n");
@@ -362,10 +383,10 @@ __STATIC_INLINE void DIGITAL_IO_SetOutputLow(const DIGITAL_IO_t *const handler)
 *   //Placeholder for user application code. The while loop below can be replaced with user application code.
 *   while(1U)
 *   {
-*      DIGITAL_IO_ToggleOutput(&DIGITAL_IO_0); //toggles : 1 -> 0 (if initial output level is logic 1)
+*      BUS_IO_Toggle(&BUS_IO_0); //toggles : 1 -> 0 (if initial output level is logic 1)
 *      //Add application code here
 *      for(delay_count = 0;delay_count<0xfffff;delay_count++);
-*      DIGITAL_IO_ToggleOutput(&DIGITAL_IO_0); //toggles : 0 -> 1
+*      BUS_IO_Toggle(&BUS_IO_0); //toggles : 0 -> 1
 *      //Add application code here
 *      for(delay_count = 0;delay_count<0xfffff;delay_count++);
 *   }
@@ -373,67 +394,7 @@ __STATIC_INLINE void DIGITAL_IO_SetOutputLow(const DIGITAL_IO_t *const handler)
 * }
 *  @endcode
 */
-
-__STATIC_INLINE void DIGITAL_IO_ToggleOutput(const DIGITAL_IO_t *const handler)
-{
-  XMC_ASSERT("DIGITAL_IO_ToggleOutput: handler null pointer", handler != NULL);
-  XMC_GPIO_ToggleOutput(handler->gpio_port, handler->gpio_pin);
-}
-
-/**
-* @brief Function to read input level of port pin.
-* @param handler Pointer pointing to APP data structure. Refer @ref DIGITAL_IO_t for details.
-* @return uint32_t input logic level. Range:0-1
-*
-* \par<b>Description:</b><br>
-* This function reads the Pn_IN register and returns the current logical value at the GPIO pin.
-*
-* \par<b>Related APIs:</b><BR>
-*  None
-*
-* Example Usage:
-* @code
-* #include "DAVE.h" //Declarations from DAVE Code Generation (includes SFR declaration)
-*
-* int main(void)
-* {
-*   DAVE_STATUS_t status;
-*   uint32_t pin_status;
-*   status = DAVE_Init();   // (DAVE_STATUS_t)DIGITAL_IO_Init(&DIGITAL_IO_0) is called within DAVE_Init()
-*   if(status == DAVE_STATUS_SUCCESS)
-*   {
-*     XMC_DEBUG("DAVE Apps initialization success\n");
-*   }
-*   else
-*   {
-*     XMC_DEBUG(("DAVE Apps initialization failed with status %d\n", status));
-*     while(1U)
-*     {
-*     }
-*   }
-*   //Placeholder for user application code. The while loop below can be replaced with user application code.
-*   while(1U)
-*   {
-*     pin_status = DIGITAL_IO_GetInput(&DIGITAL_IO_0);
-*     if(pin_status == 1)
-*     {
-*       // Add application code here
-*     }
-*     else
-*     {
-*       // Add application code here
-*     }
-*   }
-*   return (1);
-* }
-*  @endcode
-*/
-
-__STATIC_INLINE uint32_t DIGITAL_IO_GetInput(const DIGITAL_IO_t *const handler)
-{
-  XMC_ASSERT("DIGITAL_IO_GetInput: handler null pointer", handler != NULL);
-  return XMC_GPIO_GetInput(handler->gpio_port, handler->gpio_pin);
-}
+void BUS_IO_Toggle(BUS_IO_t *const handle_ptr);
 
 /**
 *@}
@@ -444,7 +405,7 @@ __STATIC_INLINE uint32_t DIGITAL_IO_GetInput(const DIGITAL_IO_t *const handler)
 #endif
 
 /* Include APP extern file */
-#include "digital_io_extern.h"
+#include "bus_io_extern.h"
 
 
-#endif /* DIGITAL_IO_H */
+#endif /* BUS_IO_H */

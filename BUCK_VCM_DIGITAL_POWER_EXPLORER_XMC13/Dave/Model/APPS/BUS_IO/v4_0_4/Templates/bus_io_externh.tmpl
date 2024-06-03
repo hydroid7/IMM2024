@@ -1,6 +1,6 @@
-package Model.APPS.DIGITAL_IO.v4_0_18.Templates;
+package Model.APPS.BUS_IO.v4_0_4.Templates;
 
-import Model.APPS.DIGITAL_IO.v4_0_18.DIGITAL_IO
+import Model.APPS.BUS_IO.v4_0_4.BUS_IO
 
 out.print("""
 /**
@@ -37,13 +37,8 @@ out.print("""
  * Change History
  * --------------
  *
- * 2015-02-16:
+ * 2016-04-06
  *     - Initial version<br>
- * 2015-12-22
- *     - APP data structure defined as constant.
- * 2016-07-08:
- *     - Fixed incorrect case for an included header.<br>
- *
  * @endcond
  *
  */
@@ -60,20 +55,19 @@ out.print("""
  * EXTERN DECLARATIONS
 ***********************************************************************************************************************/
 
-#ifndef DIGITAL_IO_EXTERN_H
-#define DIGITAL_IO_EXTERN_H
+#ifndef BUS_IO_EXTERN_H
+#define BUS_IO_EXTERN_H
 """);
 
 /* Loop through the instances list and retrieve total count as well as define the handles as extern */
 for (Object obj : appInstancesList )
 {
-	String objLabel = obj.getInstanceLabel()
-	out.print("""
-extern const DIGITAL_IO_t ${objLabel}; 
-	""");
+    String objLabel = obj.getInstanceLabel()
+    out.print("""
+extern BUS_IO_t ${objLabel}; 
+    """);
 }
 
 out.print("""
  
-#endif  /* DIGITAL_IO_EXTERN_H */
-""");
+#endif  /* BUS_IO_EXTERN_H */ """);

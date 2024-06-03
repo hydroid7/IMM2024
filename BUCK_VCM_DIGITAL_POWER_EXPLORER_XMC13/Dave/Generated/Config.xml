@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Project MotherSystem_Version="" Name="BUCK_VCM_DIGITAL_POWER_EXPLORER_XMC13" Path="C:\Users\AlbrechAndre\SW_SpaceX_optimizer\Dave\BUCK_VCM_DIGITAL_POWER_EXPLORER_XMC13">
+<Project MotherSystem_Version="" Name="BUCK_VCM_DIGITAL_POWER_EXPLORER_XMC13" Path="C:\Users\Lóránt Meszlényi\IMM2024\BUCK_VCM_DIGITAL_POWER_EXPLORER_XMC13">
     <COMPILER>
         <Name>ARM_GCC_HOME</Name>
         <Version/>
@@ -19,6 +19,16 @@
             <Source_File>
                 <File_Name>adc_measurement_adv_conf.c</File_Name>
                 <Path>\Dave\Generated\ADC_MEASUREMENT_ADV\adc_measurement_adv_conf.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>bus_io.c</File_Name>
+                <Path>\Dave\Generated\BUS_IO\bus_io.c</Path>
+                <Type>C File</Type>
+            </Source_File>
+            <Source_File>
+                <File_Name>bus_io_conf.c</File_Name>
+                <Path>\Dave\Generated\BUS_IO\bus_io_conf.c</Path>
                 <Type>C File</Type>
             </Source_File>
             <Source_File>
@@ -44,16 +54,6 @@
             <Source_File>
                 <File_Name>DAVE.c</File_Name>
                 <Path>\Dave\Generated\DAVE.c</Path>
-                <Type>C File</Type>
-            </Source_File>
-            <Source_File>
-                <File_Name>digital_io.c</File_Name>
-                <Path>\Dave\Generated\DIGITAL_IO\digital_io.c</Path>
-                <Type>C File</Type>
-            </Source_File>
-            <Source_File>
-                <File_Name>digital_io_conf.c</File_Name>
-                <Path>\Dave\Generated\DIGITAL_IO\digital_io_conf.c</Path>
                 <Type>C File</Type>
             </Source_File>
             <Source_File>
@@ -114,6 +114,21 @@
                 <Type>H File</Type>
             </Header_File>
             <Header_File>
+                <File_Name>bus_io.h</File_Name>
+                <Path>\Dave\Generated\BUS_IO\bus_io.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>bus_io_conf.h</File_Name>
+                <Path>\Dave\Generated\BUS_IO\bus_io_conf.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
+                <File_Name>bus_io_extern.h</File_Name>
+                <Path>\Dave\Generated\BUS_IO\bus_io_extern.h</Path>
+                <Type>H File</Type>
+            </Header_File>
+            <Header_File>
                 <File_Name>clock_xmc1.h</File_Name>
                 <Path>\Dave\Generated\CLOCK_XMC1\clock_xmc1.h</Path>
                 <Type>H File</Type>
@@ -151,21 +166,6 @@
             <Header_File>
                 <File_Name>DAVE_Common.h</File_Name>
                 <Path>\Dave\Generated\DAVE_Common.h</Path>
-                <Type>H File</Type>
-            </Header_File>
-            <Header_File>
-                <File_Name>digital_io.h</File_Name>
-                <Path>\Dave\Generated\DIGITAL_IO\digital_io.h</Path>
-                <Type>H File</Type>
-            </Header_File>
-            <Header_File>
-                <File_Name>digital_io_conf.h</File_Name>
-                <Path>\Dave\Generated\DIGITAL_IO\digital_io_conf.h</Path>
-                <Type>H File</Type>
-            </Header_File>
-            <Header_File>
-                <File_Name>digital_io_extern.h</File_Name>
-                <Path>\Dave\Generated\DIGITAL_IO\digital_io_extern.h</Path>
                 <Type>H File</Type>
             </Header_File>
             <Header_File>
